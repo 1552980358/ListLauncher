@@ -2,6 +2,7 @@ package sakuraba.saki.list.launcher.ui.home
 
 import android.content.Intent
 import android.content.pm.ApplicationInfo
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -34,11 +35,12 @@ class HomeFragment: Fragment() {
         
         homeViewModel.setAppInfos(arrayListOf())
         val appInfos = homeViewModel.appInfos.value!!
-    
+        
         // val appInfos = requireContext().packageManager.queryIntent.getInstalledApplications(0)
-        fragmentHomeBinding.recyclerView.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+        fragmentHomeBinding.recyclerView.layoutManager =
+            LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
         fragmentHomeBinding.recyclerView.adapter = RecyclerViewAdapter(appInfos, parentFragmentManager)
-    
+        
         homeViewModel.setLoadingDialogFragment(LoadingDialogFragment())
         homeViewModel.loadingDialogFragment.value?.show(requireActivity().supportFragmentManager)
         @Suppress("EXPERIMENTAL_API_USAGE")
@@ -50,21 +52,29 @@ class HomeFragment: Fragment() {
                 
                 // Ignore this launcher by checking package name
                 if (resolveInfo.resolvePackageName != BuildConfig.APPLICATION_ID) {
-                    appInfos.add(
-                        AppInfo(
-                            resolveInfo.loadLabel(requireContext().packageManager).toString(),
-                            resolveInfo.activityInfo.packageName,
-                            resolveInfo.loadIcon(requireContext().packageManager),
-                            requireActivity().packageManager.getApplicationInfo(resolveInfo.activityInfo.packageName, 0).flags and ApplicationInfo.FLAG_SYSTEM != 0
+                    requireActivity().packageManager.getPackageInfo(resolveInfo.activityInfo.packageName, 0).apply {
+                        @Suppress("DEPRECATION")
+                        appInfos.add(
+                            AppInfo(
+                                resolveInfo.loadLabel(requireContext().packageManager).toString(),
+                                resolveInfo.activityInfo.packageName,
+                                resolveInfo.loadIcon(requireContext().packageManager),
+                                requireActivity().packageManager.getApplicationInfo(
+                                    resolveInfo.activityInfo.packageName,
+                                    0
+                                ).flags and ApplicationInfo.FLAG_SYSTEM != 0,
+                                versionName,
+                                if (Build.VERSION.SDK_INT >= 28) longVersionCode else versionCode.toLong()
+                            )
                         )
-                    )
+                    }
                 }
             }
             
             // Short by converting all Chinese into characters for comparing
             // Will further support more language
             appInfos.sortBy { Pinyin.toPinyin(it.name, "") }
-        
+            
             // Call adapter for update of RecyclerView
             launch(Dispatchers.Main) {
                 fragmentHomeBinding.recyclerView.adapter?.notifyDataSetChanged()

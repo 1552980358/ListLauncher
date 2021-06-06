@@ -38,6 +38,8 @@ class ApplicationInfoBottomSheetDialogFragment(private val appInfo: AppInfo): Bo
                 setTextColor(ContextCompat.getColor(requireContext(), R.color.green))
             }
         }
+        fragmentApplicationInfoBottomDialogBinding.textViewVersionName.text = appInfo.versionName
+        fragmentApplicationInfoBottomDialogBinding.textViewVersionCode.text = appInfo.versionCode.toString()
         return fragmentApplicationInfoBottomDialogBinding.root
     }
     

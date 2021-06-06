@@ -20,7 +20,7 @@
         android:layout_height="50dp"
         android:id="@+id/imageView_icon"
         tools:ignore="ContentDescription"
-        android:layout_gravity="center_horizontal"/>
+        android:layout_gravity="center_horizontal" />
     
     <TextView
         android:layout_width="match_parent"
@@ -49,7 +49,7 @@
         android:id="@+id/textViewPackageName"
         android:gravity="center"
         android:textSize="17sp"
-        android:textColor="@color/black"/>
+        android:textColor="@color/black" />
     
     <TextView
         android:layout_width="match_parent"
@@ -57,4 +57,53 @@
         android:id="@+id/textViewSystemApp"
         android:gravity="center" />
     
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/textViewDivider"
+            android:text=" | "
+            tools:ignore="HardcodedText"
+            android:layout_centerHorizontal="true" />
+        
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toStartOf="@id/textViewDivider"
+            android:id="@+id/textViewVersionNameTitle"
+            android:text="@string/bottom_dialog_home_version_name"
+            tools:viewBindingIgnore="true"
+            tools:ignore="RelativeOverlap" />
+        
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@id/textViewDivider"
+            android:id="@+id/textViewVersionCodeTitle"
+            android:text="@string/bottom_dialog_home_version_code"
+            tools:viewBindingIgnore="true" />
+        
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/textViewVersionName"
+            android:layout_below="@id/textViewVersionNameTitle"
+            android:layout_toStartOf="@id/textViewDivider"
+            android:textColor="@color/black"
+            android:textSize="17sp" />
+        
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/textViewVersionCode"
+            android:layout_below="@id/textViewVersionCodeTitle"
+            android:layout_toEndOf="@id/textViewDivider"
+            android:textColor="@color/black"
+            android:textSize="17sp" />
+    
+    </RelativeLayout>
+
 </LinearLayout>

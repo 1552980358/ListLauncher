@@ -16,4 +16,7 @@
     <string name="bottom_dialog_home_system_yes">[System Application]</string>
     <string name="bottom_dialog_home_system_no">[User-installed Application]</string>
     
+    <string name="bottom_dialog_home_version_name">Version Name</string>
+    <string name="bottom_dialog_home_version_code">Version Code</string>
+    
 </resources>
