@@ -6,9 +6,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.github.promeg.pinyinhelper.Pinyin
@@ -16,7 +14,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import sakuraba.saki.list.launcher.BuildConfig
-import sakuraba.saki.list.launcher.R
 import sakuraba.saki.list.launcher.databinding.FragmentHomeBinding
 
 class HomeFragment: Fragment() {
@@ -40,9 +37,11 @@ class HomeFragment: Fragment() {
     
         @Suppress("EXPERIMENTAL_API_USAGE")
         GlobalScope.launch(Dispatchers.IO) {
+            // Query out all application packages that is launchable by a launcher
             requireContext().packageManager.queryIntentActivities(Intent(Intent.ACTION_MAIN, null).apply {
                 addCategory(Intent.CATEGORY_LAUNCHER)
             }, 0).forEach { resolveInfo ->
+                // Ignore this launcher by checking package name
                 if (resolveInfo.resolvePackageName != BuildConfig.APPLICATION_ID) {
                     appInfos.add(
                         AppInfo(
@@ -53,9 +52,12 @@ class HomeFragment: Fragment() {
                     )
                 }
             }
-        
+            
+            // Short by converting all Chinese into characters for comparing
+            // Will further support more language
             appInfos.sortBy { Pinyin.toPinyin(it.name, "") }
         
+            // Call adapter for update of RecyclerView
             launch(Dispatchers.Main) {
                 fragmentHomeBinding.recyclerView.adapter?.notifyDataSetChanged()
             }
@@ -63,7 +65,7 @@ class HomeFragment: Fragment() {
     
         // val appInfos = requireContext().packageManager.queryIntent.getInstalledApplications(0)
         fragmentHomeBinding.recyclerView.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
-        fragmentHomeBinding.recyclerView.adapter = RecyclerViewAdapter(appInfos, requireActivity().packageManager)
+        fragmentHomeBinding.recyclerView.adapter = RecyclerViewAdapter(appInfos)
         
     }
     
