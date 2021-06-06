@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="10dp"
+    android:background="@drawable/bg_application_info_bottom_sheet_dialog_fragment">
+    
+    <View
+        android:layout_width="80dp"
+        android:layout_height="4dp"
+        android:background="@drawable/bg_bottom_sheet_pull_bar"
+        android:layout_gravity="center"
+        android:layout_marginBottom="10dp" />
+    
+    <ImageView
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:id="@+id/imageView_icon"
+        tools:ignore="ContentDescription"
+        android:layout_gravity="center_horizontal"/>
+    
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/bottom_dialog_home_application_name" />
+    
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/textViewApplicationName"
+        android:gravity="center"
+        android:maxLines="1"
+        android:textSize="20sp"
+        android:textColor="@color/black" />
+    
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/bottom_dialog_home_package_name" />
+    
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/textViewPackageName"
+        android:gravity="center"
+        android:textSize="17sp"
+        android:textColor="@color/black"/>
+    
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/textViewSystemApp"
+        android:gravity="center" />
+    
+</LinearLayout>

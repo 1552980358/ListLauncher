@@ -37,7 +37,7 @@ class HomeFragment: Fragment() {
     
         // val appInfos = requireContext().packageManager.queryIntent.getInstalledApplications(0)
         fragmentHomeBinding.recyclerView.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
-        fragmentHomeBinding.recyclerView.adapter = RecyclerViewAdapter(appInfos)
+        fragmentHomeBinding.recyclerView.adapter = RecyclerViewAdapter(appInfos, parentFragmentManager)
     
         homeViewModel.setLoadingDialogFragment(LoadingDialogFragment())
         homeViewModel.loadingDialogFragment.value?.show(requireActivity().supportFragmentManager)
@@ -55,7 +55,7 @@ class HomeFragment: Fragment() {
                             resolveInfo.loadLabel(requireContext().packageManager).toString(),
                             resolveInfo.activityInfo.packageName,
                             resolveInfo.loadIcon(requireContext().packageManager),
-                            resolveInfo.activityInfo.flags and ApplicationInfo.FLAG_SYSTEM != 0
+                            requireActivity().packageManager.getApplicationInfo(resolveInfo.activityInfo.packageName, 0).flags and ApplicationInfo.FLAG_SYSTEM != 0
                         )
                     )
                 }

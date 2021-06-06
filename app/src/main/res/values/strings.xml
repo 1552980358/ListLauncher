@@ -10,4 +10,10 @@
     <string name="menu_home">Home</string>
     
     <string name="loading_dialog_title">Loading…</string>
+    
+    <string name="bottom_dialog_home_application_name">Application Name</string>
+    <string name="bottom_dialog_home_package_name">Package Name</string>
+    <string name="bottom_dialog_home_system_yes">[System Application]</string>
+    <string name="bottom_dialog_home_system_no">[User-installed Application]</string>
+    
 </resources>
