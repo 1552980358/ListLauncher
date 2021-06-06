@@ -10,7 +10,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import sakuraba.saki.list.launcher.R
 
-class RecyclerViewAdapter(private var itemList: List<AppInfo>, private val packageManager: PackageManager): RecyclerView.Adapter<ViewHolder>() {
+class RecyclerViewAdapter(var itemList: List<AppInfo>, private val packageManager: PackageManager): RecyclerView.Adapter<ViewHolder>() {
     
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.recycler_view_sub_view, parent, false))
