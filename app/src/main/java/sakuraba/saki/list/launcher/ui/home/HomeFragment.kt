@@ -35,6 +35,12 @@ class HomeFragment: Fragment() {
         homeViewModel.setAppInfos(arrayListOf())
         val appInfos = homeViewModel.appInfos.value!!
     
+        // val appInfos = requireContext().packageManager.queryIntent.getInstalledApplications(0)
+        fragmentHomeBinding.recyclerView.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+        fragmentHomeBinding.recyclerView.adapter = RecyclerViewAdapter(appInfos)
+    
+        homeViewModel.setLoadingDialogFragment(LoadingDialogFragment())
+        homeViewModel.loadingDialogFragment.value?.show(requireActivity().supportFragmentManager)
         @Suppress("EXPERIMENTAL_API_USAGE")
         GlobalScope.launch(Dispatchers.IO) {
             // Query out all application packages that is launchable by a launcher
@@ -60,12 +66,11 @@ class HomeFragment: Fragment() {
             // Call adapter for update of RecyclerView
             launch(Dispatchers.Main) {
                 fragmentHomeBinding.recyclerView.adapter?.notifyDataSetChanged()
+                // Dismiss and remove LoadingDialogFragment
+                homeViewModel.loadingDialogFragment.value?.dismiss()
+                homeViewModel.setLoadingDialogFragment()
             }
         }
-    
-        // val appInfos = requireContext().packageManager.queryIntent.getInstalledApplications(0)
-        fragmentHomeBinding.recyclerView.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
-        fragmentHomeBinding.recyclerView.adapter = RecyclerViewAdapter(appInfos)
         
     }
     

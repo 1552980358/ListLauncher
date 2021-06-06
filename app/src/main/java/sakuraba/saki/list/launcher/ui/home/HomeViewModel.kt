@@ -10,6 +10,12 @@ class HomeViewModel: ViewModel() {
     fun setAppInfos(arrayList: ArrayList<AppInfo>?) {
         _appInfos.value = arrayList
     }
-    val appInfos: LiveData<ArrayList<AppInfo>> = _appInfos
+    val appInfos get() = _appInfos as LiveData<ArrayList<AppInfo>>
+    
+    private val _loadingDialogFragment = MutableLiveData<LoadingDialogFragment>()
+    fun setLoadingDialogFragment(loadingDialogFragment: LoadingDialogFragment? = null) {
+        _loadingDialogFragment.value = loadingDialogFragment
+    }
+    val loadingDialogFragment get() = _loadingDialogFragment as LiveData<LoadingDialogFragment>
     
 }
