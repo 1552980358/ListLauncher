@@ -1,7 +1,7 @@
 package sakuraba.saki.list.launcher.ui.home
 
 import android.content.Intent
-import android.content.pm.PackageManager
+import android.content.pm.ApplicationInfo
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -47,13 +47,15 @@ class HomeFragment: Fragment() {
             requireContext().packageManager.queryIntentActivities(Intent(Intent.ACTION_MAIN, null).apply {
                 addCategory(Intent.CATEGORY_LAUNCHER)
             }, 0).forEach { resolveInfo ->
+                
                 // Ignore this launcher by checking package name
                 if (resolveInfo.resolvePackageName != BuildConfig.APPLICATION_ID) {
                     appInfos.add(
                         AppInfo(
                             resolveInfo.loadLabel(requireContext().packageManager).toString(),
                             resolveInfo.activityInfo.packageName,
-                            resolveInfo.loadIcon(requireContext().packageManager)
+                            resolveInfo.loadIcon(requireContext().packageManager),
+                            resolveInfo.activityInfo.flags and ApplicationInfo.FLAG_SYSTEM != 0
                         )
                     )
                 }
