@@ -32,7 +32,8 @@ class HomeFragment: Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         
-        val appInfos = arrayListOf<AppInfo>()
+        homeViewModel.setAppInfos(arrayListOf())
+        val appInfos = homeViewModel.appInfos.value!!
         
         requireContext().packageManager.queryIntentActivities(Intent(Intent.ACTION_MAIN, null).apply {
             addCategory(Intent.CATEGORY_LAUNCHER)
@@ -52,12 +53,13 @@ class HomeFragment: Fragment() {
         
         // val appInfos = requireContext().packageManager.queryIntent.getInstalledApplications(0)
         fragmentHomeBinding.recyclerView.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
-        fragmentHomeBinding.recyclerView.adapter = RecyclerViewAdapter(appInfos, requireActivity().packageManager)
+        fragmentHomeBinding.recyclerView.adapter = RecyclerViewAdapter(arrayListOf(), requireActivity().packageManager)
     }
     
     override fun onDestroyView() {
         super.onDestroyView()
         _fragmentHomeBinding = null
+        homeViewModel.setAppInfos(null)
     }
     
 }
