@@ -12,6 +12,9 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.github.promeg.pinyinhelper.Pinyin
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import sakuraba.saki.list.launcher.BuildConfig
 import sakuraba.saki.list.launcher.R
 import sakuraba.saki.list.launcher.databinding.FragmentHomeBinding
@@ -34,26 +37,34 @@ class HomeFragment: Fragment() {
         
         homeViewModel.setAppInfos(arrayListOf())
         val appInfos = homeViewModel.appInfos.value!!
-        
-        requireContext().packageManager.queryIntentActivities(Intent(Intent.ACTION_MAIN, null).apply {
-            addCategory(Intent.CATEGORY_LAUNCHER)
-        }, 0).forEach { resolveInfo ->
-            if (resolveInfo.resolvePackageName != BuildConfig.APPLICATION_ID) {
-                appInfos.add(
-                    AppInfo(
-                        resolveInfo.loadLabel(requireContext().packageManager).toString(),
-                        resolveInfo.activityInfo.packageName,
-                        resolveInfo.loadIcon(requireContext().packageManager)
+    
+        @Suppress("EXPERIMENTAL_API_USAGE")
+        GlobalScope.launch(Dispatchers.IO) {
+            requireContext().packageManager.queryIntentActivities(Intent(Intent.ACTION_MAIN, null).apply {
+                addCategory(Intent.CATEGORY_LAUNCHER)
+            }, 0).forEach { resolveInfo ->
+                if (resolveInfo.resolvePackageName != BuildConfig.APPLICATION_ID) {
+                    appInfos.add(
+                        AppInfo(
+                            resolveInfo.loadLabel(requireContext().packageManager).toString(),
+                            resolveInfo.activityInfo.packageName,
+                            resolveInfo.loadIcon(requireContext().packageManager)
+                        )
                     )
-                )
+                }
+            }
+        
+            appInfos.sortBy { Pinyin.toPinyin(it.name, "") }
+        
+            launch(Dispatchers.Main) {
+                fragmentHomeBinding.recyclerView.adapter?.notifyDataSetChanged()
             }
         }
-        
-        appInfos.sortBy { Pinyin.toPinyin(it.name, "") }
-        
+    
         // val appInfos = requireContext().packageManager.queryIntent.getInstalledApplications(0)
         fragmentHomeBinding.recyclerView.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
-        fragmentHomeBinding.recyclerView.adapter = RecyclerViewAdapter(arrayListOf(), requireActivity().packageManager)
+        fragmentHomeBinding.recyclerView.adapter = RecyclerViewAdapter(appInfos, requireActivity().packageManager)
+        
     }
     
     override fun onDestroyView() {
