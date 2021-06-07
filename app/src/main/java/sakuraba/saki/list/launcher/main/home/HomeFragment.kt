@@ -1,4 +1,4 @@
-package sakuraba.saki.list.launcher.ui.home
+package sakuraba.saki.list.launcher.main.home
 
 import android.content.Intent
 import android.content.pm.ApplicationInfo

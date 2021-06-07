@@ -1,5 +1,6 @@
-package sakuraba.saki.list.launcher.ui.home
+package sakuraba.saki.list.launcher.main.home
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,7 +9,10 @@ import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.RecyclerView
+import sakuraba.saki.list.launcher.LaunchAppActivity
 import sakuraba.saki.list.launcher.R
+import sakuraba.saki.list.launcher.base.Constants.Companion.LAUNCH_APPLICATION_NAME
+import sakuraba.saki.list.launcher.base.Constants.Companion.LAUNCH_PACKAGE_NAME
 
 class RecyclerViewAdapter(
     private var itemList: List<AppInfo>,
@@ -24,7 +28,11 @@ class RecyclerViewAdapter(
         holder.textView_app_name.text = itemList[position].name
         holder.textView_package_name.text = itemList[position].packageName
         holder.relativeView_root.setOnClickListener {
-        
+            it?.context?.startActivity(
+                Intent(it.context, LaunchAppActivity::class.java)
+                    .putExtra(LAUNCH_APPLICATION_NAME, itemList[position].name)
+                    .putExtra(LAUNCH_PACKAGE_NAME, itemList[position].packageName)
+            )
         }
         holder.relativeView_root.setOnLongClickListener {
             ApplicationInfoBottomSheetDialogFragment(itemList[position]).show(fragmentManager)

@@ -1,4 +1,4 @@
-package sakuraba.saki.list.launcher.ui.home
+package sakuraba.saki.list.launcher.main.home
 
 import android.app.Dialog
 import android.app.Service

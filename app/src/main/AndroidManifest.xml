@@ -32,6 +32,11 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+        
+        <activity
+            android:name=".LaunchAppActivity"
+            android:theme="@style/Theme.ListLauncher.NoActionBar.Transparent" />
+        
     </application>
 
 </manifest>
