@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import sakuraba.saki.list.launcher.R
 import sakuraba.saki.list.launcher.base.Constants.Companion.LAUNCH_APPLICATION_NAME
 import sakuraba.saki.list.launcher.base.Constants.Companion.LAUNCH_PACKAGE_NAME
+import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.SETTING_CONTAINER
 
 class RecyclerViewAdapter(
     private var itemList: List<AppInfo>,
@@ -38,10 +39,11 @@ class RecyclerViewAdapter(
             activity.findNavController(R.id.nav_host_fragment).navigate(R.id.nav_launch_app, Bundle().apply {
                 putString(LAUNCH_APPLICATION_NAME, itemList[position].name)
                 putString(LAUNCH_PACKAGE_NAME, itemList[position].packageName)
+                putSerializable(SETTING_CONTAINER, activity.intent.getSerializableExtra(SETTING_CONTAINER))
             })
         }
         holder.relativeView_root.setOnLongClickListener {
-            ApplicationInfoBottomSheetDialogFragment(itemList[position]).show(activity.supportFragmentManager)
+            ApplicationInfoDialogFragment(itemList[position]).show(activity.supportFragmentManager)
             return@setOnLongClickListener true
         }
     }
