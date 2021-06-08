@@ -8,16 +8,16 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentManager
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import sakuraba.saki.list.launcher.R
-import sakuraba.saki.list.launcher.databinding.FragmentApplicationInfoBottomDialogBinding
+import sakuraba.saki.list.launcher.databinding.FragmentApplicationInfoDialogBinding
 
-class ApplicationInfoBottomSheetDialogFragment(private val appInfo: AppInfo): BottomSheetDialogFragment() {
+class ApplicationInfoDialogFragment(private val appInfo: AppInfo): BottomSheetDialogFragment() {
     
     companion object {
         private const val TAG = "ApplicationInfoBottomSheetDialog"
     }
     
-    private var _fragmentApplicationInfoBottomDialog: FragmentApplicationInfoBottomDialogBinding? = null
-    private val fragmentApplicationInfoBottomDialogBinding get() = _fragmentApplicationInfoBottomDialog!!
+    private var _fragmentApplicationInfoDialogBinding: FragmentApplicationInfoDialogBinding? = null
+    private val fragmentApplicationInfoDialogBinding get() = _fragmentApplicationInfoDialogBinding!!
     
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,11 +25,11 @@ class ApplicationInfoBottomSheetDialogFragment(private val appInfo: AppInfo): Bo
     }
     
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        _fragmentApplicationInfoBottomDialog = FragmentApplicationInfoBottomDialogBinding.inflate(inflater)
-        fragmentApplicationInfoBottomDialogBinding.imageViewIcon.setImageDrawable(appInfo.icon)
-        fragmentApplicationInfoBottomDialogBinding.textViewApplicationName.text = appInfo.name
-        fragmentApplicationInfoBottomDialogBinding.textViewPackageName.text = appInfo.packageName
-        fragmentApplicationInfoBottomDialogBinding.textViewSystemApp.apply {
+        _fragmentApplicationInfoDialogBinding = FragmentApplicationInfoDialogBinding.inflate(inflater)
+        fragmentApplicationInfoDialogBinding.imageViewIcon.setImageDrawable(appInfo.icon)
+        fragmentApplicationInfoDialogBinding.textViewApplicationName.text = appInfo.name
+        fragmentApplicationInfoDialogBinding.textViewPackageName.text = appInfo.packageName
+        fragmentApplicationInfoDialogBinding.textViewSystemApp.apply {
             if (appInfo.isSystem) {
                 setText(R.string.bottom_dialog_home_system_yes)
                 setTextColor(ContextCompat.getColor(requireContext(), R.color.red))
@@ -38,9 +38,9 @@ class ApplicationInfoBottomSheetDialogFragment(private val appInfo: AppInfo): Bo
                 setTextColor(ContextCompat.getColor(requireContext(), R.color.green))
             }
         }
-        fragmentApplicationInfoBottomDialogBinding.textViewVersionName.text = appInfo.versionName
-        fragmentApplicationInfoBottomDialogBinding.textViewVersionCode.text = appInfo.versionCode.toString()
-        return fragmentApplicationInfoBottomDialogBinding.root
+        fragmentApplicationInfoDialogBinding.textViewVersionName.text = appInfo.versionName
+        fragmentApplicationInfoDialogBinding.textViewVersionCode.text = appInfo.versionCode.toString()
+        return fragmentApplicationInfoDialogBinding.root
     }
     
     fun show(manager: FragmentManager) {
@@ -48,7 +48,7 @@ class ApplicationInfoBottomSheetDialogFragment(private val appInfo: AppInfo): Bo
     }
     
     override fun onDestroyView() {
-        _fragmentApplicationInfoBottomDialog = null
+        _fragmentApplicationInfoDialogBinding = null
         super.onDestroyView()
     }
     
