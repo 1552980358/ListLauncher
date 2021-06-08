@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    
+    <CheckBoxPreference
+        android:key="key_use_fingerprint"
+        android:title="@string/setting_use_fingerprint_title"
+        android:summary="@string/setting_use_fingerprint_summary"
+        app:defaultValue="false"
+        app:iconSpaceReserved="false" />
+    
+</PreferenceScreen>

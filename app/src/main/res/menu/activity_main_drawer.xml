@@ -8,5 +8,8 @@
             android:id="@+id/nav_home"
             android:icon="@drawable/ic_menu_camera"
             android:title="@string/menu_home" />
+        <item
+            android:id="@+id/nav_setting"
+            android:title="@string/action_settings" />
     </group>
 </menu>

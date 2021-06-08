@@ -8,6 +8,10 @@
     <string name="action_settings">Settings</string>
     
     <string name="menu_home">Home</string>
+    <string name="menu_setting">Setting</string>
+    
+    <string name="setting_use_fingerprint_title">Fingerprint</string>
+    <string name="setting_use_fingerprint_summary">Use Fingerprint to Auth</string>
     
     <string name="loading_dialog_title">Loading…</string>
     
