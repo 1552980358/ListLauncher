@@ -20,13 +20,13 @@
     <style name="Theme.ListLauncher.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
     <style name="Theme.ListLauncher.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
     
-    <style name="Theme.ListLauncher.NoActionBar.Transparent" parent="Theme.ListLauncher.NoActionBar">
+    <!--style name="Theme.ListLauncher.NoActionBar.Transparent" parent="Theme.ListLauncher.NoActionBar">
         <item name="android:windowIsTranslucent">true</item>
         <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:windowContentOverlay">@null</item>
         <item name="android:windowIsFloating">true</item>
         <item name="android:backgroundDimEnabled">false</item>
-    </style>
+    </style-->
     
     <!-- Theme for setting a transparent background BottomSheetDialog -->
     <style name="TransparentBackgroundBottomSheetDialogTheme" parent="Theme.Design.Light.BottomSheetDialog">
