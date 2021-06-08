@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_height="match_parent"
+    android:id="@+id/drawer_layout"
+    android:layout_width="match_parent"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical"
+    android:background="@color/purple_500">
+    
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+        
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:id="@+id/imageViewIcon"
+            android:layout_gravity="center_horizontal"
+            tools:ignore="ContentDescription"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true" />
+        
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/textViewPkgName"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:layout_above="@id/imageViewIcon" />
+        
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/textViewAppName"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:textSize="17sp"
+            android:layout_above="@id/textViewPkgName" />
+        
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/activity_launch_app_launching"
+            android:textColor="@color/white"
+            android:layout_below="@id/imageViewIcon" />
+    
+    </RelativeLayout>
+    
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:id="@+id/frame_layout"
+        android:layout_weight="1" />
+
+</LinearLayout>

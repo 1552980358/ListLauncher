@@ -19,4 +19,10 @@
     <string name="bottom_dialog_home_version_name">Version Name</string>
     <string name="bottom_dialog_home_version_code">Version Code</string>
     
+    <string name="activity_launch_app_launching">Launching…</string>
+    
+    <string name="fingerprint_auth_title">Fingerprint Auth</string>
+    <string name="fingerprint_auth_description">Access the application with fingerprint auth</string>
+    <string name="fingerprint_auth_cancel">Cancel</string>
+    
 </resources>

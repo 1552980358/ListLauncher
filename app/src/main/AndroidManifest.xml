@@ -35,7 +35,7 @@
         
         <activity
             android:name=".LaunchAppActivity"
-            android:theme="@style/Theme.ListLauncher.NoActionBar.Transparent" />
+            android:theme="@style/Theme.ListLauncher.NoActionBar" />
         
     </application>
 
