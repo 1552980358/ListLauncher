@@ -1,4 +1,4 @@
-package sakuraba.saki.list.launcher.launchApp
+package sakuraba.saki.list.launcher.main.launchApp
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

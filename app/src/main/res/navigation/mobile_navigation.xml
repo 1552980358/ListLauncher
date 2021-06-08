@@ -10,5 +10,15 @@
         android:name="sakuraba.saki.list.launcher.main.home.HomeFragment"
         android:label="@string/menu_home"
         tools:layout="@layout/fragment_home" />
+    
+    <fragment
+        android:id="@id/nav_setting"
+        android:name="sakuraba.saki.list.launcher.main.setting.SettingFragment"
+        android:label="@string/menu_setting" />
+    
+    <fragment
+        android:id="@+id/nav_launch_app"
+        android:name="sakuraba.saki.list.launcher.main.launchApp.LaunchAppFragment"
+        android:label="LaunchApp" />
 
 </navigation>

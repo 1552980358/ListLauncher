@@ -33,10 +33,6 @@
             </intent-filter>
         </activity>
         
-        <activity
-            android:name=".LaunchAppActivity"
-            android:theme="@style/Theme.ListLauncher.NoActionBar" />
-        
     </application>
 
 </manifest>
