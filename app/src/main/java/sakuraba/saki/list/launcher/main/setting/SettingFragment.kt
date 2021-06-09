@@ -12,6 +12,7 @@ import androidx.preference.PreferenceFragmentCompat
 import sakuraba.saki.list.launcher.R
 import sakuraba.saki.list.launcher.main.launchApp.FingerprintUtil
 import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.KEY_USE_FINGERPRINT
+import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.SETTING_CONTAINER
 
 class SettingFragment: PreferenceFragmentCompat(), FingerprintUtil {
     
@@ -23,7 +24,7 @@ class SettingFragment: PreferenceFragmentCompat(), FingerprintUtil {
         setHasOptionsMenu(true)
         
         viewModel = ViewModelProvider(this).get(SettingViewModel::class.java)
-        viewModel.setSettingContainer(arguments?.getSerializable(SettingContainer.SETTING_CONTAINER) as SettingContainer)
+        viewModel.setSettingContainer(requireActivity().intent?.getSerializableExtra(SETTING_CONTAINER) as SettingContainer?)
         
         findPreference<CheckBoxPreference>(KEY_USE_FINGERPRINT)?.apply {
             if (!checkSupportFingerprint(requireContext())) {

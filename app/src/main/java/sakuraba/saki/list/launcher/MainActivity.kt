@@ -24,6 +24,12 @@ class MainActivity: AppCompatActivity() {
     
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        
+        viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
+        viewModel.setSettingContainer(SettingContainer(this))
+    
+        intent!!.putExtra(SETTING_CONTAINER, viewModel.settingContainer.value)
+        
         _activityMainBinding = ActivityMainBinding.inflate(layoutInflater)
         // setContentView(R.layout.activity_main)
         setContentView(activityMainBinding.root)
@@ -39,11 +45,6 @@ class MainActivity: AppCompatActivity() {
         appBarConfiguration = AppBarConfiguration(setOf(R.id.nav_home, R.id.nav_setting), activityMainBinding.drawerLayout)
         setupActionBarWithNavController(navController, appBarConfiguration)
         activityMainBinding.navView.setupWithNavController(navController)
-    
-        viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
-        viewModel.setSettingContainer(SettingContainer(this))
-    
-        intent!!.putExtra(SETTING_CONTAINER, viewModel.settingContainer.value)
     }
     
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
