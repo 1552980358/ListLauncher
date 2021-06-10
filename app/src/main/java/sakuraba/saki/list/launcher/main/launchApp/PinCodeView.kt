@@ -30,6 +30,8 @@ class PinCodeView: View {
     
     private var diffX = 0F
     
+    fun getInput() = inputSize
+    
     fun update(newInputSize: Int) {
         inputSize = newInputSize
         postInvalidate()

@@ -3,6 +3,7 @@ package sakuraba.saki.list.launcher.main.viewGroup
 import android.app.Service
 import android.content.Context
 import android.util.AttributeSet
+import android.util.Log
 import android.view.LayoutInflater
 import android.widget.LinearLayout
 import sakuraba.saki.list.launcher.databinding.LayoutPinInputBinding
@@ -12,7 +13,7 @@ class PinInputLayout: LinearLayout {
     companion object {
         
         fun interface OnButtonClickListener {
-            fun onClick(button: Int, buttonChar: Char): Boolean
+            fun onClick(button: Int, buttonChar: Char)
         }
         
         const val KEY_1 = 1
@@ -58,76 +59,51 @@ class PinInputLayout: LinearLayout {
         addView(layoutPinInputBinding.root)
         layoutPinInputBinding.apply {
             textViewNum0.setOnClickListener {
-                if (onButtonClickListener?.onClick(KEY_0, KEY_0_CHAR) == false) {
-                    return@setOnClickListener
-                }
                 newKey()
+                onButtonClickListener?.onClick(KEY_0, KEY_0_CHAR)
             }
             textViewNum1.setOnClickListener {
-                if (onButtonClickListener?.onClick(KEY_1, KEY_1_CHAR) == false) {
-                    return@setOnClickListener
-                }
                 newKey()
+                onButtonClickListener?.onClick(KEY_1, KEY_1_CHAR)
             }
             textViewNum2.setOnClickListener {
-                if (onButtonClickListener?.onClick(KEY_2, KEY_2_CHAR) == false) {
-                    return@setOnClickListener
-                }
                 newKey()
+                onButtonClickListener?.onClick(KEY_2, KEY_2_CHAR)
             }
             textViewNum3.setOnClickListener {
-                if (onButtonClickListener?.onClick(KEY_3, KEY_3_CHAR) == false) {
-                    return@setOnClickListener
-                }
                 newKey()
+                onButtonClickListener?.onClick(KEY_3, KEY_3_CHAR)
             }
             textViewNum4.setOnClickListener {
-                if (onButtonClickListener?.onClick(KEY_4, KEY_4_CHAR) == false) {
-                    return@setOnClickListener
-                }
                 newKey()
+                onButtonClickListener?.onClick(KEY_4, KEY_4_CHAR)
             }
             textViewNum5.setOnClickListener {
-                if (onButtonClickListener?.onClick(KEY_5, KEY_5_CHAR) == false) {
-                    return@setOnClickListener
-                }
                 newKey()
+                onButtonClickListener?.onClick(KEY_5, KEY_5_CHAR)
             }
             textViewNum6.setOnClickListener {
-                if (onButtonClickListener?.onClick(KEY_6, KEY_6_CHAR) == false) {
-                    return@setOnClickListener
-                }
                 newKey()
+                onButtonClickListener?.onClick(KEY_6, KEY_6_CHAR)
             }
             textViewNum7.setOnClickListener {
-                if (onButtonClickListener?.onClick(KEY_7, KEY_7_CHAR) == false) {
-                    return@setOnClickListener
-                }
                 newKey()
+                onButtonClickListener?.onClick(KEY_7, KEY_7_CHAR)
             }
             textViewNum8.setOnClickListener {
-                if (onButtonClickListener?.onClick(KEY_8, KEY_8_CHAR) == false) {
-                    return@setOnClickListener
-                }
                 newKey()
+                onButtonClickListener?.onClick(KEY_8, KEY_8_CHAR)
             }
             textViewNum9.setOnClickListener {
-                if (onButtonClickListener?.onClick(KEY_9, KEY_9_CHAR) == false) {
-                    return@setOnClickListener
-                }
                 newKey()
+                onButtonClickListener?.onClick(KEY_9, KEY_9_CHAR)
             }
             textViewBackSpace.setOnClickListener {
-                if (onButtonClickListener?.onClick(KEY_BACKSPACE, KEY_BACKSPACE_CHAR) == false) {
-                    return@setOnClickListener
-                }
                 removeKey()
+                onButtonClickListener?.onClick(KEY_BACKSPACE, KEY_BACKSPACE_CHAR)
             }
             textView.setOnClickListener { 
-                if (onButtonClickListener?.onClick(KEY_CUSTOM, KEY_CUSTOM_CHAR) == false) {
-                    return@setOnClickListener
-                }
-                newKey()
+                onButtonClickListener?.onClick(KEY_CUSTOM, KEY_CUSTOM_CHAR)
             }
         }
     }
@@ -136,23 +112,19 @@ class PinInputLayout: LinearLayout {
         this.onButtonClickListener = onButtonClickListener
     }
     
-    fun removeAllKey() = removeKey(layoutPinInputBinding.pinCodeView.getMaxInputSize())
+    fun removeAllKey() = layoutPinInputBinding.pinCodeView.update(0)
     
-    fun newKey() = newKey(1)
+    fun newKey() =
+        layoutPinInputBinding.pinCodeView.update(layoutPinInputBinding.pinCodeView.getInput() + 1)
     
-    fun newKey(newKey: Int) {
-        _numberClick += if (newKey > layoutPinInputBinding.pinCodeView.getMaxInputSize()) {
-                layoutPinInputBinding.pinCodeView.getMaxInputSize() - _numberClick
-            } else { newKey }
-        layoutPinInputBinding.pinCodeView.update(_numberClick)
+    
+    fun removeKey() {
+        if (layoutPinInputBinding.pinCodeView.getInput() != 0) {
+            layoutPinInputBinding.pinCodeView.update(layoutPinInputBinding.pinCodeView.getInput() - 1)
+        }
     }
     
-    fun removeKey() = removeKey(1)
-    
-    fun removeKey(key: Int) {
-        _numberClick -= if (key > _numberClick) { _numberClick } else { key }
-        layoutPinInputBinding.pinCodeView.update(_numberClick)
-    }
+    fun updateKey(newKey: Int) = layoutPinInputBinding.pinCodeView.update(newKey)
     
     fun setMaxInput(newSize: Int) = layoutPinInputBinding.pinCodeView.setMaxInputSize(newSize)
     
