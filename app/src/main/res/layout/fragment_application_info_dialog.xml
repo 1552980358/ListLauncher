@@ -6,7 +6,7 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:padding="10dp"
-    android:background="@drawable/bg_application_info_dialog_fragment">
+    android:background="@drawable/bg_bottom_sheet_root">
     
     <View
         android:layout_width="80dp"
