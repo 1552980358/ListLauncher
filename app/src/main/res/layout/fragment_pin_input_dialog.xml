@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="10dp"
+    android:background="@drawable/bg_bottom_sheet_root" >
+    
+    <View
+        android:layout_width="80dp"
+        android:layout_height="4dp"
+        android:background="@drawable/bg_bottom_sheet_pull_bar"
+        android:layout_gravity="center"
+        android:layout_marginBottom="10dp" />
+    
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/pin_auth_title"
+        android:textColor="@color/black"
+        android:textSize="16sp" />
+    
+    <sakuraba.saki.list.launcher.main.viewGroup.PinInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:id="@+id/pinInputLayout" />
+
+</LinearLayout>

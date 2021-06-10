@@ -12,14 +12,20 @@ class SettingContainer(context: Context): Serializable {
         const val SETTING_CONTAINER = "SettingContainer"
         
         const val KEY_USE_FINGERPRINT = "key_use_fingerprint"   // Boolean
+        const val KEY_USE_PIN = "key_use_pin"
+        const val KEY_PIN_CODE = "key_pin_code"
     }
     
-    private val stringMap = mutableMapOf<String, String>()
+    private val stringMap = mutableMapOf<String, String?>()
     private val booleanMap = mutableMapOf<String, Boolean>()
     
     init {
         val preferenceManager = PreferenceManager.getDefaultSharedPreferences(context)
         booleanMap[KEY_USE_FINGERPRINT] = preferenceManager.getBoolean(KEY_USE_FINGERPRINT, false)
+        booleanMap[KEY_USE_PIN] = preferenceManager.getBoolean(KEY_USE_PIN, false)
+        if (preferenceManager.contains(KEY_PIN_CODE)) {
+            stringMap[KEY_PIN_CODE] = preferenceManager.getString(KEY_PIN_CODE, null)
+        }
     }
     
     fun <T> getValue(key: String): T? {
