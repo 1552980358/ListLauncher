@@ -71,31 +71,42 @@ class LaunchAppFragment: Fragment(), FingerprintUtil {
         }
         if (checkSupportFingerprint(requireContext())) {
             getFingerprintAuth(requireContext(), object : FingerprintAuthCallback {
+                
+                private var count = 0
+                
                 override fun success() {
                     launchApplication()
                     if (Build.VERSION.SDK_INT in (Build.VERSION_CODES.M .. Build.VERSION_CODES.O)) {
                         fingerprintDialogFragment.dismiss()
                     }
-                }
-                override fun failed() {
-                    if (Build.VERSION.SDK_INT in (Build.VERSION_CODES.M .. Build.VERSION_CODES.O)) {
-                        fingerprintDialogFragment.dismiss()
-                    }
                     findNavController().navigateUp()
                 }
-            
-                override fun error(code: Int, message: String?) {
-                    if (Build.VERSION.SDK_INT in (Build.VERSION_CODES.M .. Build.VERSION_CODES.O)) {
-                        fingerprintDialogFragment.onMessageReceived(message)
-                        if (code == FINGERPRINT_ERROR_CANCELED) {
+                override fun failed() {
+                    count++
+                    if (count == 4) {
+                        if (Build.VERSION.SDK_INT in (Build.VERSION_CODES.M .. Build.VERSION_CODES.O)) {
                             fingerprintDialogFragment.dismiss()
                         }
-                    }
-                    if (code == FINGERPRINT_ERROR_USER_CANCELED) {
                         findNavController().navigateUp()
                     }
                 }
             
+                override fun error(code: Int, message: String?) {
+                    help(code, message)
+                    if (code == FINGERPRINT_ERROR_USER_CANCELED || code == FINGERPRINT_ERROR_CANCELED) {
+                        findNavController().navigateUp()
+                    }
+                }
+    
+                override fun help(code: Int, message: String?) {
+                    if (Build.VERSION.SDK_INT in (Build.VERSION_CODES.M .. Build.VERSION_CODES.O)) {
+                        fingerprintDialogFragment.onMessageReceived(message)
+                        if (code == FINGERPRINT_ERROR_USER_CANCELED || code == FINGERPRINT_ERROR_CANCELED) {
+                            fingerprintDialogFragment.dismiss()
+                        }
+                    }
+                }
+    
                 override fun exit() {
                     if (Build.VERSION.SDK_INT in (Build.VERSION_CODES.M .. Build.VERSION_CODES.O)) {
                         fingerprintDialogFragment.dismiss()

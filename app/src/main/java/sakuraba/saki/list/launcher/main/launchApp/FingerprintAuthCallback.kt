@@ -8,6 +8,8 @@ interface FingerprintAuthCallback {
     
     fun error(code: Int, message: String?)
     
+    fun help(code: Int, message: String?)
+    
     fun exit()
     
 }

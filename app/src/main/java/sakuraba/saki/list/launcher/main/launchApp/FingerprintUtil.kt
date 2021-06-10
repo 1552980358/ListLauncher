@@ -39,8 +39,8 @@ interface FingerprintUtil {
     
     fun getFingerprintAuth(context: Context, callback: FingerprintAuthCallback, cancellationSignal: CancellationSignal) {
         // if (Build.VERSION.SDK_INT in (Build.VERSION_CODES.M .. Build.VERSION_CODES.O)) {
-         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
-             getFingerprintAuthP(context, callback, cancellationSignal)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+            getFingerprintAuthP(context, callback, cancellationSignal)
         } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             getFingerprintAuthM(context, callback, cancellationSignal)
         }
@@ -55,7 +55,7 @@ interface FingerprintUtil {
                     callback.error(errorCode, errString?.toString())
                 }
                 override fun onAuthenticationHelp(helpCode: Int, helpString: CharSequence?) {
-                    callback.error(helpCode, helpString?.toString())
+                    callback.help(helpCode, helpString?.toString())
                 }
                 override fun onAuthenticationSucceeded(result: FingerprintManager.AuthenticationResult?) {
                     callback.success()
@@ -79,7 +79,7 @@ interface FingerprintUtil {
                     callback.error(errorCode, errString?.toString())
                 }
                 override fun onAuthenticationHelp(helpCode: Int, helpString: CharSequence?) {
-                    callback.error(helpCode, helpString?.toString())
+                    callback.help(helpCode, helpString?.toString())
                 }
                 override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult?) {
                     callback.success()
