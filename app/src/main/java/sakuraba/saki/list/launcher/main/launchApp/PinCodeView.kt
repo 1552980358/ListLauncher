@@ -24,6 +24,12 @@ class PinCodeView: View {
     
     private var margin = resources.getDimension(R.dimen.view_pin_code_circle_margin)
     
+    private var centerXStart = 0F
+    
+    private var centerY = 0F
+    
+    private var diffX = 0F
+    
     fun update(newInputSize: Int) {
         inputSize = newInputSize
         postInvalidate()
@@ -36,12 +42,23 @@ class PinCodeView: View {
     
     fun updateRadius(newRadius: Float) {
         radius = newRadius
+        diffX = radius * 2 + margin
+        centerXStart = width / 2F - (maxInputSize / 2 - 1) * diffX - radius - margin / 2F
         postInvalidate()
     }
     
     fun updateMargin(newMargin: Float) {
         margin = newMargin
+        diffX = radius * 2 + margin
+        centerXStart = width / 2F - (maxInputSize / 2 - 1) * diffX - radius - margin / 2F
         postInvalidate()
+    }
+    
+    override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec)
+        centerY = MeasureSpec.getSize(heightMeasureSpec) / 2F
+        diffX = radius * 2 + margin
+        centerXStart = MeasureSpec.getSize(widthMeasureSpec) / 2F - (maxInputSize / 2 - 1) * diffX - radius - margin / 2F
     }
     
     override fun onDraw(canvas: Canvas?) {
@@ -49,10 +66,7 @@ class PinCodeView: View {
         
         canvas?:return
     
-        var centerX = width / 2F - radius * 3 + margin
-        val centerY = height / 2F
-    
-        val diffX = radius * 2 + margin
+        var centerX = centerXStart
     
         paint.style = Paint.Style.FILL
         repeat(inputSize) {
