@@ -35,6 +35,8 @@ class PinCodeView: View {
         postInvalidate()
     }
     
+    fun getMaxInputSize() = maxInputSize
+    
     fun setMaxInputSize(newMaxInputSize: Int) {
         maxInputSize = newMaxInputSize
         postInvalidate()
