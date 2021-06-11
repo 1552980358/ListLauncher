@@ -33,6 +33,7 @@ class LaunchAppFragment: Fragment(), FingerprintUtil {
     
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         viewModel = ViewModelProvider(this).get(LaunchAppViewModel::class.java)
+        viewModel.setSettingContainer(arguments?.getSerializable(SETTING_CONTAINER) as SettingContainer)
         viewModel.applicationName.observe(this) { appName ->
             fragmentLaunchAppBinding.textViewAppName.text = appName
         }
@@ -45,6 +46,18 @@ class LaunchAppFragment: Fragment(), FingerprintUtil {
         viewModel.setCancellationSignal {
             findNavController().navigateUp()
         }
+        viewModel.setAuthorizationListener(object : AuthorizationListener {
+            
+            override fun onAuthFailed() {
+                findNavController().navigateUp()
+            }
+    
+            override fun onAuthComplete() {
+                launchApplication()
+                findNavController().navigateUp()
+            }
+    
+        })
         _fragmentLaunchAppBinding = FragmentLaunchAppBinding.inflate(inflater)
         setHasOptionsMenu(true)
         return fragmentLaunchAppBinding.root
@@ -56,10 +69,14 @@ class LaunchAppFragment: Fragment(), FingerprintUtil {
         viewModel.setPackageName(arguments?.getString(Constants.LAUNCH_PACKAGE_NAME))
         @Suppress("EXPERIMENTAL_API_USAGE")
         GlobalScope.launch(Dispatchers.IO) {
-            if ((arguments?.getSerializable(SETTING_CONTAINER) as SettingContainer?)?.getBooleanValue(KEY_USE_FINGERPRINT) == true) {
-                fingerprintAuth()
-            } else {
-                launchApplication()
+            when {
+                viewModel.settingContainer.value?.getBooleanValue(KEY_USE_FINGERPRINT) == true -> {
+                    fingerprintAuth()
+                }
+                viewModel.settingContainer.value?.getBooleanValue(KEY_USE_FINGERPRINT) == true -> {
+                    pinAuth()
+                }
+                else -> launchApplication()
             }
         }
     }
@@ -87,7 +104,7 @@ class LaunchAppFragment: Fragment(), FingerprintUtil {
                         if (Build.VERSION.SDK_INT in (Build.VERSION_CODES.M .. Build.VERSION_CODES.O)) {
                             fingerprintDialogFragment.dismiss()
                         }
-                        findNavController().navigateUp()
+                        pinAuth()
                     }
                 }
             
@@ -113,8 +130,13 @@ class LaunchAppFragment: Fragment(), FingerprintUtil {
                     }
                     findNavController().navigateUp()
                 }
+                
             }, viewModel.cancellationSignal.value!!)
         }
+    }
+    
+    private fun pinAuth() {
+        PinInputDialogFragment(viewModel.authorizationListener.value).show(requireActivity().supportFragmentManager)
     }
     
     private fun launchApplication() {
@@ -127,11 +149,6 @@ class LaunchAppFragment: Fragment(), FingerprintUtil {
         viewModel.cancellationSignal.value?.cancel()
         _fragmentLaunchAppBinding = null
         super.onDestroyView()
-    }
-    
-    override fun onPause() {
-        findNavController().navigateUp()
-        super.onPause()
     }
     
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {

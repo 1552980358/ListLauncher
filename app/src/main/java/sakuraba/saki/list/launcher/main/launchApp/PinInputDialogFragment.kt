@@ -2,6 +2,7 @@ package sakuraba.saki.list.launcher.main.launchApp
 
 import android.app.Dialog
 import android.os.Bundle
+import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import sakuraba.saki.list.launcher.R
@@ -12,10 +13,11 @@ import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.KEY_P
 import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.SETTING_CONTAINER
 import sakuraba.saki.list.launcher.main.viewGroup.PinInputLayout.Companion.KEY_CUSTOM
 
-class PinInputDialogFragment: BottomSheetDialogFragment() {
+class PinInputDialogFragment(private val authorizationListener: AuthorizationListener?): BottomSheetDialogFragment() {
     
     companion object {
         const val PIN_MAX_SIZE = 4
+        const val TAG = "PinInputDialogFragment"
     }
     
     private var _fragmentPinInputDialogBinding: FragmentPinInputDialogBinding? = null
@@ -39,6 +41,7 @@ class PinInputDialogFragment: BottomSheetDialogFragment() {
             if (pinCode.length == PIN_MAX_SIZE) {
                 if (pinTry == 3) {
                     dismiss()
+                    authorizationListener?.onAuthFailed()
                 }
                 if (viewModel.settingContainer.value?.getStringValue(KEY_PIN_CODE) == pinCode) {
                     return@observe
@@ -62,5 +65,7 @@ class PinInputDialogFragment: BottomSheetDialogFragment() {
         _fragmentPinInputDialogBinding = null
         super.onDestroyView()
     }
+    
+    fun show(fragmentManager: FragmentManager) = show(fragmentManager, TAG)
     
 }
