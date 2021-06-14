@@ -4,6 +4,7 @@ import android.content.Context
 import android.util.Log
 import androidx.preference.PreferenceManager
 import lib.github1552980358.ktExtension.jvm.keyword.tryRun
+import sakuraba.saki.list.launcher.base.SettingValueChangeListener
 import java.io.Serializable
 
 class SettingContainer(context: Context): Serializable {
@@ -18,6 +19,7 @@ class SettingContainer(context: Context): Serializable {
     
     private val stringMap = mutableMapOf<String, String?>()
     private val booleanMap = mutableMapOf<String, Boolean>()
+    private val settingValueListeners = arrayListOf<SettingValueChangeListener>()
     
     init {
         val preferenceManager = PreferenceManager.getDefaultSharedPreferences(context)
@@ -50,10 +52,26 @@ class SettingContainer(context: Context): Serializable {
     
     fun getStringUpdate(key: String, newValue: String) {
         stringMap[key] = newValue
+        settingValueListeners.forEach { listeners -> listeners.notifyUpdate(key, newValue) }
     }
     
     fun getBooleanUpdate(key: String, newValue: Boolean) {
         booleanMap[key] = newValue
+        settingValueListeners.forEach { listeners -> listeners.notifyUpdate(key, newValue) }
+    }
+    
+    @Synchronized
+    fun addSettingValueChangeListener(listener: SettingValueChangeListener?) {
+        if (listener != null) {
+            settingValueListeners.add(listener)
+        }
+    }
+    
+    @Synchronized
+    fun removeSettingValueChangeListener(listener: SettingValueChangeListener?) {
+        if (settingValueListeners.contains(listener)) {
+            settingValueListeners.remove(listener)
+        }
     }
     
 }
