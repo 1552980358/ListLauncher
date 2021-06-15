@@ -3,11 +3,30 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     
-    <CheckBoxPreference
-        android:key="key_use_fingerprint"
-        android:title="@string/setting_use_fingerprint_title"
-        android:summary="@string/setting_use_fingerprint_summary"
-        app:defaultValue="false"
-        app:iconSpaceReserved="false" />
+    <PreferenceCategory
+        android:title="@string/setting_auth_title"
+        android:summary="@string/setting_auth_summary"
+        app:iconSpaceReserved="false" >
+    
+        <CheckBoxPreference
+            android:key="key_use_fingerprint"
+            android:title="@string/setting_use_fingerprint_title"
+            android:summary="@string/setting_use_fingerprint_summary"
+            app:defaultValue="false"
+            app:iconSpaceReserved="false" />
+    
+        <CheckBoxPreference
+            android:key="key_use_pin"
+            android:title="@string/setting_use_pin_title"
+            android:summary="@string/setting_use_pin_summary"
+            app:defaultValue="false"
+            app:iconSpaceReserved="false" />
+    
+        <Preference
+            android:key="key_pin_code"
+            android:title="@string/setting_pin_code_title"
+            app:iconSpaceReserved="false" />
+        
+    </PreferenceCategory>
     
 </PreferenceScreen>
