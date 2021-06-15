@@ -44,6 +44,8 @@ class PinInputDialogFragment(private val authorizationListener: AuthorizationLis
                     authorizationListener?.onAuthFailed()
                 }
                 if (viewModel.settingContainer.value?.getStringValue(KEY_PIN_CODE) == pinCode) {
+                    dismiss()
+                    authorizationListener?.onAuthComplete()
                     return@observe
                 }
                 viewModel.newKeyInput(CLEAR_ALL)
