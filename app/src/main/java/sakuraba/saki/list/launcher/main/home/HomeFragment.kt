@@ -27,6 +27,7 @@ class HomeFragment: Fragment() {
         homeViewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
         // val root = inflater.inflate(R.layout.fragment_home, container, false)
         _fragmentHomeBinding = FragmentHomeBinding.inflate(inflater)
+        fragmentHomeBinding.root.isRefreshing = true
         return fragmentHomeBinding.root
     }
     
@@ -40,16 +41,22 @@ class HomeFragment: Fragment() {
         fragmentHomeBinding.recyclerView.layoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
         fragmentHomeBinding.recyclerView.adapter = RecyclerViewAdapter(appInfos, requireActivity())
-        
-        homeViewModel.setLoadingDialogFragment(LoadingDialogFragment())
-        homeViewModel.loadingDialogFragment.value?.show(requireActivity().supportFragmentManager)
+        updateAppList()
+        fragmentHomeBinding.root.setOnRefreshListener { updateAppList() }
+    }
+    
+    private fun updateAppList() {
+        val appInfos = homeViewModel.appInfos.value!!
+        appInfos.clear()
+        // homeViewModel.setLoadingDialogFragment(LoadingDialogFragment())
+        // homeViewModel.loadingDialogFragment.value?.show(requireActivity().supportFragmentManager)
         @Suppress("EXPERIMENTAL_API_USAGE")
         GlobalScope.launch(Dispatchers.IO) {
             // Query out all application packages that is launchable by a launcher
             requireContext().packageManager.queryIntentActivities(Intent(Intent.ACTION_MAIN, null).apply {
                 addCategory(Intent.CATEGORY_LAUNCHER)
             }, 0).forEach { resolveInfo ->
-                
+            
                 // Ignore this launcher by checking package name
                 if (resolveInfo.resolvePackageName != BuildConfig.APPLICATION_ID) {
                     requireActivity().packageManager.getPackageInfo(resolveInfo.activityInfo.packageName, 0).apply {
@@ -70,20 +77,20 @@ class HomeFragment: Fragment() {
                     }
                 }
             }
-            
+        
             // Short by converting all Chinese into characters for comparing
             // Will further support more language
             appInfos.sortBy { Pinyin.toPinyin(it.name, "") }
-            
+        
             // Call adapter for update of RecyclerView
             launch(Dispatchers.Main) {
                 fragmentHomeBinding.recyclerView.adapter?.notifyDataSetChanged()
                 // Dismiss and remove LoadingDialogFragment
-                homeViewModel.loadingDialogFragment.value?.dismiss()
-                homeViewModel.setLoadingDialogFragment()
+                // homeViewModel.loadingDialogFragment.value?.dismiss()
+                // homeViewModel.setLoadingDialogFragment()
+                fragmentHomeBinding.root.isRefreshing = false
             }
         }
-        
     }
     
     override fun onDestroyView() {
