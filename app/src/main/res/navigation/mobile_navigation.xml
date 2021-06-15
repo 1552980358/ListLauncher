@@ -19,6 +19,12 @@
     <fragment
         android:id="@+id/nav_launch_app"
         android:name="sakuraba.saki.list.launcher.main.launchApp.LaunchAppFragment"
-        android:label="LaunchApp" />
+        android:label="@string/menu_launch_app" />
+    
+    <fragment
+        android:id="@+id/nav_set_pin"
+        android:name="sakuraba.saki.list.launcher.main.setting.SetPinFragment"
+        android:label="@string/menu_set_pin"
+        tools:layout="@layout/fragment_set_pin" />
 
 </navigation>
