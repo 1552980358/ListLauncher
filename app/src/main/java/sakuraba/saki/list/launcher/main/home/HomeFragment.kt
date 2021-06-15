@@ -80,7 +80,7 @@ class HomeFragment: Fragment() {
         
             // Short by converting all Chinese into characters for comparing
             // Will further support more language
-            appInfos.sortBy { Pinyin.toPinyin(it.name, "") }
+            appInfos.sortBy { Pinyin.toPinyin(it.name, "").uppercase() }
         
             // Call adapter for update of RecyclerView
             launch(Dispatchers.Main) {
