@@ -1,8 +1,9 @@
 package sakuraba.saki.list.launcher.base
 
 import sakuraba.saki.list.launcher.main.setting.SettingContainer
+import java.io.Serializable
 
-abstract class SettingValueChangeListener {
+abstract class SettingValueChangeListener: Serializable {
     
     private var _settingContainer: SettingContainer? = null
     private val arrayList = arrayListOf<String>()
