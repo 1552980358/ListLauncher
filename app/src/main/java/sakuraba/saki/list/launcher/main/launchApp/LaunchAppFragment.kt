@@ -18,11 +18,11 @@ import androidx.navigation.fragment.findNavController
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import lib.github1552980358.ktExtension.jvm.keyword.tryOnly
 import sakuraba.saki.list.launcher.base.Constants
 import sakuraba.saki.list.launcher.databinding.FragmentLaunchAppBinding
 import sakuraba.saki.list.launcher.main.setting.SettingContainer
 import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.KEY_USE_FINGERPRINT
+import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.KEY_USE_PIN
 import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.SETTING_CONTAINER
 
 class LaunchAppFragment: Fragment(), FingerprintUtil {
@@ -73,7 +73,7 @@ class LaunchAppFragment: Fragment(), FingerprintUtil {
                 viewModel.settingContainer.value?.getBooleanValue(KEY_USE_FINGERPRINT) == true -> {
                     fingerprintAuth()
                 }
-                viewModel.settingContainer.value?.getBooleanValue(KEY_USE_FINGERPRINT) == true -> {
+                viewModel.settingContainer.value?.getBooleanValue(KEY_USE_PIN) == true -> {
                     pinAuth()
                 }
                 else -> launchApplication()
