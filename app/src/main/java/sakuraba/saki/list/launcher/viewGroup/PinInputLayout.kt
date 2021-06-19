@@ -1,9 +1,8 @@
-package sakuraba.saki.list.launcher.main.viewGroup
+package sakuraba.saki.list.launcher.viewGroup
 
 import android.app.Service
 import android.content.Context
 import android.util.AttributeSet
-import android.util.Log
 import android.view.LayoutInflater
 import android.widget.LinearLayout
 import sakuraba.saki.list.launcher.databinding.LayoutPinInputBinding
@@ -50,8 +49,6 @@ class PinInputLayout: LinearLayout {
     
     constructor(context: Context): this(context, null)
     constructor(context: Context, attributeSet: AttributeSet?): super(context, attributeSet)
-    
-    private var _numberClick = 0
     
     init {
         _layoutPinInputBinding =

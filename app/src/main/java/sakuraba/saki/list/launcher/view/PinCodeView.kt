@@ -1,4 +1,4 @@
-package sakuraba.saki.list.launcher.main.launchApp
+package sakuraba.saki.list.launcher.view
 
 import android.content.Context
 import android.graphics.Canvas
