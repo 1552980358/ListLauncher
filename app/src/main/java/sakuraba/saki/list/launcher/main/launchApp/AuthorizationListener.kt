@@ -1,6 +1,12 @@
 package sakuraba.saki.list.launcher.main.launchApp
 
-interface AuthorizationListener {
+import java.io.Serializable
+
+interface AuthorizationListener: Serializable {
+    
+    companion object {
+        const val AUTHORIZATION_LISTENER = "AuthorizationListener"
+    }
     
     fun onAuthFailed()
     

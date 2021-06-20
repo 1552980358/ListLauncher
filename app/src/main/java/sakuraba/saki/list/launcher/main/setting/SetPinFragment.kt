@@ -14,8 +14,8 @@ import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.KEY_P
 import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.KEY_USE_FINGERPRINT
 import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.KEY_USE_PIN
 import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.SETTING_CONTAINER
-import sakuraba.saki.list.launcher.main.viewGroup.PinInputLayout.Companion.KEY_BACKSPACE
-import sakuraba.saki.list.launcher.main.viewGroup.PinInputLayout.Companion.KEY_CUSTOM
+import sakuraba.saki.list.launcher.viewGroup.PinInputLayout.Companion.KEY_BACKSPACE
+import sakuraba.saki.list.launcher.viewGroup.PinInputLayout.Companion.KEY_CUSTOM
 
 class SetPinFragment: Fragment() {
     
@@ -84,15 +84,17 @@ class SetPinFragment: Fragment() {
     
     private fun checkInputs() {
         if (_inputFirst.length != 4 || _inputSecond.length != 4 || _inputFirst != _inputSecond) {
-            @Suppress("ApplySharedPref")
-            PreferenceManager.getDefaultSharedPreferences(requireContext())
-                .edit()
-                .putBoolean(KEY_USE_FINGERPRINT, false)
-                .putBoolean(KEY_USE_PIN, false)
-                .commit()
-            (arguments?.getSerializable(SETTING_CONTAINER) as SettingContainer?)?.apply {
-                getBooleanUpdate(KEY_USE_FINGERPRINT, false)
-                getBooleanUpdate(KEY_USE_PIN, false)
+            if (arguments?.getInt(SettingFragment.LAUNCH_TASK) != SettingFragment.LAUNCH_TASK_MODIFY) {
+                @Suppress("ApplySharedPref")
+                PreferenceManager.getDefaultSharedPreferences(requireContext())
+                    .edit()
+                    .putBoolean(KEY_USE_FINGERPRINT, false)
+                    .putBoolean(KEY_USE_PIN, false)
+                    .commit()
+                (arguments?.getSerializable(SETTING_CONTAINER) as SettingContainer?)?.apply {
+                    getBooleanUpdate(KEY_USE_FINGERPRINT, false)
+                    getBooleanUpdate(KEY_USE_PIN, false)
+                }
             }
             return
         }
@@ -101,12 +103,14 @@ class SetPinFragment: Fragment() {
             .edit()
             .putString(KEY_PIN_CODE, _inputSecond)
             .commit()
-        (arguments?.getSerializable(SETTING_CONTAINER) as SettingContainer?)?.getStringUpdate(KEY_PIN_CODE, _inputFirst)
+        (arguments?.getSerializable(SETTING_CONTAINER) as SettingContainer?)?.apply {
+            getStringUpdate(KEY_PIN_CODE, _inputFirst)
+            getBooleanUpdate(KEY_USE_PIN, true)
+        }
     }
     
     override fun onDestroyView() {
         _fragmentSetPinBinding = null
-        Log.e("onDestroyView", "$_inputFirst $_inputSecond")
         checkInputs()
         super.onDestroyView()
     }

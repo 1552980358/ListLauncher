@@ -15,6 +15,7 @@ class SettingContainer(context: Context): Serializable {
         const val KEY_USE_FINGERPRINT = "key_use_fingerprint"   // Boolean
         const val KEY_USE_PIN = "key_use_pin"
         const val KEY_PIN_CODE = "key_pin_code"
+        const val KEY_EDIT_PIN = "key_edit_pin"
     }
     
     private val stringMap = mutableMapOf<String, String?>()
