@@ -22,7 +22,7 @@
         android:textColor="@color/black"
         android:textSize="16sp" />
     
-    <sakuraba.saki.list.launcher.main.viewGroup.PinInputLayout
+    <sakuraba.saki.list.launcher.viewGroup.PinInputLayout
         android:layout_width="match_parent"
         android:layout_height="250dp"
         android:id="@+id/pinInputLayout" />
