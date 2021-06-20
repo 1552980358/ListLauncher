@@ -95,7 +95,7 @@ class PinInputLayout: LinearLayout {
                 newKey()
                 onButtonClickListener?.onClick(KEY_9, KEY_9_CHAR)
             }
-            textViewBackSpace.setOnClickListener {
+            imageButton.setOnClickListener {
                 removeKey()
                 onButtonClickListener?.onClick(KEY_BACKSPACE, KEY_BACKSPACE_CHAR)
             }

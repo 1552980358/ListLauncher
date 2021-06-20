@@ -6,7 +6,7 @@
     android:layout_height="wrap_content"
     android:orientation="vertical">
     
-    <sakuraba.saki.list.launcher.main.launchApp.PinCodeView
+    <sakuraba.saki.list.launcher.view.PinCodeView
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:id="@+id/pinCodeView" />
@@ -163,16 +163,15 @@
             android:layout_weight="1"
             tools:ignore="HardcodedText" />
         
-        <TextView
+        <ImageButton
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:id="@+id/textViewBackSpace"
+            android:id="@+id/imageButton"
+            android:layout_weight="1"
             android:background="?android:attr/selectableItemBackground"
             android:gravity="center"
-            android:text=""
-            android:textColor="@color/black"
-            android:textSize="17sp"
-            android:layout_weight="1" />
+            android:src="@drawable/ic_backspace"
+            tools:ignore="ContentDescription" />
     
     </LinearLayout>
 
