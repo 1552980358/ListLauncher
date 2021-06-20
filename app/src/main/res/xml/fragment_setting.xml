@@ -23,7 +23,7 @@
             app:iconSpaceReserved="false" />
     
         <Preference
-            android:key="key_pin_code"
+            android:key="key_edit_pin"
             android:title="@string/setting_pin_code_title"
             app:iconSpaceReserved="false" />
         
