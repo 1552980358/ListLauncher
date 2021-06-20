@@ -11,7 +11,7 @@ import sakuraba.saki.list.launcher.main.launchApp.PinInputViewModel.Companion.CL
 import sakuraba.saki.list.launcher.main.setting.SettingContainer
 import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.KEY_PIN_CODE
 import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.SETTING_CONTAINER
-import sakuraba.saki.list.launcher.main.viewGroup.PinInputLayout.Companion.KEY_CUSTOM
+import sakuraba.saki.list.launcher.viewGroup.PinInputLayout.Companion.KEY_CUSTOM
 
 class PinInputDialogFragment(private val authorizationListener: AuthorizationListener?): BottomSheetDialogFragment() {
     
