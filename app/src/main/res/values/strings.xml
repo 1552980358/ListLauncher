@@ -46,4 +46,6 @@
     
     <string name="pin_authorize_title">Verify 4-digit pin</string>
     
+    <string name="pin_authorize_failed_message">Pin verify failed!</string>
+    
 </resources>

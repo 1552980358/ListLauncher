@@ -9,6 +9,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.preference.CheckBoxPreference
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
+import com.google.android.material.snackbar.Snackbar
 import sakuraba.saki.list.launcher.R
 import sakuraba.saki.list.launcher.base.SettingValueChangeListener
 import sakuraba.saki.list.launcher.main.launchApp.AuthorizationListener
@@ -19,6 +20,7 @@ import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.KEY_P
 import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.KEY_USE_FINGERPRINT
 import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.KEY_USE_PIN
 import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.SETTING_CONTAINER
+import sakuraba.saki.list.launcher.util.findActivityViewById
 
 class SettingFragment: PreferenceFragmentCompat(), FingerprintUtil {
     
@@ -84,7 +86,9 @@ class SettingFragment: PreferenceFragmentCompat(), FingerprintUtil {
                     findNavController().navigate(R.id.nav_pin_auth, Bundle().apply {
                         putSerializable(SETTING_CONTAINER, viewModel.settingContainer.value)
                         putSerializable(AUTHORIZATION_LISTENER, object : AuthorizationListener {
-                            override fun onAuthFailed() {  }
+                            override fun onAuthFailed() {
+                                Snackbar.make(findActivityViewById(R.id.coordinatorLayout), R.string.pin_authorize_failed_message, Snackbar.LENGTH_SHORT).show()
+                            }
                             override fun onAuthComplete() {
                                 if (viewModel.settingContainer.value?.getBooleanValue(KEY_USE_PIN) != false) {
                                     viewModel.settingContainer.value?.getBooleanUpdate(KEY_USE_PIN, false)
@@ -108,7 +112,9 @@ class SettingFragment: PreferenceFragmentCompat(), FingerprintUtil {
             findNavController().navigate(R.id.nav_pin_auth, Bundle().apply {
                 putSerializable(SETTING_CONTAINER, viewModel.settingContainer.value)
                 putSerializable(AUTHORIZATION_LISTENER, object : AuthorizationListener {
-                    override fun onAuthFailed() {  }
+                    override fun onAuthFailed() {
+                        Snackbar.make(findActivityViewById(R.id.coordinatorLayout), R.string.pin_authorize_failed_message, Snackbar.LENGTH_SHORT).show()
+                    }
                     override fun onAuthComplete() {
                         findNavController().navigate(R.id.nav_set_pin, Bundle().apply {
                             putSerializable(SETTING_CONTAINER, viewModel.settingContainer.value)
