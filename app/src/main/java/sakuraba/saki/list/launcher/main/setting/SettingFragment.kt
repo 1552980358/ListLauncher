@@ -81,12 +81,20 @@ class SettingFragment: PreferenceFragmentCompat(), FingerprintUtil {
                         putSerializable(SETTING_CONTAINER, viewModel.settingContainer.value)
                     })
                 } else {
-                    if (viewModel.settingContainer.value?.getBooleanValue(KEY_USE_PIN) != false) {
-                        viewModel.settingContainer.value?.getBooleanUpdate(KEY_USE_PIN, false)
-                    }
-                    if (findPreference<CheckBoxPreference>(KEY_USE_FINGERPRINT)?.isChecked == true) {
-                        findPreference<CheckBoxPreference>(KEY_USE_FINGERPRINT)?.isChecked = false
-                    }
+                    findNavController().navigate(R.id.nav_pin_auth, Bundle().apply {
+                        putSerializable(SETTING_CONTAINER, viewModel.settingContainer.value)
+                        putSerializable(AUTHORIZATION_LISTENER, object : AuthorizationListener {
+                            override fun onAuthFailed() {  }
+                            override fun onAuthComplete() {
+                                if (viewModel.settingContainer.value?.getBooleanValue(KEY_USE_PIN) != false) {
+                                    viewModel.settingContainer.value?.getBooleanUpdate(KEY_USE_PIN, false)
+                                }
+                                if (findPreference<CheckBoxPreference>(KEY_USE_FINGERPRINT)?.isChecked == true) {
+                                    findPreference<CheckBoxPreference>(KEY_USE_FINGERPRINT)?.isChecked = false
+                                }
+                            }
+                        })
+                    })
                 }
                 return@setOnPreferenceChangeListener true
             }
