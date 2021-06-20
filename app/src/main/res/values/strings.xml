@@ -11,6 +11,7 @@
     <string name="menu_setting">Setting</string>
     <string name="menu_launch_app">Launching application…</string>
     <string name="menu_set_pin">Set Pin</string>
+    <string name="menu_pin_auth">Verify Pin</string>
     
     <string name="setting_auth_title">Authorization</string>
     <string name="setting_auth_summary">Authorize before launching application</string>
@@ -42,5 +43,7 @@
     
     <string name="set_pin_title_1">Set 4-digit pin</string>
     <string name="set_pin_title_2">Confirm 4-digit pin</string>
+    
+    <string name="pin_authorize_title">Verify 4-digit pin</string>
     
 </resources>
