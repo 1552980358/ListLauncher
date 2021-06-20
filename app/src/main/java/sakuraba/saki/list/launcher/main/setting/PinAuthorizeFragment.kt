@@ -10,6 +10,7 @@ import androidx.navigation.fragment.findNavController
 import sakuraba.saki.list.launcher.databinding.FragmentPinAuthorizeBinding
 import sakuraba.saki.list.launcher.main.launchApp.AuthorizationListener
 import sakuraba.saki.list.launcher.main.launchApp.AuthorizationListener.Companion.AUTHORIZATION_LISTENER
+import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.KEY_PIN_CODE
 import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.SETTING_CONTAINER
 import sakuraba.saki.list.launcher.viewGroup.PinInputLayout.Companion.KEY_BACKSPACE
 import sakuraba.saki.list.launcher.viewGroup.PinInputLayout.Companion.KEY_CUSTOM
@@ -54,7 +55,8 @@ class PinAuthorizeFragment: Fragment() {
     }
     
     override fun onDestroyView() {
-        if (viewModel.pinLength == 4) {
+        if (viewModel.pinLength == 4 &&
+            viewModel.pin.value == viewModel.settingContainer.value?.getStringValue(KEY_PIN_CODE)) {
             viewModel.authorizationListener.value?.onAuthComplete()
         } else {
             viewModel.authorizationListener.value?.onAuthFailed()
