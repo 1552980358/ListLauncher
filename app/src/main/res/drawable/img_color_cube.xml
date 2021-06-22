@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:viewportWidth="10"
+    android:viewportHeight="10"
+    android:height="10dp"
+    android:width="10dp">
+    
+    <!-- Draw gray part -->
+    <!-- 灰色部分 -->
+    <path
+        android:fillColor="@color/color_cube_fill_color_gray"
+        android:pathData="M0,0H5V5H-5Z" />
+    
+    <path
+        android:fillColor="@color/color_cube_fill_color_gray"
+        android:pathData="M5,5H10V10H5Z" />
+    
+    <!-- Draw white part -->
+    <!-- 白色部分 -->
+    <path
+        android:fillColor="@color/white"
+        android:pathData="M5,0H10V5H5Z" />
+    
+    <path
+        android:fillColor="@color/white"
+        android:pathData="M0,5H5V10H-5" />
+
+</vector>
