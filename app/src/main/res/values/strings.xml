@@ -48,4 +48,9 @@
     
     <string name="pin_authorize_failed_message">Pin verify failed!</string>
     
+    <string name="color_pick_title">Pick a color</string>
+    <string name="color_pick_cancel">Cancel</string>
+    <string name="color_pick_confirm">Confirm</string>
+    <string name="color_pick_default">Default</string>
+
 </resources>

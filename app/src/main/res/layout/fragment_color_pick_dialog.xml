@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="20dp">
+    
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:orientation="horizontal"
+        android:layout_marginBottom="10dp">
+        
+        <sakuraba.saki.list.launcher.view.ColorPlateView
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:id="@+id/colorPlateView"
+            android:layout_centerHorizontal="true"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp" />
+        
+        <sakuraba.saki.list.launcher.view.ColorPadView
+            android:layout_width="30dp"
+            android:layout_height="200dp"
+            android:id="@+id/colorPadView"
+            android:layout_toStartOf="@id/colorPlateView" />
+        
+        <sakuraba.saki.list.launcher.view.ColorTransparencyView
+            android:layout_width="30dp"
+            android:layout_height="200dp"
+            android:id="@+id/colorTransparencyView"
+            android:layout_toEndOf="@id/colorPlateView" />
+    
+    </RelativeLayout>
+    
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingBottom="10dp">
+        
+        <ImageView
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:id="@+id/imageView"
+            android:src="@drawable/img_arrow"
+            android:layout_centerInParent="true"
+            tools:ignore="ContentDescription"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp" />
+        
+        <sakuraba.saki.list.launcher.view.ColorPresentView
+            android:layout_width="70dp"
+            android:layout_height="35dp"
+            android:id="@+id/colorPresentViewOrigin"
+            android:layout_toStartOf="@id/imageView" />
+        
+        <sakuraba.saki.list.launcher.view.ColorPresentView
+            android:layout_width="70dp"
+            android:layout_height="35dp"
+            android:id="@+id/colorPresentViewNew"
+            android:layout_toEndOf="@id/imageView" />
+    
+    </RelativeLayout>
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:baselineAligned="false">
+        
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_weight="1">
+    
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="RGB"
+                android:textColor="@color/black"
+                tools:ignore="HardcodedText" />
+    
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/editTextRGB"
+                android:digits="#1234567890ABCDEFabcdef"
+                android:maxLength="9"
+                android:maxLines="1"
+                android:inputType="text"
+                tools:ignore="Autofill,LabelFor" />
+            
+        </LinearLayout>
+    
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_weight="1">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="HSV"
+                android:textColor="@color/black"
+                tools:ignore="HardcodedText" />
+        
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/editTextHSV"
+                android:inputType="text"
+                tools:ignore="Autofill,LabelFor" />
+    
+        </LinearLayout>
+        
+    </LinearLayout>
+    
+</LinearLayout>
