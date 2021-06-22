@@ -8,4 +8,8 @@
     
     <dimen name="view_pin_code_radius">10dp</dimen>
     <dimen name="view_pin_code_circle_margin">5dp</dimen>
+    
+    <dimen name="img_arrow_size">10dp</dimen>
+    <dimen name="color_plate_circle_radius">5dp</dimen>
+    <dimen name="color_plate_circle_stroke">2dp</dimen>
 </resources>
