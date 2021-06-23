@@ -7,15 +7,22 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.github.promeg.pinyinhelper.Pinyin
+import com.google.android.material.snackbar.BaseTransientBottomBar.LENGTH_SHORT
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import sakuraba.saki.list.launcher.BuildConfig
+import sakuraba.saki.list.launcher.R
+import sakuraba.saki.list.launcher.broadcast.ApplicationChangeBroadcastReceiver
+import sakuraba.saki.list.launcher.broadcast.ApplicationChangeBroadcastReceiver.Companion.APPLICATION_CHANGE_BROADCAST_RECEIVER
 import sakuraba.saki.list.launcher.databinding.FragmentHomeBinding
+import sakuraba.saki.list.launcher.util.findActivityViewById
 
 class HomeFragment: Fragment() {
     
@@ -43,6 +50,11 @@ class HomeFragment: Fragment() {
         fragmentHomeBinding.recyclerView.adapter = RecyclerViewAdapter(appInfos, requireActivity())
         updateAppList()
         fragmentHomeBinding.root.setOnRefreshListener { updateAppList() }
+        (requireActivity().intent.getSerializableExtra(APPLICATION_CHANGE_BROADCAST_RECEIVER) as ApplicationChangeBroadcastReceiver).setApplicationChangeListener {
+            Snackbar.make(findActivityViewById<CoordinatorLayout>(R.id.coordinatorLayout), R.string.main_application_change, LENGTH_SHORT).show()
+            fragmentHomeBinding.root.isRefreshing = true
+            updateAppList()
+        }
     }
     
     private fun updateAppList() {

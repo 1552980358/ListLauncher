@@ -10,6 +10,8 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
+import sakuraba.saki.list.launcher.broadcast.ApplicationChangeBroadcastReceiver
+import sakuraba.saki.list.launcher.broadcast.ApplicationChangeBroadcastReceiver.Companion.APPLICATION_CHANGE_BROADCAST_RECEIVER
 import sakuraba.saki.list.launcher.databinding.ActivityMainBinding
 import sakuraba.saki.list.launcher.main.MainViewModel
 import sakuraba.saki.list.launcher.main.setting.SettingContainer
@@ -27,8 +29,10 @@ class MainActivity: AppCompatActivity() {
         
         viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
         viewModel.setSettingContainer(SettingContainer(this))
+        viewModel.setApplicationChangeBroadcastReceiver(ApplicationChangeBroadcastReceiver(this))
     
         intent!!.putExtra(SETTING_CONTAINER, viewModel.settingContainer.value)
+        intent.putExtra(APPLICATION_CHANGE_BROADCAST_RECEIVER, viewModel.applicationChangeBroadcastReceiver.value)
         
         _activityMainBinding = ActivityMainBinding.inflate(layoutInflater)
         // setContentView(R.layout.activity_main)
@@ -69,6 +73,7 @@ class MainActivity: AppCompatActivity() {
     }
     
     override fun onDestroy() {
+        viewModel.applicationChangeBroadcastReceiver.value?.getUnregistered(this)
         _activityMainBinding = null
         super.onDestroy()
     }

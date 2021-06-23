@@ -52,5 +52,7 @@
     <string name="color_pick_cancel">Cancel</string>
     <string name="color_pick_confirm">Confirm</string>
     <string name="color_pick_default">Default</string>
+    
+    <string name="main_application_change">Application change detected. Refreshing…</string>
 
 </resources>
