@@ -7,7 +7,6 @@ import android.graphics.Color
 import android.graphics.LinearGradient
 import android.graphics.Shader
 import android.util.AttributeSet
-import android.util.Log
 import android.view.MotionEvent.ACTION_DOWN
 import android.view.MotionEvent.ACTION_MOVE
 import androidx.annotation.ColorInt
@@ -19,7 +18,7 @@ class ColorTransparencyView: BaseArrowView {
     
     companion object {
         fun interface OnColorTransparencyChangeListener {
-            fun onColorUpdate(@ColorInt color: Int)
+            fun onColorUpdate(@ColorInt color: Int, alpha: Int)
         }
     }
     
@@ -65,11 +64,8 @@ class ColorTransparencyView: BaseArrowView {
     
     fun updateColor(@ColorInt color: Int) {
         this.color = Color.parseColor("#" + String.format("%08X", color).substring(2, 8))
-        (Color.alpha(color) / 255F).apply {
-            touchY = heightFloat * this
-            invalidate()
-            updateTransparency(this)
-        }
+        invalidate()
+        listener?.onColorUpdate(getColorInt(), (transparency * 255).toInt())
     }
     
     @ColorInt
@@ -78,7 +74,13 @@ class ColorTransparencyView: BaseArrowView {
     
     private fun updateTransparency(transparency: Float) {
         this.transparency = transparency
-        listener?.onColorUpdate(getColorInt())
+        listener?.onColorUpdate(getColorInt(), (transparency * 255).toInt())
+    }
+    
+    fun updateAlpha(alpha: Int) {
+        updateTransparency(alpha / 255F)
+        touchY = (1 - transparency) * heightFloat
+        invalidate()
     }
     
     override fun onDraw(canvas: Canvas?) {
