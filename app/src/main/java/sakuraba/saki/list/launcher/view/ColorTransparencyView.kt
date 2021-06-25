@@ -74,8 +74,7 @@ class ColorTransparencyView: BaseArrowView {
     
     @ColorInt
     private fun getColorInt(): Int =
-        Color.parseColor((String.format("#%02X", (transparency * 255).toInt())
-            + String.format("%08X", color).substring(2, 8)).apply { Log.e("ColorStr", this) })
+        Color.parseColor((String.format("#%02X", (transparency * 255).toInt()) + String.format("%08X", color).substring(2, 8)))
     
     private fun updateTransparency(transparency: Float) {
         this.transparency = transparency
