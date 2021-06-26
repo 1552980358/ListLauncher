@@ -6,6 +6,7 @@ import androidx.annotation.ColorInt
 import androidx.appcompat.app.AlertDialog
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.FragmentManager
 import sakuraba.saki.list.launcher.R
 import sakuraba.saki.list.launcher.databinding.FragmentColorPickDialogBinding
 import sakuraba.saki.list.launcher.util.hexStrToInt
@@ -19,6 +20,8 @@ class ColorPickDialogFragment(private val listener: OnColorPickListener?): Dialo
             fun onSelectDefault()
             fun onCancel()
         }
+        
+        private const val TAG = "ColorPickDialogFragment"
     }
     
     private var _fragmentColorPickDialogBinding: FragmentColorPickDialogBinding? = null
@@ -73,5 +76,7 @@ class ColorPickDialogFragment(private val listener: OnColorPickListener?): Dialo
             }
             .create()
     }
+    
+    fun show(manager: FragmentManager) = show(manager, TAG)
     
 }
