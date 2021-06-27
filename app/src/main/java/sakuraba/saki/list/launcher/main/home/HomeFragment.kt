@@ -5,11 +5,15 @@ import android.content.pm.ApplicationInfo
 import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.github.promeg.pinyinhelper.Pinyin
 import com.google.android.material.snackbar.BaseTransientBottomBar.LENGTH_SHORT
@@ -22,6 +26,8 @@ import sakuraba.saki.list.launcher.R
 import sakuraba.saki.list.launcher.broadcast.ApplicationChangeBroadcastReceiver
 import sakuraba.saki.list.launcher.broadcast.ApplicationChangeBroadcastReceiver.Companion.APPLICATION_CHANGE_BROADCAST_RECEIVER
 import sakuraba.saki.list.launcher.databinding.FragmentHomeBinding
+import sakuraba.saki.list.launcher.main.setting.SettingContainer
+import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.SETTING_CONTAINER
 import sakuraba.saki.list.launcher.util.findActivityViewById
 
 class HomeFragment: Fragment() {
@@ -32,6 +38,7 @@ class HomeFragment: Fragment() {
     
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         homeViewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
+        homeViewModel.setSettingContainer(requireActivity().intent.getSerializableExtra(SETTING_CONTAINER) as SettingContainer?)
         // val root = inflater.inflate(R.layout.fragment_home, container, false)
         _fragmentHomeBinding = FragmentHomeBinding.inflate(inflater)
         fragmentHomeBinding.root.isRefreshing = true
@@ -40,6 +47,8 @@ class HomeFragment: Fragment() {
     
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        
+        setHasOptionsMenu(true)
         
         homeViewModel.setAppInfos(arrayListOf())
         val appInfos = homeViewModel.appInfos.value!!
@@ -103,6 +112,20 @@ class HomeFragment: Fragment() {
                 fragmentHomeBinding.root.isRefreshing = false
             }
         }
+    }
+    
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.main, menu)
+    }
+    
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.action_settings -> {
+                findNavController().navigate(R.id.nav_setting, Bundle().apply { putSerializable(SETTING_CONTAINER, homeViewModel.settingContainer.value) })
+                return true
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
     
     override fun onDestroyView() {

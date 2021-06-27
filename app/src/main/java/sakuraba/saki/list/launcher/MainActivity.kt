@@ -2,8 +2,6 @@ package sakuraba.saki.list.launcher
 
 import android.graphics.Color
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuItem
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
@@ -63,22 +61,6 @@ class MainActivity: AppCompatActivity() {
                 window.statusBarColor = Color.parseColor(getStringValue(KEY_STATUS_BAR_COLOR))
             }
         }
-    }
-    
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        menuInflater.inflate(R.menu.main, menu)
-        return true
-    }
-    
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            R.id.action_settings -> {
-                findNavController(R.id.nav_host_fragment).navigate(R.id.nav_setting, Bundle().apply { putSerializable(SETTING_CONTAINER, viewModel.settingContainer.value) })
-                return true
-            }
-        }
-        return super.onOptionsItemSelected(item)
     }
     
     override fun onSupportNavigateUp(): Boolean {
