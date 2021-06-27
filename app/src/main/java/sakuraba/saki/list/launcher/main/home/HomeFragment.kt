@@ -121,6 +121,9 @@ class HomeFragment: Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.action_settings -> {
+                if (fragmentHomeBinding.root.isRefreshing) {
+                    return false
+                }
                 findNavController().navigate(R.id.nav_setting, Bundle().apply { putSerializable(SETTING_CONTAINER, homeViewModel.settingContainer.value) })
                 return true
             }
