@@ -34,6 +34,8 @@ class MainActivity: AppCompatActivity() {
     
         intent!!.putExtra(SETTING_CONTAINER, viewModel.settingContainer.value)
         intent.putExtra(APPLICATION_CHANGE_BROADCAST_RECEIVER, viewModel.applicationChangeBroadcastReceiver.value)
+    
+        getCustomizeSystem()
         
         _activityMainBinding = ActivityMainBinding.inflate(layoutInflater)
         // setContentView(R.layout.activity_main)
@@ -50,8 +52,6 @@ class MainActivity: AppCompatActivity() {
         appBarConfiguration = AppBarConfiguration(setOf(R.id.nav_home, R.id.nav_setting), activityMainBinding.drawerLayout)
         setupActionBarWithNavController(navController, appBarConfiguration)
         activityMainBinding.navView.setupWithNavController(navController)
-        
-        getCustomize()
     }
     
     private fun getCustomizeSystem() {
