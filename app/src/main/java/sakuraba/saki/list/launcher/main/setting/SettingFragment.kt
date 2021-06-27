@@ -144,6 +144,7 @@ class SettingFragment: PreferenceFragmentCompat(), FingerprintUtil {
                     setStatusBarColor()
                     findPreference<Preference>(KEY_STATUS_BAR_COLOR)?.isEnabled = true
                 } else {
+                    requireActivity().window.statusBarColor = ContextCompat.getColor(requireContext(), R.color.purple_700)
                     findPreference<Preference>(KEY_STATUS_BAR_COLOR)?.isEnabled = false
                 }
                 return@setOnPreferenceChangeListener true
