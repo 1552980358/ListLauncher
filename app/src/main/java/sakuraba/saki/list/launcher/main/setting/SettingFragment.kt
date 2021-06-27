@@ -6,9 +6,10 @@ import android.view.MenuInflater
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
-import androidx.preference.CheckBoxPreference
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
+import androidx.preference.PreferenceManager
+import androidx.preference.SwitchPreferenceCompat
 import com.google.android.material.snackbar.Snackbar
 import sakuraba.saki.list.launcher.R
 import sakuraba.saki.list.launcher.base.SettingValueChangeListener
@@ -40,7 +41,7 @@ class SettingFragment: PreferenceFragmentCompat(), FingerprintUtil {
         viewModel = ViewModelProvider(this).get(SettingViewModel::class.java)
         viewModel.setSettingContainer(requireActivity().intent?.getSerializableExtra(SETTING_CONTAINER) as SettingContainer?)
         
-        findPreference<CheckBoxPreference>(KEY_USE_FINGERPRINT)?.apply {
+        findPreference<SwitchPreferenceCompat>(KEY_USE_FINGERPRINT)?.apply {
             if (!checkSupportFingerprint(requireContext())) {
                 isSelectable = false
                 setSummary(R.string.setting_use_fingerprint_summary_not_available)
@@ -52,16 +53,16 @@ class SettingFragment: PreferenceFragmentCompat(), FingerprintUtil {
             setOnPreferenceChangeListener { _, newValue ->
                 viewModel.settingContainer.value?.getBooleanUpdate(KEY_USE_FINGERPRINT, newValue as Boolean)
                 if (newValue as Boolean) {
-                    findPreference<CheckBoxPreference>(KEY_USE_PIN)?.isChecked = true
+                    findPreference<SwitchPreferenceCompat>(KEY_USE_PIN)?.isChecked = true
                 }
                 return@setOnPreferenceChangeListener true
             }
         }
         
-        findPreference<CheckBoxPreference>(KEY_USE_PIN)?.apply {
-            if (findPreference<CheckBoxPreference>(KEY_USE_FINGERPRINT)?.isChecked == true) {
+        findPreference<SwitchPreferenceCompat>(KEY_USE_PIN)?.apply {
+            if (findPreference<SwitchPreferenceCompat>(KEY_USE_FINGERPRINT)?.isChecked == true) {
                 if (!sharedPreferences.contains(KEY_PIN_CODE)) {
-                    findPreference<CheckBoxPreference>(KEY_USE_FINGERPRINT)?.isChecked = false
+                    findPreference<SwitchPreferenceCompat>(KEY_USE_FINGERPRINT)?.isChecked = false
                 } else {
                     if (!isChecked) {
                         isChecked = true
@@ -73,8 +74,8 @@ class SettingFragment: PreferenceFragmentCompat(), FingerprintUtil {
                     object : SettingValueChangeListener(viewModel.settingContainer.value, KEY_USE_PIN) {
                         override fun onSettingValueChange(settingContainer: SettingContainer?, key: String, newValue: Boolean?) {
                             if (newValue == false) {
-                                findPreference<CheckBoxPreference>(KEY_USE_FINGERPRINT)?.isChecked = false
-                                findPreference<CheckBoxPreference>(KEY_USE_PIN)?.isChecked = false
+                                findPreference<SwitchPreferenceCompat>(KEY_USE_FINGERPRINT)?.isChecked = false
+                                findPreference<SwitchPreferenceCompat>(KEY_USE_PIN)?.isChecked = false
                             }
                             removeListener()
                         }
@@ -93,8 +94,8 @@ class SettingFragment: PreferenceFragmentCompat(), FingerprintUtil {
                                 if (viewModel.settingContainer.value?.getBooleanValue(KEY_USE_PIN) != false) {
                                     viewModel.settingContainer.value?.getBooleanUpdate(KEY_USE_PIN, false)
                                 }
-                                if (findPreference<CheckBoxPreference>(KEY_USE_FINGERPRINT)?.isChecked == true) {
-                                    findPreference<CheckBoxPreference>(KEY_USE_FINGERPRINT)?.isChecked = false
+                                if (findPreference<SwitchPreferenceCompat>(KEY_USE_FINGERPRINT)?.isChecked == true) {
+                                    findPreference<SwitchPreferenceCompat>(KEY_USE_FINGERPRINT)?.isChecked = false
                                 }
                             }
                         })
