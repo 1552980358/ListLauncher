@@ -56,7 +56,7 @@ class SettingContainer(context: Context): Serializable {
     
     fun getBooleanValue(key: String): Boolean? = getValue(key)
     
-    fun getStringUpdate(key: String, newValue: String) {
+    fun getStringUpdate(key: String, newValue: String?) {
         stringMap[key] = newValue
         settingValueListeners.forEach { listeners -> listeners.notifyUpdate(key, newValue) }
     }
