@@ -24,10 +24,15 @@ class SettingContainer(context: Context): Serializable {
     
     init {
         val preferenceManager = PreferenceManager.getDefaultSharedPreferences(context)
-        booleanMap[KEY_USE_FINGERPRINT] = preferenceManager.getBoolean(KEY_USE_FINGERPRINT, false)
-        booleanMap[KEY_USE_PIN] = preferenceManager.getBoolean(KEY_USE_PIN, false)
-        if (preferenceManager.contains(KEY_PIN_CODE)) {
-            stringMap[KEY_PIN_CODE] = preferenceManager.getString(KEY_PIN_CODE, null)
+        arrayOf(KEY_USE_FINGERPRINT, KEY_USE_PIN).forEach { key ->
+            if (preferenceManager.contains(key)) {
+                booleanMap[key] = preferenceManager.getBoolean(key, false)
+            }
+        }
+        arrayOf(KEY_PIN_CODE).forEach { key ->
+            if (preferenceManager.contains(key)) {
+                stringMap[key] = preferenceManager.getString(key, null)
+            }
         }
     }
     
