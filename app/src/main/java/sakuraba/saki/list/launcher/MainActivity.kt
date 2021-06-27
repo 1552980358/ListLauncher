@@ -1,5 +1,6 @@
 package sakuraba.saki.list.launcher
 
+import android.graphics.Color
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -15,6 +16,8 @@ import sakuraba.saki.list.launcher.broadcast.ApplicationChangeBroadcastReceiver.
 import sakuraba.saki.list.launcher.databinding.ActivityMainBinding
 import sakuraba.saki.list.launcher.main.MainViewModel
 import sakuraba.saki.list.launcher.main.setting.SettingContainer
+import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.KEY_CUSTOM_STATUS_BAR
+import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.KEY_STATUS_BAR_COLOR
 import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.SETTING_CONTAINER
 
 class MainActivity: AppCompatActivity() {
@@ -49,6 +52,17 @@ class MainActivity: AppCompatActivity() {
         appBarConfiguration = AppBarConfiguration(setOf(R.id.nav_home, R.id.nav_setting), activityMainBinding.drawerLayout)
         setupActionBarWithNavController(navController, appBarConfiguration)
         activityMainBinding.navView.setupWithNavController(navController)
+        
+        getCustomize()
+    }
+    
+    private fun getCustomize() {
+        viewModel.settingContainer.value?.apply {
+            if (getBooleanValue(KEY_CUSTOM_STATUS_BAR) == true
+                && getStringValue(KEY_STATUS_BAR_COLOR) != null) {
+                window.statusBarColor = Color.parseColor(getStringValue(KEY_STATUS_BAR_COLOR))
+            }
+        }
     }
     
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

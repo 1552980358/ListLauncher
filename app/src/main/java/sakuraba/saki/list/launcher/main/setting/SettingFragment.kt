@@ -1,9 +1,11 @@
 package sakuraba.saki.list.launcher.main.setting
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.preference.Preference
@@ -16,8 +18,11 @@ import sakuraba.saki.list.launcher.base.SettingValueChangeListener
 import sakuraba.saki.list.launcher.main.launchApp.AuthorizationListener
 import sakuraba.saki.list.launcher.main.launchApp.AuthorizationListener.Companion.AUTHORIZATION_LISTENER
 import sakuraba.saki.list.launcher.main.launchApp.FingerprintUtil
+import sakuraba.saki.list.launcher.main.setting.ColorPickDialogFragment.Companion.OnColorPickListener
+import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.KEY_CUSTOM_STATUS_BAR
 import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.KEY_EDIT_PIN
 import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.KEY_PIN_CODE
+import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.KEY_STATUS_BAR_COLOR
 import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.KEY_USE_FINGERPRINT
 import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.KEY_USE_PIN
 import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.SETTING_CONTAINER
@@ -29,6 +34,8 @@ class SettingFragment: PreferenceFragmentCompat(), FingerprintUtil {
         const val LAUNCH_TASK = "launch_task"
         const val LAUNCH_TASK_ENABLE = 1
         const val LAUNCH_TASK_MODIFY = 2
+        
+        private const val DEFAULT_STATUS_BAR_COLOR = "#FF3700B3"
     }
     
     private lateinit var viewModel: SettingViewModel
@@ -126,7 +133,52 @@ class SettingFragment: PreferenceFragmentCompat(), FingerprintUtil {
             })
             return@setOnPreferenceClickListener true
         }
+        
+        findPreference<SwitchPreferenceCompat>(KEY_CUSTOM_STATUS_BAR)?.apply {
+            if (!isChecked) {
+                findPreference<Preference>(KEY_STATUS_BAR_COLOR)?.isEnabled = false
+            }
+            setOnPreferenceChangeListener { _, newValue ->
+                viewModel.settingContainer.value?.getBooleanUpdate(KEY_CUSTOM_STATUS_BAR, newValue as Boolean)
+                if (newValue as Boolean) {
+                    setStatusBarColor()
+                    findPreference<Preference>(KEY_STATUS_BAR_COLOR)?.isEnabled = true
+                } else {
+                    findPreference<Preference>(KEY_STATUS_BAR_COLOR)?.isEnabled = false
+                }
+                return@setOnPreferenceChangeListener true
+            }
+        }
+        
+        findPreference<Preference>(KEY_STATUS_BAR_COLOR)?.setOnPreferenceClickListener {
+            setStatusBarColor()
+            return@setOnPreferenceClickListener true
+        }
+        
     }
+    
+    private fun setStatusBarColor() = ColorPickDialogFragment(object : OnColorPickListener {
+            
+            override fun onColorPick(color: Int, colorStr: String) {
+                viewModel.settingContainer.value?.getStringUpdate(KEY_STATUS_BAR_COLOR, colorStr)
+                @Suppress("ApplySharedPref")
+                PreferenceManager.getDefaultSharedPreferences(requireContext())
+                    .edit()
+                    .putString(KEY_STATUS_BAR_COLOR, colorStr)
+                    .commit()
+                requireActivity().window?.statusBarColor = color
+            }
+            override fun onSelectDefault() {
+                viewModel.settingContainer.value?.getStringUpdate(KEY_STATUS_BAR_COLOR, DEFAULT_STATUS_BAR_COLOR)
+                @Suppress("ApplySharedPref")
+                PreferenceManager.getDefaultSharedPreferences(requireContext())
+                    .edit()
+                    .putString(KEY_STATUS_BAR_COLOR, DEFAULT_STATUS_BAR_COLOR)
+                    .commit()
+                requireActivity().window?.statusBarColor = ContextCompat.getColor(requireContext(), R.color.purple_700)
+            }
+            override fun onCancel() { }
+        }).show(parentFragmentManager)
     
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         menu.clear()

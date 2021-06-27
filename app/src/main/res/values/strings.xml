@@ -23,6 +23,13 @@
     <string name="setting_use_pin_summary">Use 4-digit Pin to Authorize</string>
     <string name="setting_pin_code_title">Edit Pin</string>
     
+    <string name="setting_customize_title">Customize</string>
+    <string name="setting_customize_summary">Customize your launcher</string>
+    <string name="setting_custom_status_bar_title">Status bar</string>
+    <string name="setting_custom_status_bar_summary">Customize status bar color</string>
+    <string name="setting_status_bar_title">Set status bar color</string>
+    <string name="setting_status_bar_summary">Click to select status bar color</string>
+    
     <string name="loading_dialog_title">Loading…</string>
     
     <string name="bottom_dialog_home_application_name">Application Name</string>

@@ -1,7 +1,6 @@
 package sakuraba.saki.list.launcher.main.setting
 
 import android.content.Context
-import android.util.Log
 import androidx.preference.PreferenceManager
 import lib.github1552980358.ktExtension.jvm.keyword.tryRun
 import sakuraba.saki.list.launcher.base.SettingValueChangeListener
@@ -16,6 +15,8 @@ class SettingContainer(context: Context): Serializable {
         const val KEY_USE_PIN = "key_use_pin"
         const val KEY_PIN_CODE = "key_pin_code"
         const val KEY_EDIT_PIN = "key_edit_pin"
+        const val KEY_CUSTOM_STATUS_BAR = "key_custom_status_bar"
+        const val KEY_STATUS_BAR_COLOR = "key_status_bar_color"
     }
     
     private val stringMap = mutableMapOf<String, String?>()
@@ -24,12 +25,12 @@ class SettingContainer(context: Context): Serializable {
     
     init {
         val preferenceManager = PreferenceManager.getDefaultSharedPreferences(context)
-        arrayOf(KEY_USE_FINGERPRINT, KEY_USE_PIN).forEach { key ->
+        arrayOf(KEY_USE_FINGERPRINT, KEY_USE_PIN, KEY_CUSTOM_STATUS_BAR).forEach { key ->
             if (preferenceManager.contains(key)) {
                 booleanMap[key] = preferenceManager.getBoolean(key, false)
             }
         }
-        arrayOf(KEY_PIN_CODE).forEach { key ->
+        arrayOf(KEY_PIN_CODE, KEY_STATUS_BAR_COLOR).forEach { key ->
             if (preferenceManager.contains(key)) {
                 stringMap[key] = preferenceManager.getString(key, null)
             }

@@ -66,7 +66,7 @@ class ColorPickDialogFragment(private val listener: OnColorPickListener?): Dialo
             .setTitle(R.string.color_pick_title)
             .setView(fragmentColorPickDialogBinding.root)
             .setPositiveButton(R.string.color_pick_confirm) { _, _ ->
-                listener?.onColorPick(fragmentColorPickDialogBinding.colorPresentViewNew.color, String.format("%08X", fragmentColorPickDialogBinding.colorPresentViewNew.color))
+                listener?.onColorPick(fragmentColorPickDialogBinding.colorPresentViewNew.color, String.format("#%08X", fragmentColorPickDialogBinding.colorPresentViewNew.color))
             }
             .setNegativeButton(R.string.color_pick_cancel) { _, _ ->
                 listener?.onCancel()
