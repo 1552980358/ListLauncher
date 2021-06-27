@@ -18,6 +18,11 @@
     <style name="Theme.ListLauncher.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
     <style name="Theme.ListLauncher.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
     
+    <style name="Theme.ListLauncher.LightStatusBar" parent="ThemeOverlay.AppCompat">
+        <!-- Change the text color of status bar into black -->
+        <item name="android:windowLightStatusBar" tools:targetApi="23">true</item>
+    </style>
+    
     <!--style name="Theme.ListLauncher.NoActionBar.Transparent" parent="Theme.ListLauncher.NoActionBar">
         <item name="android:windowIsTranslucent">true</item>
         <item name="android:windowBackground">@android:color/transparent</item>

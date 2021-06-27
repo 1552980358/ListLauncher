@@ -25,6 +25,8 @@
     
     <string name="setting_customize_title">Customize</string>
     <string name="setting_customize_summary">Customize your launcher</string>
+    <string name="setting_status_bar_black_text_title">Status bar text color</string>
+    <string name="setting_status_bar_black_text_summary">Set text of text color as black\n(Some devices with Android L (both SDK 21, 22) may not work)</string>
     <string name="setting_custom_status_bar_color_title">Status bar color</string>
     <string name="setting_custom_status_bar_color_summary">Customize status bar color</string>
     <string name="setting_status_bar_title">Set status bar color</string>

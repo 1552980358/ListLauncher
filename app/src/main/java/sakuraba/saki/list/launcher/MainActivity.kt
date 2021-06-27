@@ -1,7 +1,9 @@
 package sakuraba.saki.list.launcher
 
 import android.graphics.Color
+import android.os.Build
 import android.os.Bundle
+import android.view.View
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
@@ -14,6 +16,7 @@ import sakuraba.saki.list.launcher.broadcast.ApplicationChangeBroadcastReceiver.
 import sakuraba.saki.list.launcher.databinding.ActivityMainBinding
 import sakuraba.saki.list.launcher.main.MainViewModel
 import sakuraba.saki.list.launcher.main.setting.SettingContainer
+import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.KEY_CUSTOM_STATUS_BAR_BLACK_TEXT
 import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.KEY_CUSTOM_STATUS_BAR_COLOR
 import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.KEY_STATUS_BAR_COLOR
 import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.SETTING_CONTAINER
@@ -56,6 +59,17 @@ class MainActivity: AppCompatActivity() {
     
     private fun getCustomizeSystem() {
         viewModel.settingContainer.value?.apply {
+            if (getBooleanValue(KEY_CUSTOM_STATUS_BAR_BLACK_TEXT) == true) {
+                when  {
+                    Build.VERSION.SDK_INT >= Build.VERSION_CODES.M -> {
+                        setTheme(R.style.Theme_ListLauncher_LightStatusBar)
+                    }
+                    else -> {
+                        @Suppress("DEPRECATION", "InlinedApi")
+                        window.decorView.systemUiVisibility = window.decorView.systemUiVisibility or View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+                    }
+                }
+            }
             if (getBooleanValue(KEY_CUSTOM_STATUS_BAR_COLOR) == true
                 && getStringValue(KEY_STATUS_BAR_COLOR) != null) {
                 window.statusBarColor = Color.parseColor(getStringValue(KEY_STATUS_BAR_COLOR))

@@ -1,5 +1,6 @@
 package sakuraba.saki.list.launcher.main.setting
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
@@ -12,12 +13,14 @@ import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.PreferenceManager
 import androidx.preference.SwitchPreferenceCompat
 import com.google.android.material.snackbar.Snackbar
+import sakuraba.saki.list.launcher.MainActivity
 import sakuraba.saki.list.launcher.R
 import sakuraba.saki.list.launcher.base.SettingValueChangeListener
 import sakuraba.saki.list.launcher.main.launchApp.AuthorizationListener
 import sakuraba.saki.list.launcher.main.launchApp.AuthorizationListener.Companion.AUTHORIZATION_LISTENER
 import sakuraba.saki.list.launcher.main.launchApp.FingerprintUtil
 import sakuraba.saki.list.launcher.main.setting.ColorPickDialogFragment.Companion.OnColorPickListener
+import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.KEY_CUSTOM_STATUS_BAR_BLACK_TEXT
 import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.KEY_CUSTOM_STATUS_BAR_COLOR
 import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.KEY_EDIT_PIN
 import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.KEY_PIN_CODE
@@ -153,6 +156,13 @@ class SettingFragment: PreferenceFragmentCompat(), FingerprintUtil {
         findPreference<Preference>(KEY_STATUS_BAR_COLOR)?.setOnPreferenceClickListener {
             setStatusBarColor()
             return@setOnPreferenceClickListener true
+        }
+        
+        findPreference<SwitchPreferenceCompat>(KEY_CUSTOM_STATUS_BAR_BLACK_TEXT)?.setOnPreferenceChangeListener { _, newValue ->
+            viewModel.settingContainer.value?.getBooleanUpdate(KEY_CUSTOM_STATUS_BAR_BLACK_TEXT, newValue as Boolean)
+            startActivity(Intent(requireContext(), MainActivity::class.java))
+            requireActivity().finish()
+            return@setOnPreferenceChangeListener true
         }
         
     }
