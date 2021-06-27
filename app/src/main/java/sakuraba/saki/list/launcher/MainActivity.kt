@@ -54,7 +54,7 @@ class MainActivity: AppCompatActivity() {
         getCustomize()
     }
     
-    private fun getCustomize() {
+    private fun getCustomizeSystem() {
         viewModel.settingContainer.value?.apply {
             if (getBooleanValue(KEY_CUSTOM_STATUS_BAR) == true
                 && getStringValue(KEY_STATUS_BAR_COLOR) != null) {
