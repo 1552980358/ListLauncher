@@ -14,7 +14,7 @@ import sakuraba.saki.list.launcher.broadcast.ApplicationChangeBroadcastReceiver.
 import sakuraba.saki.list.launcher.databinding.ActivityMainBinding
 import sakuraba.saki.list.launcher.main.MainViewModel
 import sakuraba.saki.list.launcher.main.setting.SettingContainer
-import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.KEY_CUSTOM_STATUS_BAR
+import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.KEY_CUSTOM_STATUS_BAR_COLOR
 import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.KEY_STATUS_BAR_COLOR
 import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.SETTING_CONTAINER
 
@@ -56,7 +56,7 @@ class MainActivity: AppCompatActivity() {
     
     private fun getCustomizeSystem() {
         viewModel.settingContainer.value?.apply {
-            if (getBooleanValue(KEY_CUSTOM_STATUS_BAR) == true
+            if (getBooleanValue(KEY_CUSTOM_STATUS_BAR_COLOR) == true
                 && getStringValue(KEY_STATUS_BAR_COLOR) != null) {
                 window.statusBarColor = Color.parseColor(getStringValue(KEY_STATUS_BAR_COLOR))
             }

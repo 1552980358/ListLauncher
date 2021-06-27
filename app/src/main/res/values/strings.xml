@@ -25,8 +25,8 @@
     
     <string name="setting_customize_title">Customize</string>
     <string name="setting_customize_summary">Customize your launcher</string>
-    <string name="setting_custom_status_bar_title">Status bar</string>
-    <string name="setting_custom_status_bar_summary">Customize status bar color</string>
+    <string name="setting_custom_status_bar_color_title">Status bar color</string>
+    <string name="setting_custom_status_bar_color_summary">Customize status bar color</string>
     <string name="setting_status_bar_title">Set status bar color</string>
     <string name="setting_status_bar_summary">Click to select status bar color</string>
     

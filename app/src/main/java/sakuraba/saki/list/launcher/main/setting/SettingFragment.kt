@@ -1,6 +1,5 @@
 package sakuraba.saki.list.launcher.main.setting
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
@@ -19,7 +18,7 @@ import sakuraba.saki.list.launcher.main.launchApp.AuthorizationListener
 import sakuraba.saki.list.launcher.main.launchApp.AuthorizationListener.Companion.AUTHORIZATION_LISTENER
 import sakuraba.saki.list.launcher.main.launchApp.FingerprintUtil
 import sakuraba.saki.list.launcher.main.setting.ColorPickDialogFragment.Companion.OnColorPickListener
-import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.KEY_CUSTOM_STATUS_BAR
+import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.KEY_CUSTOM_STATUS_BAR_COLOR
 import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.KEY_EDIT_PIN
 import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.KEY_PIN_CODE
 import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.KEY_STATUS_BAR_COLOR
@@ -134,12 +133,12 @@ class SettingFragment: PreferenceFragmentCompat(), FingerprintUtil {
             return@setOnPreferenceClickListener true
         }
         
-        findPreference<SwitchPreferenceCompat>(KEY_CUSTOM_STATUS_BAR)?.apply {
+        findPreference<SwitchPreferenceCompat>(KEY_CUSTOM_STATUS_BAR_COLOR)?.apply {
             if (!isChecked) {
                 findPreference<Preference>(KEY_STATUS_BAR_COLOR)?.isEnabled = false
             }
             setOnPreferenceChangeListener { _, newValue ->
-                viewModel.settingContainer.value?.getBooleanUpdate(KEY_CUSTOM_STATUS_BAR, newValue as Boolean)
+                viewModel.settingContainer.value?.getBooleanUpdate(KEY_CUSTOM_STATUS_BAR_COLOR, newValue as Boolean)
                 if (newValue as Boolean) {
                     setStatusBarColor()
                     findPreference<Preference>(KEY_STATUS_BAR_COLOR)?.isEnabled = true
