@@ -150,7 +150,7 @@ class SettingFragment: PreferenceFragmentCompat(), FingerprintUtil {
             setOnPreferenceChangeListener { _, newValue ->
                 viewModel.settingContainer.value?.getBooleanUpdate(KEY_CUSTOM_STATUS_BAR_COLOR, newValue as Boolean)
                 if (newValue as Boolean) {
-                    setStatusBarColor()
+                    setStatusBarColor(preferenceManager.getString(KEY_STATUS_BAR_COLOR, DEFAULT_STATUS_BAR_COLOR)!!)
                     findPreference<Preference>(KEY_STATUS_BAR_COLOR)?.isEnabled = true
                 } else {
                     requireActivity().window.statusBarColor = ContextCompat.getColor(requireContext(), R.color.purple_700)
@@ -161,7 +161,7 @@ class SettingFragment: PreferenceFragmentCompat(), FingerprintUtil {
         }
         
         findPreference<Preference>(KEY_STATUS_BAR_COLOR)?.setOnPreferenceClickListener {
-            setStatusBarColor()
+            setStatusBarColor(preferenceManager.getString(KEY_STATUS_BAR_COLOR, DEFAULT_STATUS_BAR_COLOR)!!)
             return@setOnPreferenceClickListener true
         }
         
@@ -207,7 +207,7 @@ class SettingFragment: PreferenceFragmentCompat(), FingerprintUtil {
         
     }
     
-    private fun setStatusBarColor() = ColorPickDialogFragment(object : OnColorPickListener {
+    private fun setStatusBarColor(color: String) = ColorPickDialogFragment(object : OnColorPickListener {
             
             override fun onColorPick(color: Int, colorStr: String) {
                 viewModel.settingContainer.value?.getStringUpdate(KEY_STATUS_BAR_COLOR, colorStr)
@@ -228,7 +228,7 @@ class SettingFragment: PreferenceFragmentCompat(), FingerprintUtil {
                 requireActivity().window?.statusBarColor = ContextCompat.getColor(requireContext(), R.color.purple_700)
             }
             override fun onCancel() { }
-        }).show(parentFragmentManager)
+        }, Color.parseColor(color)).show(parentFragmentManager)
     
     private fun setToolbarBackgroundColor(color: String, preference: Preference?) = ColorPickDialogFragment(object : OnColorPickListener {
         override fun onColorPick(color: Int, colorStr: String) {
@@ -254,7 +254,7 @@ class SettingFragment: PreferenceFragmentCompat(), FingerprintUtil {
         override fun onCancel() {
             findActivityViewById<AppBarLayout>(R.id.appBarLayout).setBackgroundColor(Color.parseColor(color))
         }
-    }).show(parentFragmentManager)
+    }, Color.parseColor(color)).show(parentFragmentManager)
     
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         menu.clear()

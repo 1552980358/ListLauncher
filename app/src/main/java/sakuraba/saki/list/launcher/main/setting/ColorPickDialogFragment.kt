@@ -12,7 +12,7 @@ import sakuraba.saki.list.launcher.databinding.FragmentColorPickDialogBinding
 import sakuraba.saki.list.launcher.util.hexStrToInt
 import java.io.Serializable
 
-class ColorPickDialogFragment(private val listener: OnColorPickListener?): DialogFragment() {
+class ColorPickDialogFragment(private val listener: OnColorPickListener?, @ColorInt private val originColor: Int): DialogFragment() {
     
     companion object {
         interface OnColorPickListener: Serializable {
@@ -29,6 +29,7 @@ class ColorPickDialogFragment(private val listener: OnColorPickListener?): Dialo
     
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         _fragmentColorPickDialogBinding = FragmentColorPickDialogBinding.inflate(layoutInflater)
+        fragmentColorPickDialogBinding.colorPresentViewOrigin.updateColor(originColor)
         fragmentColorPickDialogBinding.colorPadView.setOnHSEChangeListener { hse ->
             fragmentColorPickDialogBinding.colorPlateView.setHSE(hse)
         }
