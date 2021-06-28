@@ -12,7 +12,9 @@
     <com.google.android.material.appbar.AppBarLayout
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
-        android:theme="@style/Theme.ListLauncher.AppBarOverlay">
+        android:id="@+id/appBarLayout"
+        android:theme="@style/Theme.ListLauncher.AppBarOverlay"
+        app:elevation="0dp">
 
         <androidx.appcompat.widget.Toolbar
             android:layout_height="?attr/actionBarSize"

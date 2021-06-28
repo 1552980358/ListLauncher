@@ -1,6 +1,7 @@
 package sakuraba.saki.list.launcher.main.setting
 
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
@@ -12,6 +13,7 @@ import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.PreferenceManager
 import androidx.preference.SwitchPreferenceCompat
+import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.snackbar.Snackbar
 import sakuraba.saki.list.launcher.MainActivity
 import sakuraba.saki.list.launcher.R
@@ -22,9 +24,11 @@ import sakuraba.saki.list.launcher.main.launchApp.FingerprintUtil
 import sakuraba.saki.list.launcher.main.setting.ColorPickDialogFragment.Companion.OnColorPickListener
 import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.KEY_CUSTOM_STATUS_BAR_BLACK_TEXT
 import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.KEY_CUSTOM_STATUS_BAR_COLOR
+import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.KEY_CUSTOM_TOOLBAR_BACKGROUND_COLOR
 import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.KEY_EDIT_PIN
 import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.KEY_PIN_CODE
 import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.KEY_STATUS_BAR_COLOR
+import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.KEY_TOOLBAR_BACKGROUND_COLOR
 import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.KEY_USE_FINGERPRINT
 import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.KEY_USE_PIN
 import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.SETTING_CONTAINER
@@ -38,6 +42,7 @@ class SettingFragment: PreferenceFragmentCompat(), FingerprintUtil {
         const val LAUNCH_TASK_MODIFY = 2
         
         private const val DEFAULT_STATUS_BAR_COLOR = "#FF3700B3"
+        private const val DEFAULT_TOOLBAR_BACKGROUND_COLOR = "#FF6200EE"
     }
     
     private lateinit var viewModel: SettingViewModel
@@ -49,6 +54,8 @@ class SettingFragment: PreferenceFragmentCompat(), FingerprintUtil {
         
         viewModel = ViewModelProvider(this).get(SettingViewModel::class.java)
         viewModel.setSettingContainer(requireActivity().intent?.getSerializableExtra(SETTING_CONTAINER) as SettingContainer?)
+        
+        val preferenceManager = PreferenceManager.getDefaultSharedPreferences(requireContext())
         
         findPreference<SwitchPreferenceCompat>(KEY_USE_FINGERPRINT)?.apply {
             if (!checkSupportFingerprint(requireContext())) {
@@ -165,6 +172,39 @@ class SettingFragment: PreferenceFragmentCompat(), FingerprintUtil {
             return@setOnPreferenceChangeListener true
         }
         
+        findPreference<SwitchPreferenceCompat>(KEY_CUSTOM_TOOLBAR_BACKGROUND_COLOR)?.apply {
+            if (!preferenceManager.getBoolean(KEY_CUSTOM_TOOLBAR_BACKGROUND_COLOR, false)) {
+                findPreference<Preference>(KEY_TOOLBAR_BACKGROUND_COLOR)?.isEnabled = false
+            }
+            setOnPreferenceChangeListener { _, newValue ->
+                viewModel.settingContainer.value?.getBooleanUpdate(KEY_CUSTOM_TOOLBAR_BACKGROUND_COLOR, newValue as Boolean)
+                if (newValue as Boolean) {
+                    findPreference<Preference>(KEY_TOOLBAR_BACKGROUND_COLOR)?.apply {
+                        this.isEnabled = true
+                        setToolbarBackgroundColor(preferenceManager.getString(KEY_TOOLBAR_BACKGROUND_COLOR, DEFAULT_TOOLBAR_BACKGROUND_COLOR)!!, this)
+                    }
+                } else {
+                    findActivityViewById<AppBarLayout>(R.id.appBarLayout).setBackgroundColor(Color.parseColor(DEFAULT_TOOLBAR_BACKGROUND_COLOR))
+                    findPreference<Preference>(KEY_TOOLBAR_BACKGROUND_COLOR)?.isEnabled = false
+                }
+                return@setOnPreferenceChangeListener true
+            }
+        }
+        
+        findPreference<Preference>(KEY_TOOLBAR_BACKGROUND_COLOR)?.apply {
+            if (!preferenceManager.contains(KEY_TOOLBAR_BACKGROUND_COLOR)) {
+                @Suppress("ApplySharedPref")
+                preferenceManager.edit()
+                    .putString(KEY_TOOLBAR_BACKGROUND_COLOR, DEFAULT_TOOLBAR_BACKGROUND_COLOR)
+                    .commit()
+            }
+            icon.setTint(Color.parseColor(preferenceManager.getString(KEY_TOOLBAR_BACKGROUND_COLOR, null)))
+            setOnPreferenceClickListener {
+                setToolbarBackgroundColor(preferenceManager.getString(KEY_TOOLBAR_BACKGROUND_COLOR, DEFAULT_TOOLBAR_BACKGROUND_COLOR)!!, this)
+                return@setOnPreferenceClickListener true
+            }
+        }
+        
     }
     
     private fun setStatusBarColor() = ColorPickDialogFragment(object : OnColorPickListener {
@@ -189,6 +229,32 @@ class SettingFragment: PreferenceFragmentCompat(), FingerprintUtil {
             }
             override fun onCancel() { }
         }).show(parentFragmentManager)
+    
+    private fun setToolbarBackgroundColor(color: String, preference: Preference?) = ColorPickDialogFragment(object : OnColorPickListener {
+        override fun onColorPick(color: Int, colorStr: String) {
+            viewModel.settingContainer.value?.getStringUpdate(KEY_TOOLBAR_BACKGROUND_COLOR, colorStr)
+            @Suppress("ApplySharedPref")
+            PreferenceManager.getDefaultSharedPreferences(requireContext())
+                .edit()
+                .putString(KEY_TOOLBAR_BACKGROUND_COLOR, colorStr)
+                .commit()
+            preference?.icon?.setTint(color)
+            findActivityViewById<AppBarLayout>(R.id.appBarLayout).setBackgroundColor(color)
+        }
+        override fun onSelectDefault() {
+            viewModel.settingContainer.value?.getStringUpdate(KEY_TOOLBAR_BACKGROUND_COLOR, DEFAULT_TOOLBAR_BACKGROUND_COLOR)
+            @Suppress("ApplySharedPref")
+            PreferenceManager.getDefaultSharedPreferences(requireContext())
+                .edit()
+                .putString(KEY_TOOLBAR_BACKGROUND_COLOR, DEFAULT_TOOLBAR_BACKGROUND_COLOR)
+                .commit()
+            preference?.icon?.setTint(Color.parseColor(DEFAULT_TOOLBAR_BACKGROUND_COLOR))
+            findActivityViewById<AppBarLayout>(R.id.appBarLayout).setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.purple_500))
+        }
+        override fun onCancel() {
+            findActivityViewById<AppBarLayout>(R.id.appBarLayout).setBackgroundColor(Color.parseColor(color))
+        }
+    }).show(parentFragmentManager)
     
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         menu.clear()

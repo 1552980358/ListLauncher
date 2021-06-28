@@ -31,6 +31,10 @@
     <string name="setting_custom_status_bar_color_summary">Customize status bar color</string>
     <string name="setting_status_bar_title">Set status bar color</string>
     <string name="setting_status_bar_summary">Click to select status bar color</string>
+    <string name="setting_custom_toolbar_bg_color_title">Status toolbar color</string>
+    <string name="setting_custom_toolbar_bg_color_summary">Customize toolbar color</string>
+    <string name="setting_toolbar_bg_title">Set toolbar background color</string>
+    <string name="setting_toolbar_bg_summary">Click to select toolbar background color</string>
     
     <string name="loading_dialog_title">Loading…</string>
     

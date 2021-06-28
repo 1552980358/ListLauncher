@@ -11,6 +11,7 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
+import com.google.android.material.appbar.AppBarLayout
 import sakuraba.saki.list.launcher.broadcast.ApplicationChangeBroadcastReceiver
 import sakuraba.saki.list.launcher.broadcast.ApplicationChangeBroadcastReceiver.Companion.APPLICATION_CHANGE_BROADCAST_RECEIVER
 import sakuraba.saki.list.launcher.databinding.ActivityMainBinding
@@ -18,7 +19,9 @@ import sakuraba.saki.list.launcher.main.MainViewModel
 import sakuraba.saki.list.launcher.main.setting.SettingContainer
 import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.KEY_CUSTOM_STATUS_BAR_BLACK_TEXT
 import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.KEY_CUSTOM_STATUS_BAR_COLOR
+import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.KEY_CUSTOM_TOOLBAR_BACKGROUND_COLOR
 import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.KEY_STATUS_BAR_COLOR
+import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.KEY_TOOLBAR_BACKGROUND_COLOR
 import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.SETTING_CONTAINER
 
 class MainActivity: AppCompatActivity() {
@@ -41,6 +44,7 @@ class MainActivity: AppCompatActivity() {
         getCustomizeSystem()
         
         _activityMainBinding = ActivityMainBinding.inflate(layoutInflater)
+        getCustomActivitySet()
         // setContentView(R.layout.activity_main)
         setContentView(activityMainBinding.root)
         // val toolbar: Toolbar = findViewById(R.id.toolbar)
@@ -73,6 +77,16 @@ class MainActivity: AppCompatActivity() {
             if (getBooleanValue(KEY_CUSTOM_STATUS_BAR_COLOR) == true
                 && getStringValue(KEY_STATUS_BAR_COLOR) != null) {
                 window.statusBarColor = Color.parseColor(getStringValue(KEY_STATUS_BAR_COLOR))
+            }
+        }
+    }
+    
+    private fun getCustomActivitySet() {
+        viewModel.settingContainer.value?.apply {
+            if (getBooleanValue(KEY_CUSTOM_TOOLBAR_BACKGROUND_COLOR) == true) {
+                activityMainBinding.root
+                    .findViewById<AppBarLayout>(R.id.appBarLayout)
+                    .setBackgroundColor(Color.parseColor(getStringValue(KEY_TOOLBAR_BACKGROUND_COLOR)!!))
             }
         }
     }
