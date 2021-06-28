@@ -160,9 +160,18 @@ class SettingFragment: PreferenceFragmentCompat(), FingerprintUtil {
             }
         }
         
-        findPreference<Preference>(KEY_STATUS_BAR_COLOR)?.setOnPreferenceClickListener {
-            setStatusBarColor(preferenceManager.getString(KEY_STATUS_BAR_COLOR, DEFAULT_STATUS_BAR_COLOR)!!)
-            return@setOnPreferenceClickListener true
+        findPreference<Preference>(KEY_STATUS_BAR_COLOR)?.apply {
+            if (!preferenceManager.contains(KEY_STATUS_BAR_COLOR)) {
+                @Suppress("ApplySharedPref")
+                preferenceManager.edit()
+                    .putString(KEY_STATUS_BAR_COLOR, DEFAULT_STATUS_BAR_COLOR)
+                    .commit()
+            }
+            icon.setTint(Color.parseColor(preferenceManager.getString(KEY_STATUS_BAR_COLOR, DEFAULT_STATUS_BAR_COLOR)!!))
+            setOnPreferenceClickListener {
+                setStatusBarColor(preferenceManager.getString(KEY_STATUS_BAR_COLOR, DEFAULT_STATUS_BAR_COLOR)!!)
+                return@setOnPreferenceClickListener true
+            }
         }
         
         findPreference<SwitchPreferenceCompat>(KEY_CUSTOM_STATUS_BAR_BLACK_TEXT)?.setOnPreferenceChangeListener { _, newValue ->
