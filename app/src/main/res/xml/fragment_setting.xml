@@ -52,7 +52,6 @@
             android:key="key_status_bar_color"
             android:title="@string/setting_status_bar_title"
             android:summary="@string/setting_status_bar_summary"
-            app:defaultValue="#FF3700B3"
             app:icon="@drawable/ic_preference_color_block" />
         
         <SwitchPreferenceCompat
@@ -66,8 +65,7 @@
             android:key="key_toolbar_background_color"
             android:title="@string/setting_toolbar_bg_title"
             android:summary="@string/setting_toolbar_bg_summary"
-            app:icon="@drawable/ic_preference_color_block"
-            app:defaultValue="#FF6200EE" />
+            app:icon="@drawable/ic_preference_color_block" />
         
     </PreferenceCategory>
     
