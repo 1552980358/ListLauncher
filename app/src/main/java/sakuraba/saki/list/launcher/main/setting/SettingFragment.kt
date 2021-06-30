@@ -1,12 +1,19 @@
 package sakuraba.saki.list.launcher.main.setting
 
+import android.app.Activity.RESULT_OK
+import android.content.Context
 import android.content.Intent
 import android.graphics.Color
+import android.os.Build
 import android.os.Bundle
+import android.provider.MediaStore
 import android.view.Menu
 import android.view.MenuInflater
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.content.ContextCompat
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.preference.Preference
@@ -14,6 +21,7 @@ import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.PreferenceManager
 import androidx.preference.SwitchPreferenceCompat
 import com.google.android.material.appbar.AppBarLayout
+import com.google.android.material.snackbar.BaseTransientBottomBar.LENGTH_SHORT
 import com.google.android.material.snackbar.Snackbar
 import sakuraba.saki.list.launcher.MainActivity
 import sakuraba.saki.list.launcher.R
@@ -22,6 +30,8 @@ import sakuraba.saki.list.launcher.main.launchApp.AuthorizationListener
 import sakuraba.saki.list.launcher.main.launchApp.AuthorizationListener.Companion.AUTHORIZATION_LISTENER
 import sakuraba.saki.list.launcher.main.launchApp.FingerprintUtil
 import sakuraba.saki.list.launcher.main.setting.ColorPickDialogFragment.Companion.OnColorPickListener
+import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.KEY_BACKGROUND_IMAGE
+import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.KEY_CUSTOM_BACKGROUND_IMAGE
 import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.KEY_CUSTOM_STATUS_BAR_BLACK_TEXT
 import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.KEY_CUSTOM_STATUS_BAR_COLOR
 import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.KEY_CUSTOM_TOOLBAR_BACKGROUND_COLOR
@@ -33,6 +43,7 @@ import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.KEY_U
 import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.KEY_USE_PIN
 import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.SETTING_CONTAINER
 import sakuraba.saki.list.launcher.util.findActivityViewById
+import sakuraba.saki.list.launcher.view.CropImageView
 
 class SettingFragment: PreferenceFragmentCompat(), FingerprintUtil {
     
@@ -43,9 +54,14 @@ class SettingFragment: PreferenceFragmentCompat(), FingerprintUtil {
         
         private const val DEFAULT_STATUS_BAR_COLOR = "#FF3700B3"
         private const val DEFAULT_TOOLBAR_BACKGROUND_COLOR = "#FF6200EE"
+        
+        const val BACKGROUND_FILE = "ListLauncherBackground.jpeg"
+        
+        const val CROP_URI = "crop_uri"
     }
     
     private lateinit var viewModel: SettingViewModel
+    // private lateinit var cropImageUri: Uri
     
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         setPreferencesFromResource(R.xml.fragment_setting, rootKey)
@@ -213,7 +229,58 @@ class SettingFragment: PreferenceFragmentCompat(), FingerprintUtil {
                 return@setOnPreferenceClickListener true
             }
         }
+    
+        /**
+         * Due to the limitation of Android Q [Build.VERSION_CODES.Q], application directories,
+         * including the external directory fetched with application-owned [Context], e.g. [Context.getExternalFilesDir],
+         * the cropping of image is handled by external application, that there is limitation on the access of the file.
+         * For fetching the cropped file, we can only use the public directory to store and access the cropped image.
+         *
+         * 用中文简单的说一下，反正就是[Context]限制的，一切用[Context]获取的路径，包括[Context.getExternalFilesDir]，都是应用专属，
+         * 使用com.android.camera.action.CROP会调用非本应用处理，由于[Context]的限制，导致无法保存。所以只能用公共空间来保存访问了。
+         *
+         * This solution is suggested by
+         * 解决方案是来自 [https://blog.csdn.net/qq_35584878/article/details/115284323]
+         *
+         * No need, cropping will be handled by [CropImageView] in the [CropImageFragment]
+         *
+         * // @Suppress("DEPRECATION")
+         * // cropImageUri = Uri.fromFile(File(Environment.getExternalStoragePublicDirectory(DIRECTORY_PICTURES), BACKGROUND_FILE))
+         **/
         
+        val getImageContent = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { activityResult ->
+            when (activityResult.resultCode) {
+                RESULT_OK -> {
+                    findNavController().navigate(R.id.nav_crop_image, Bundle().apply { putString(CROP_URI, activityResult.data?.data?.toString()) })
+                }
+                else -> {
+                    Snackbar.make(findActivityViewById<CoordinatorLayout>(R.id.coordinatorLayout), R.string.setting_background_snackbar_fetching_image_fail, LENGTH_SHORT).show()
+                }
+            }
+        }
+        
+        findPreference<SwitchPreferenceCompat>(KEY_CUSTOM_BACKGROUND_IMAGE)?.apply {
+            if (!preferenceManager.getBoolean(KEY_CUSTOM_BACKGROUND_IMAGE, false)) {
+                findPreference<Preference>(KEY_BACKGROUND_IMAGE)?.isEnabled = false
+            }
+            setOnPreferenceChangeListener { _, newValue ->
+                viewModel.settingContainer.value?.getBooleanUpdate(KEY_CUSTOM_BACKGROUND_IMAGE, newValue as Boolean)
+                findPreference<Preference>(KEY_BACKGROUND_IMAGE)?.isEnabled = newValue as Boolean
+                if (newValue) {
+                    getImageContent.launch(Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI))
+                } else {
+                    findActivityViewById<DrawerLayout>(R.id.drawer_layout).background = null
+                }
+                return@setOnPreferenceChangeListener true
+            }
+        }
+        
+        findPreference<Preference>(KEY_BACKGROUND_IMAGE)?.apply {
+            setOnPreferenceClickListener {
+                getImageContent.launch(Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI))
+                return@setOnPreferenceClickListener true
+            }
+        }
     }
     
     private fun setStatusBarColor(color: String) = ColorPickDialogFragment(object : OnColorPickListener {

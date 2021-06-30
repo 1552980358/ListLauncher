@@ -1,5 +1,6 @@
 package sakuraba.saki.list.launcher
 
+import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
@@ -10,19 +11,23 @@ import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.graphics.drawable.toDrawable
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.appbar.AppBarLayout
+import lib.github1552980358.ktExtension.jvm.keyword.tryOnly
 import sakuraba.saki.list.launcher.broadcast.ApplicationChangeBroadcastReceiver
 import sakuraba.saki.list.launcher.broadcast.ApplicationChangeBroadcastReceiver.Companion.APPLICATION_CHANGE_BROADCAST_RECEIVER
 import sakuraba.saki.list.launcher.databinding.ActivityMainBinding
 import sakuraba.saki.list.launcher.main.MainViewModel
 import sakuraba.saki.list.launcher.main.setting.SettingContainer
+import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.KEY_CUSTOM_BACKGROUND_IMAGE
 import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.KEY_CUSTOM_STATUS_BAR_BLACK_TEXT
 import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.KEY_CUSTOM_STATUS_BAR_COLOR
 import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.KEY_CUSTOM_TOOLBAR_BACKGROUND_COLOR
 import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.KEY_STATUS_BAR_COLOR
 import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.KEY_TOOLBAR_BACKGROUND_COLOR
 import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.SETTING_CONTAINER
+import sakuraba.saki.list.launcher.main.setting.SettingFragment.Companion.BACKGROUND_FILE
 
 class MainActivity: AppCompatActivity() {
     
@@ -87,6 +92,12 @@ class MainActivity: AppCompatActivity() {
                 activityMainBinding.root
                     .findViewById<AppBarLayout>(R.id.appBarLayout)
                     .setBackgroundColor(Color.parseColor(getStringValue(KEY_TOOLBAR_BACKGROUND_COLOR)!!))
+            }
+            if (getBooleanValue(KEY_CUSTOM_BACKGROUND_IMAGE) == true) {
+                tryOnly {
+                    activityMainBinding.drawerLayout.background =
+                        BitmapFactory.decodeStream(openFileInput(BACKGROUND_FILE))?.toDrawable(resources)
+                }
             }
         }
     }

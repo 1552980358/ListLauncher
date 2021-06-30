@@ -12,6 +12,10 @@
     <string name="menu_launch_app">Launching application…</string>
     <string name="menu_set_pin">Set Pin</string>
     <string name="menu_pin_auth">Verify Pin</string>
+    <string name="menu_crop_image">Crop Image</string>
+    
+    <string name="menu_crop_image_save">Save</string>
+    <string name="menu_crop_image_change_image">Change as…</string>
     
     <string name="setting_auth_title">Authorization</string>
     <string name="setting_auth_summary">Authorize before launching application</string>
@@ -35,6 +39,12 @@
     <string name="setting_custom_toolbar_bg_color_summary">Customize toolbar color</string>
     <string name="setting_toolbar_bg_title">Set toolbar background color</string>
     <string name="setting_toolbar_bg_summary">Click to select toolbar background color</string>
+    <string name="setting_custom_background_image_title">Custom background image</string>
+    <string name="setting_custom_background_image_summary">Enable/Disable custom launcher background image</string>
+    <string name="setting_background_image_title">Custom background image</string>
+    <string name="setting_background_image_summary">Click to set custom launcher background image</string>
+    <string name="setting_background_snackbar_storing_image_fail">Storing image failed. Please try again later or contact the maintainer.</string>
+    <string name="setting_background_snackbar_fetching_image_fail">Fetching image failed. Please try again later or contact the maintainer.</string>
     
     <string name="loading_dialog_title">Loading…</string>
     
