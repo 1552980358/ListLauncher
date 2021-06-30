@@ -12,4 +12,7 @@
     <dimen name="img_arrow_size">10dp</dimen>
     <dimen name="color_plate_circle_radius">5dp</dimen>
     <dimen name="color_plate_circle_stroke">2dp</dimen>
+    
+    <dimen name="crop_image_stroke_width">3dp</dimen>
+    <dimen name="crop_image_stroke_circle_radius">10dp</dimen>
 </resources>
