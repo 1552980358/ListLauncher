@@ -1,6 +1,6 @@
 package sakuraba.saki.list.launcher.util
 
-import java.util.IllegalFormatException
+import android.graphics.Bitmap
 
 fun Int.getPower(power: Int): Int {
     var tmp = 1
@@ -41,3 +41,7 @@ val String.hexStrToInt: Int get() {
     }
     return tmp
 }
+
+val Bitmap.heightFloat: Float get() = height.toFloat()
+
+val Bitmap.widthFloat: Float get() = width.toFloat()
