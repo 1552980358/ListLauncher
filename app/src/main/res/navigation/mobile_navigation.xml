@@ -33,5 +33,11 @@
         android:name="sakuraba.saki.list.launcher.main.setting.PinAuthorizeFragment"
         android:label="@string/menu_pin_auth"
         tools:layout="@layout/fragment_pin_authorize" />
+    
+    <fragment
+        android:id="@+id/nav_crop_image"
+        android:name="sakuraba.saki.list.launcher.main.setting.CropImageFragment"
+        android:label="@string/menu_crop_image"
+        tools:layout="@layout/fragment_crop_image" />
 
 </navigation>
