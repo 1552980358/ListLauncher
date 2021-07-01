@@ -259,9 +259,17 @@ class SettingFragment: PreferenceFragmentCompat(), FingerprintUtil {
             }
         }
         
-        findPreference<SwitchPreferenceCompat>(KEY_CUSTOM_BACKGROUND_IMAGE)?.apply {
-            if (!preferenceManager.getBoolean(KEY_CUSTOM_BACKGROUND_IMAGE, false)) {
-                findPreference<Preference>(KEY_BACKGROUND_IMAGE)?.isEnabled = false
+        findPreference<TwoSidedSwitchPreferenceCompat>(KEY_CUSTOM_BACKGROUND_IMAGE)?.apply {
+            setOnContentClickListener {
+                if (preferenceManager.getBoolean(KEY_CUSTOM_BACKGROUND_IMAGE, false)) {
+                    getImageContent.launch(Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI))
+                } else {
+                    Snackbar.make(
+                        findActivityViewById<DrawerLayout>(R.id.drawer_layout),
+                        R.string.setting_background_snackbar_should_enable_to_set,
+                        LENGTH_SHORT
+                    ).show()
+                }
             }
             setOnPreferenceChangeListener { _, newValue ->
                 viewModel.settingContainer.value?.getBooleanUpdate(KEY_CUSTOM_BACKGROUND_IMAGE, newValue as Boolean)
@@ -272,13 +280,6 @@ class SettingFragment: PreferenceFragmentCompat(), FingerprintUtil {
                     findActivityViewById<DrawerLayout>(R.id.drawer_layout).background = null
                 }
                 return@setOnPreferenceChangeListener true
-            }
-        }
-        
-        findPreference<Preference>(KEY_BACKGROUND_IMAGE)?.apply {
-            setOnPreferenceClickListener {
-                getImageContent.launch(Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI))
-                return@setOnPreferenceClickListener true
             }
         }
     }
