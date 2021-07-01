@@ -159,9 +159,24 @@ class SettingFragment: PreferenceFragmentCompat(), FingerprintUtil {
             return@setOnPreferenceClickListener true
         }
         
-        findPreference<SwitchPreferenceCompat>(KEY_CUSTOM_STATUS_BAR_COLOR)?.apply {
-            if (!isChecked) {
-                findPreference<Preference>(KEY_STATUS_BAR_COLOR)?.isEnabled = false
+        findPreference<TwoSidedSwitchPreferenceCompat>(KEY_CUSTOM_STATUS_BAR_COLOR)?.apply {
+            if (!preferenceManager.contains(KEY_STATUS_BAR_COLOR)) {
+                @Suppress("ApplySharedPref")
+                preferenceManager.edit()
+                    .putString(KEY_STATUS_BAR_COLOR, DEFAULT_STATUS_BAR_COLOR)
+                    .commit()
+            }
+            icon.setTint(Color.parseColor(preferenceManager.getString(KEY_STATUS_BAR_COLOR, DEFAULT_STATUS_BAR_COLOR)!!))
+            setOnContentClickListener {
+                if (preferenceManager.getBoolean(KEY_CUSTOM_STATUS_BAR_COLOR, false)) {
+                    setStatusBarColor(preferenceManager.getString(KEY_STATUS_BAR_COLOR, DEFAULT_STATUS_BAR_COLOR)!!)
+                } else {
+                    Snackbar.make(
+                        findActivityViewById<DrawerLayout>(R.id.drawer_layout),
+                        R.string.setting_status_bar_snackbar_should_enable_to_set,
+                        LENGTH_SHORT
+                    ).show()
+                }
             }
             setOnPreferenceChangeListener { _, newValue ->
                 viewModel.settingContainer.value?.getBooleanUpdate(KEY_CUSTOM_STATUS_BAR_COLOR, newValue as Boolean)
@@ -173,20 +188,6 @@ class SettingFragment: PreferenceFragmentCompat(), FingerprintUtil {
                     findPreference<Preference>(KEY_STATUS_BAR_COLOR)?.isEnabled = false
                 }
                 return@setOnPreferenceChangeListener true
-            }
-        }
-        
-        findPreference<Preference>(KEY_STATUS_BAR_COLOR)?.apply {
-            if (!preferenceManager.contains(KEY_STATUS_BAR_COLOR)) {
-                @Suppress("ApplySharedPref")
-                preferenceManager.edit()
-                    .putString(KEY_STATUS_BAR_COLOR, DEFAULT_STATUS_BAR_COLOR)
-                    .commit()
-            }
-            icon.setTint(Color.parseColor(preferenceManager.getString(KEY_STATUS_BAR_COLOR, DEFAULT_STATUS_BAR_COLOR)!!))
-            setOnPreferenceClickListener {
-                setStatusBarColor(preferenceManager.getString(KEY_STATUS_BAR_COLOR, DEFAULT_STATUS_BAR_COLOR)!!)
-                return@setOnPreferenceClickListener true
             }
         }
         

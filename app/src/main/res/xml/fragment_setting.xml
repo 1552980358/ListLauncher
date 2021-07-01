@@ -41,17 +41,11 @@
             app:defaultValue="false"
             app:iconSpaceReserved="false" />
         
-        <SwitchPreferenceCompat
+        <sakuraba.saki.list.launcher.main.setting.TwoSidedSwitchPreferenceCompat
             android:key="key_custom_status_bar_color"
             android:title="@string/setting_custom_status_bar_color_title"
             android:summary="@string/setting_custom_status_bar_color_summary"
             app:defaultValue="false"
-            app:iconSpaceReserved="false" />
-        
-        <Preference
-            android:key="key_status_bar_color"
-            android:title="@string/setting_status_bar_title"
-            android:summary="@string/setting_status_bar_summary"
             app:icon="@drawable/ic_preference_color_block" />
         
         <sakuraba.saki.list.launcher.main.setting.TwoSidedSwitchPreferenceCompat
