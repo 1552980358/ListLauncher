@@ -2,15 +2,12 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:minHeight="?android:attr/listPreferredItemHeightSmall"
     android:gravity="center_vertical"
-    android:paddingEnd="?android:attr/listPreferredItemPaddingEnd"
     android:clipToPadding="false"
-    android:baselineAligned="false"
-    tools:ignore="RtlSymmetry">
+    android:baselineAligned="false">
     
     <LinearLayout
         android:id="@android:id/widget_frame"
@@ -29,7 +26,7 @@
         android:layout_toStartOf="@android:id/widget_frame"
         android:background="?android:attr/selectableItemBackground"
         android:paddingStart="?android:attr/listPreferredItemPaddingStart"
-        tools:ignore="RtlSymmetry">
+        android:paddingEnd="?android:attr/listPreferredItemPaddingEnd">
     
         <androidx.preference.internal.PreferenceImageView
             android:id="@android:id/icon"
