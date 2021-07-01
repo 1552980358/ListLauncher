@@ -39,6 +39,7 @@
     <string name="setting_custom_toolbar_bg_color_summary">Customize toolbar color</string>
     <string name="setting_toolbar_bg_title">Set toolbar background color</string>
     <string name="setting_toolbar_bg_summary">Click to select toolbar background color</string>
+    <string name="setting_toolbar_bg_snackbar_should_enable_to_set">You should enable this option before setting the custom color</string>
     <string name="setting_custom_background_image_title">Custom background image</string>
     <string name="setting_custom_background_image_summary">Use custom image as launcher background.\nClick here to select image.</string>
     <string name="setting_background_snackbar_storing_image_fail">Storing image failed. Please try again later or contact the maintainer.</string>

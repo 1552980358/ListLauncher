@@ -197,26 +197,7 @@ class SettingFragment: PreferenceFragmentCompat(), FingerprintUtil {
             return@setOnPreferenceChangeListener true
         }
         
-        findPreference<SwitchPreferenceCompat>(KEY_CUSTOM_TOOLBAR_BACKGROUND_COLOR)?.apply {
-            if (!preferenceManager.getBoolean(KEY_CUSTOM_TOOLBAR_BACKGROUND_COLOR, false)) {
-                findPreference<Preference>(KEY_TOOLBAR_BACKGROUND_COLOR)?.isEnabled = false
-            }
-            setOnPreferenceChangeListener { _, newValue ->
-                viewModel.settingContainer.value?.getBooleanUpdate(KEY_CUSTOM_TOOLBAR_BACKGROUND_COLOR, newValue as Boolean)
-                if (newValue as Boolean) {
-                    findPreference<Preference>(KEY_TOOLBAR_BACKGROUND_COLOR)?.apply {
-                        this.isEnabled = true
-                        setToolbarBackgroundColor(preferenceManager.getString(KEY_TOOLBAR_BACKGROUND_COLOR, DEFAULT_TOOLBAR_BACKGROUND_COLOR)!!, this)
-                    }
-                } else {
-                    findActivityViewById<AppBarLayout>(R.id.appBarLayout).setBackgroundColor(Color.parseColor(DEFAULT_TOOLBAR_BACKGROUND_COLOR))
-                    findPreference<Preference>(KEY_TOOLBAR_BACKGROUND_COLOR)?.isEnabled = false
-                }
-                return@setOnPreferenceChangeListener true
-            }
-        }
-        
-        findPreference<Preference>(KEY_TOOLBAR_BACKGROUND_COLOR)?.apply {
+        findPreference<TwoSidedSwitchPreferenceCompat>(KEY_CUSTOM_TOOLBAR_BACKGROUND_COLOR)?.apply {
             if (!preferenceManager.contains(KEY_TOOLBAR_BACKGROUND_COLOR)) {
                 @Suppress("ApplySharedPref")
                 preferenceManager.edit()
@@ -224,9 +205,26 @@ class SettingFragment: PreferenceFragmentCompat(), FingerprintUtil {
                     .commit()
             }
             icon.setTint(Color.parseColor(preferenceManager.getString(KEY_TOOLBAR_BACKGROUND_COLOR, null)))
-            setOnPreferenceClickListener {
-                setToolbarBackgroundColor(preferenceManager.getString(KEY_TOOLBAR_BACKGROUND_COLOR, DEFAULT_TOOLBAR_BACKGROUND_COLOR)!!, this)
-                return@setOnPreferenceClickListener true
+            setOnContentClickListener {
+                if (preferenceManager.getBoolean(KEY_CUSTOM_TOOLBAR_BACKGROUND_COLOR, false)) {
+                    setToolbarBackgroundColor(preferenceManager.getString(KEY_TOOLBAR_BACKGROUND_COLOR, DEFAULT_TOOLBAR_BACKGROUND_COLOR)!!, this)
+                } else {
+                    Snackbar.make(
+                        findActivityViewById<DrawerLayout>(R.id.drawer_layout),
+                        R.string.setting_toolbar_bg_snackbar_should_enable_to_set,
+                        LENGTH_SHORT
+                    ).show()
+                }
+            }
+            setOnPreferenceChangeListener { _, newValue ->
+                viewModel.settingContainer.value?.getBooleanUpdate(KEY_CUSTOM_TOOLBAR_BACKGROUND_COLOR, newValue as Boolean)
+                if (newValue as Boolean) {
+                    setToolbarBackgroundColor(preferenceManager.getString(KEY_TOOLBAR_BACKGROUND_COLOR, DEFAULT_TOOLBAR_BACKGROUND_COLOR)!!, this)
+                } else {
+                    findActivityViewById<AppBarLayout>(R.id.appBarLayout).setBackgroundColor(Color.parseColor(DEFAULT_TOOLBAR_BACKGROUND_COLOR))
+                    findPreference<Preference>(KEY_TOOLBAR_BACKGROUND_COLOR)?.isEnabled = false
+                }
+                return@setOnPreferenceChangeListener true
             }
         }
     
