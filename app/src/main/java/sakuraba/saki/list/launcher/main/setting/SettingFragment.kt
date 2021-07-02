@@ -75,12 +75,8 @@ class SettingFragment: PreferenceFragmentCompat(), FingerprintUtil {
         
         findPreference<SwitchPreferenceCompat>(KEY_USE_FINGERPRINT)?.apply {
             if (!checkSupportFingerprint(requireContext())) {
-                isSelectable = false
+                isEnabled = false
                 setSummary(R.string.setting_use_fingerprint_summary_not_available)
-            }
-            setOnPreferenceClickListener {
-                Toast.makeText(requireContext(), R.string.setting_use_fingerprint_wait_for_implement, Toast.LENGTH_SHORT).show()
-                return@setOnPreferenceClickListener true
             }
             setOnPreferenceChangeListener { _, newValue ->
                 viewModel.settingContainer.value?.getBooleanUpdate(KEY_USE_FINGERPRINT, newValue as Boolean)
