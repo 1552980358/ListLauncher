@@ -14,7 +14,6 @@ class SettingContainer(context: Context): Serializable {
         const val KEY_USE_FINGERPRINT = "key_use_fingerprint"   // Boolean
         const val KEY_USE_PIN = "key_use_pin"
         const val KEY_PIN_CODE = "key_pin_code"
-        const val KEY_EDIT_PIN = "key_edit_pin"
         const val KEY_CUSTOM_STATUS_BAR_BLACK_TEXT = "key_status_bar_black_text"
         const val KEY_CUSTOM_STATUS_BAR_COLOR = "key_custom_status_bar_color"
         const val KEY_STATUS_BAR_COLOR = "key_status_bar_color"
