@@ -91,7 +91,7 @@ class SettingFragment: PreferenceFragmentCompat(), FingerprintUtil {
             }
         }
         
-        findPreference<SwitchPreferenceCompat>(KEY_USE_PIN)?.apply {
+        findPreference<TwoSidedSwitchPreferenceCompat>(KEY_USE_PIN)?.apply {
             if (findPreference<SwitchPreferenceCompat>(KEY_USE_FINGERPRINT)?.isChecked == true) {
                 if (!sharedPreferences.contains(KEY_PIN_CODE)) {
                     findPreference<SwitchPreferenceCompat>(KEY_USE_FINGERPRINT)?.isChecked = false
@@ -135,28 +135,26 @@ class SettingFragment: PreferenceFragmentCompat(), FingerprintUtil {
                 }
                 return@setOnPreferenceChangeListener true
             }
-        }
-        
-        findPreference<Preference>(KEY_EDIT_PIN)?.setOnPreferenceClickListener {
-            if (viewModel.settingContainer.value?.getBooleanValue(KEY_USE_PIN) != true ||
-                viewModel.settingContainer.value?.getStringValue(KEY_PIN_CODE).isNullOrEmpty()) {
-                return@setOnPreferenceClickListener true
-            }
-            findNavController().navigate(R.id.nav_pin_auth, Bundle().apply {
-                putSerializable(SETTING_CONTAINER, viewModel.settingContainer.value)
-                putSerializable(AUTHORIZATION_LISTENER, object : AuthorizationListener {
-                    override fun onAuthFailed() {
-                        Snackbar.make(findActivityViewById(R.id.coordinatorLayout), R.string.pin_authorize_failed_message, Snackbar.LENGTH_SHORT).show()
-                    }
-                    override fun onAuthComplete() {
-                        findNavController().navigate(R.id.nav_set_pin, Bundle().apply {
-                            putSerializable(SETTING_CONTAINER, viewModel.settingContainer.value)
-                            putInt(LAUNCH_TASK, LAUNCH_TASK_MODIFY)
+            setOnContentClickListener {
+                if (sharedPreferences.contains(KEY_PIN_CODE) && viewModel.settingContainer.value?.getBooleanValue(KEY_USE_PIN) == true) {
+                    findNavController().navigate(R.id.nav_pin_auth, Bundle().apply {
+                        putSerializable(SETTING_CONTAINER, viewModel.settingContainer.value)
+                        putSerializable(AUTHORIZATION_LISTENER, object : AuthorizationListener {
+                            override fun onAuthFailed() {
+                                Snackbar.make(findActivityViewById(R.id.coordinatorLayout), R.string.pin_authorize_failed_message, Snackbar.LENGTH_SHORT).show()
+                            }
+                            override fun onAuthComplete() {
+                                findNavController().navigate(R.id.nav_set_pin, Bundle().apply {
+                                    putSerializable(SETTING_CONTAINER, viewModel.settingContainer.value)
+                                    putInt(LAUNCH_TASK, LAUNCH_TASK_MODIFY)
+                                })
+                            }
                         })
-                    }
-                })
-            })
-            return@setOnPreferenceClickListener true
+                    })
+                } else {
+                    Snackbar.make(findActivityViewById<CoordinatorLayout>(R.id.coordinatorLayout), R.string.setting_use_pin_should_enable_to_set, LENGTH_SHORT).show()
+                }
+            }
         }
         
         findPreference<TwoSidedSwitchPreferenceCompat>(KEY_CUSTOM_STATUS_BAR_COLOR)?.apply {

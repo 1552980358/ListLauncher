@@ -25,7 +25,7 @@
     <string name="setting_use_fingerprint_wait_for_implement">Wait for implementation of other modules to have fully fingerprint authorization function</string>
     <string name="setting_use_pin_title">Pin</string>
     <string name="setting_use_pin_summary">Use 4-digit Pin to Authorize</string>
-    <string name="setting_pin_code_title">Edit Pin</string>
+    <string name="setting_use_pin_should_enable_to_set">You should enable this option before editing the pin</string>
     
     <string name="setting_customize_title">Customize</string>
     <string name="setting_customize_summary">Customize your launcher</string>
