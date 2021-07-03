@@ -23,7 +23,7 @@
         android:layout_toEndOf="@+id/imageView_icon"
         android:orientation="vertical">
         
-        <TextView
+        <sakuraba.saki.list.launcher.view.TitleTextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="16sp"
