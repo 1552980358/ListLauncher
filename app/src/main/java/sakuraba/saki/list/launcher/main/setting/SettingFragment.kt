@@ -56,7 +56,7 @@ class SettingFragment: PreferenceFragmentCompat(), FingerprintUtil {
         
         private const val DEFAULT_STATUS_BAR_COLOR = "#FF3700B3"
         private const val DEFAULT_TOOLBAR_BACKGROUND_COLOR = "#FF6200EE"
-        private const val DEFAULT_TITLE_COLOR = "#FFFFFFFF"
+        private const val DEFAULT_TITLE_COLOR = "#FF000000"
         
         const val BACKGROUND_FILE = "ListLauncherBackground.jpeg"
         
