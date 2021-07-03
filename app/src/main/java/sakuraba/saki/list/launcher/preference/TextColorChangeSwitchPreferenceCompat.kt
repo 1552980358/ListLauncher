@@ -18,6 +18,9 @@ open class TextColorChangeSwitchPreferenceCompat: SwitchPreferenceCompat {
             if (hasCustomTitleTextColor()) {
                 holder?.itemView?.findViewById<TextView>(android.R.id.title)?.setTextColor(getTitleTextColor())
             }
+            if (hasCustomSummaryTextColor()) {
+                holder?.itemView?.findViewById<TextView>(android.R.id.summary)?.setTextColor(getSummaryTextColor())
+            }
         }
     }
     
