@@ -340,7 +340,7 @@ class SettingFragment: PreferenceFragmentCompat(), FingerprintUtil {
             icon.setTint(Color.parseColor(preferenceManager.getString(KEY_SUMMARY_COLOR, DEFAULT_SUMMARY_COLOR)))
             setOnPreferenceChangeListener { _, newValue ->
                 if (newValue as Boolean) {
-                    setTitleTextColor(preferenceManager.getString(KEY_SUMMARY_COLOR, DEFAULT_SUMMARY_COLOR)!!)
+                    setSummaryTextColor(preferenceManager.getString(KEY_SUMMARY_COLOR, DEFAULT_SUMMARY_COLOR)!!)
                 } else {
                     startActivity(Intent(requireContext(), MainActivity::class.java))
                     requireActivity().finish()
@@ -349,7 +349,7 @@ class SettingFragment: PreferenceFragmentCompat(), FingerprintUtil {
             }
             setOnContentClickListener {
                 if (preferenceManager.getBoolean(KEY_CUSTOM_SUMMARY_COLOR, false)) {
-                    setTitleTextColor(preferenceManager.getString(KEY_SUMMARY_COLOR, DEFAULT_SUMMARY_COLOR)!!)
+                    setSummaryTextColor(preferenceManager.getString(KEY_SUMMARY_COLOR, DEFAULT_SUMMARY_COLOR)!!)
                 } else {
                     Snackbar.make(
                         findActivityViewById<DrawerLayout>(R.id.drawer_layout),
@@ -435,6 +435,34 @@ class SettingFragment: PreferenceFragmentCompat(), FingerprintUtil {
     
         override fun onCancel() {}
     }, Color.parseColor(color)).show(parentFragmentManager)
+    
+    private fun setSummaryTextColor(color: String) =
+        ColorPickDialogFragment(object : OnColorPickListener {
+            override fun onColorPick(color: Int, colorStr: String) {
+                viewModel.settingContainer.value?.getStringUpdate(KEY_SUMMARY_COLOR, colorStr)
+                @Suppress("ApplySharedPref")
+                PreferenceManager.getDefaultSharedPreferences(requireContext())
+                    .edit()
+                    .putString(KEY_SUMMARY_COLOR, colorStr)
+                    .commit()
+                // preference.icon?.setTint(color)
+                startActivity(Intent(requireContext(), MainActivity::class.java))
+                requireActivity().finish()
+            }
+        
+            override fun onSelectDefault() {
+                viewModel.settingContainer.value?.getStringUpdate(KEY_SUMMARY_COLOR, DEFAULT_SUMMARY_COLOR)
+                @Suppress("ApplySharedPref")
+                PreferenceManager.getDefaultSharedPreferences(requireContext())
+                    .edit()
+                    .putString(KEY_SUMMARY_COLOR, DEFAULT_SUMMARY_COLOR)
+                    .commit()
+                startActivity(Intent(requireContext(), MainActivity::class.java))
+                requireActivity().finish()
+            }
+        
+            override fun onCancel() {}
+        }, Color.parseColor(color)).show(parentFragmentManager)
     
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         menu.clear()
