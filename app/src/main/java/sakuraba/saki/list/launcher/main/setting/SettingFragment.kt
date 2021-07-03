@@ -3,6 +3,7 @@ package sakuraba.saki.list.launcher.main.setting
 import android.app.Activity.RESULT_OK
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
@@ -75,6 +76,16 @@ class SettingFragment: PreferenceFragmentCompat(), FingerprintUtil {
         
         val preferenceManager = PreferenceManager.getDefaultSharedPreferences(requireContext())
         
+        initFingerprint()
+        initPinCode()
+        initStatusBarColor(preferenceManager)
+        initStatusBarTextColor()
+        initToolbarBackgroundColor(preferenceManager)
+        initBackground(preferenceManager)
+        initTitleColor(preferenceManager)
+    }
+    
+    private fun initFingerprint() =
         findPreference<SwitchPreferenceCompat>(KEY_USE_FINGERPRINT)?.apply {
             if (!checkSupportFingerprint(requireContext())) {
                 isEnabled = false
@@ -88,73 +99,75 @@ class SettingFragment: PreferenceFragmentCompat(), FingerprintUtil {
                 return@setOnPreferenceChangeListener true
             }
         }
-        
+    
+    private fun initPinCode() =
         findPreference<TwoSidedSwitchPreferenceCompat>(KEY_USE_PIN)?.apply {
-            if (findPreference<SwitchPreferenceCompat>(KEY_USE_FINGERPRINT)?.isChecked == true) {
-                if (!sharedPreferences.contains(KEY_PIN_CODE)) {
-                    findPreference<SwitchPreferenceCompat>(KEY_USE_FINGERPRINT)?.isChecked = false
-                } else {
-                    if (!isChecked) {
-                        isChecked = true
-                    }
-                }
-            }
-            setOnPreferenceChangeListener { _, newValue ->
-                if (newValue as Boolean) {
-                    object : SettingValueChangeListener(viewModel.settingContainer.value, KEY_USE_PIN) {
-                        override fun onSettingValueChange(settingContainer: SettingContainer?, key: String, newValue: Boolean?) {
-                            if (newValue == false) {
-                                findPreference<SwitchPreferenceCompat>(KEY_USE_FINGERPRINT)?.isChecked = false
-                                findPreference<SwitchPreferenceCompat>(KEY_USE_PIN)?.isChecked = false
-                            }
-                            removeListener()
-                        }
-                    }
-                    findNavController().navigate(R.id.nav_set_pin, Bundle().apply {
-                        putSerializable(SETTING_CONTAINER, viewModel.settingContainer.value)
-                    })
-                } else {
-                    findNavController().navigate(R.id.nav_pin_auth, Bundle().apply {
-                        putSerializable(SETTING_CONTAINER, viewModel.settingContainer.value)
-                        putSerializable(AUTHORIZATION_LISTENER, object : AuthorizationListener {
-                            override fun onAuthFailed() {
-                                Snackbar.make(findActivityViewById(R.id.coordinatorLayout), R.string.pin_authorize_failed_message, Snackbar.LENGTH_SHORT).show()
-                            }
-                            override fun onAuthComplete() {
-                                if (viewModel.settingContainer.value?.getBooleanValue(KEY_USE_PIN) != false) {
-                                    viewModel.settingContainer.value?.getBooleanUpdate(KEY_USE_PIN, false)
-                                }
-                                if (findPreference<SwitchPreferenceCompat>(KEY_USE_FINGERPRINT)?.isChecked == true) {
-                                    findPreference<SwitchPreferenceCompat>(KEY_USE_FINGERPRINT)?.isChecked = false
-                                }
-                            }
-                        })
-                    })
-                }
-                return@setOnPreferenceChangeListener true
-            }
-            setOnContentClickListener {
-                if (sharedPreferences.contains(KEY_PIN_CODE) && viewModel.settingContainer.value?.getBooleanValue(KEY_USE_PIN) == true) {
-                    findNavController().navigate(R.id.nav_pin_auth, Bundle().apply {
-                        putSerializable(SETTING_CONTAINER, viewModel.settingContainer.value)
-                        putSerializable(AUTHORIZATION_LISTENER, object : AuthorizationListener {
-                            override fun onAuthFailed() {
-                                Snackbar.make(findActivityViewById(R.id.coordinatorLayout), R.string.pin_authorize_failed_message, Snackbar.LENGTH_SHORT).show()
-                            }
-                            override fun onAuthComplete() {
-                                findNavController().navigate(R.id.nav_set_pin, Bundle().apply {
-                                    putSerializable(SETTING_CONTAINER, viewModel.settingContainer.value)
-                                    putInt(LAUNCH_TASK, LAUNCH_TASK_MODIFY)
-                                })
-                            }
-                        })
-                    })
-                } else {
-                    Snackbar.make(findActivityViewById<CoordinatorLayout>(R.id.coordinatorLayout), R.string.setting_use_pin_should_enable_to_set, LENGTH_SHORT).show()
+        if (findPreference<SwitchPreferenceCompat>(KEY_USE_FINGERPRINT)?.isChecked == true) {
+            if (!sharedPreferences.contains(KEY_PIN_CODE)) {
+                findPreference<SwitchPreferenceCompat>(KEY_USE_FINGERPRINT)?.isChecked = false
+            } else {
+                if (!isChecked) {
+                    isChecked = true
                 }
             }
         }
-        
+        setOnPreferenceChangeListener { _, newValue ->
+            if (newValue as Boolean) {
+                object : SettingValueChangeListener(viewModel.settingContainer.value, KEY_USE_PIN) {
+                    override fun onSettingValueChange(settingContainer: SettingContainer?, key: String, newValue: Boolean?) {
+                        if (newValue == false) {
+                            findPreference<SwitchPreferenceCompat>(KEY_USE_FINGERPRINT)?.isChecked = false
+                            findPreference<SwitchPreferenceCompat>(KEY_USE_PIN)?.isChecked = false
+                        }
+                        removeListener()
+                    }
+                }
+                findNavController().navigate(R.id.nav_set_pin, Bundle().apply {
+                    putSerializable(SETTING_CONTAINER, viewModel.settingContainer.value)
+                })
+            } else {
+                findNavController().navigate(R.id.nav_pin_auth, Bundle().apply {
+                    putSerializable(SETTING_CONTAINER, viewModel.settingContainer.value)
+                    putSerializable(AUTHORIZATION_LISTENER, object : AuthorizationListener {
+                        override fun onAuthFailed() {
+                            Snackbar.make(findActivityViewById(R.id.coordinatorLayout), R.string.pin_authorize_failed_message, Snackbar.LENGTH_SHORT).show()
+                        }
+                        override fun onAuthComplete() {
+                            if (viewModel.settingContainer.value?.getBooleanValue(KEY_USE_PIN) != false) {
+                                viewModel.settingContainer.value?.getBooleanUpdate(KEY_USE_PIN, false)
+                            }
+                            if (findPreference<SwitchPreferenceCompat>(KEY_USE_FINGERPRINT)?.isChecked == true) {
+                                findPreference<SwitchPreferenceCompat>(KEY_USE_FINGERPRINT)?.isChecked = false
+                            }
+                        }
+                    })
+                })
+            }
+            return@setOnPreferenceChangeListener true
+        }
+        setOnContentClickListener {
+            if (sharedPreferences.contains(KEY_PIN_CODE) && viewModel.settingContainer.value?.getBooleanValue(KEY_USE_PIN) == true) {
+                findNavController().navigate(R.id.nav_pin_auth, Bundle().apply {
+                    putSerializable(SETTING_CONTAINER, viewModel.settingContainer.value)
+                    putSerializable(AUTHORIZATION_LISTENER, object : AuthorizationListener {
+                        override fun onAuthFailed() {
+                            Snackbar.make(findActivityViewById(R.id.coordinatorLayout), R.string.pin_authorize_failed_message, Snackbar.LENGTH_SHORT).show()
+                        }
+                        override fun onAuthComplete() {
+                            findNavController().navigate(R.id.nav_set_pin, Bundle().apply {
+                                putSerializable(SETTING_CONTAINER, viewModel.settingContainer.value)
+                                putInt(LAUNCH_TASK, LAUNCH_TASK_MODIFY)
+                            })
+                        }
+                    })
+                })
+            } else {
+                Snackbar.make(findActivityViewById<CoordinatorLayout>(R.id.coordinatorLayout), R.string.setting_use_pin_should_enable_to_set, LENGTH_SHORT).show()
+            }
+        }
+    }
+    
+    private fun initStatusBarColor(preferenceManager: SharedPreferences) =
         findPreference<TwoSidedSwitchPreferenceCompat>(KEY_CUSTOM_STATUS_BAR_COLOR)?.apply {
             if (!preferenceManager.contains(KEY_STATUS_BAR_COLOR)) {
                 @Suppress("ApplySharedPref")
@@ -186,45 +199,48 @@ class SettingFragment: PreferenceFragmentCompat(), FingerprintUtil {
                 return@setOnPreferenceChangeListener true
             }
         }
-        
+    
+    private fun initStatusBarTextColor() =
         findPreference<SwitchPreferenceCompat>(KEY_CUSTOM_STATUS_BAR_BLACK_TEXT)?.setOnPreferenceChangeListener { _, newValue ->
-            viewModel.settingContainer.value?.getBooleanUpdate(KEY_CUSTOM_STATUS_BAR_BLACK_TEXT, newValue as Boolean)
-            startActivity(Intent(requireContext(), MainActivity::class.java))
-            requireActivity().finish()
+        viewModel.settingContainer.value?.getBooleanUpdate(KEY_CUSTOM_STATUS_BAR_BLACK_TEXT, newValue as Boolean)
+        startActivity(Intent(requireContext(), MainActivity::class.java))
+        requireActivity().finish()
+        return@setOnPreferenceChangeListener true
+    }
+    
+    private fun initToolbarBackgroundColor(preferenceManager: SharedPreferences) =
+        findPreference<TwoSidedSwitchPreferenceCompat>(KEY_CUSTOM_TOOLBAR_BACKGROUND_COLOR)?.apply {
+        if (!preferenceManager.contains(KEY_TOOLBAR_BACKGROUND_COLOR)) {
+            @Suppress("ApplySharedPref")
+            preferenceManager.edit()
+                .putString(KEY_TOOLBAR_BACKGROUND_COLOR, DEFAULT_TOOLBAR_BACKGROUND_COLOR)
+                .commit()
+        }
+        icon.setTint(Color.parseColor(preferenceManager.getString(KEY_TOOLBAR_BACKGROUND_COLOR, null)))
+        setOnContentClickListener {
+            if (preferenceManager.getBoolean(KEY_CUSTOM_TOOLBAR_BACKGROUND_COLOR, false)) {
+                setToolbarBackgroundColor(preferenceManager.getString(KEY_TOOLBAR_BACKGROUND_COLOR, DEFAULT_TOOLBAR_BACKGROUND_COLOR)!!, this)
+            } else {
+                Snackbar.make(
+                    findActivityViewById<DrawerLayout>(R.id.drawer_layout),
+                    R.string.setting_toolbar_bg_snackbar_should_enable_to_set,
+                    LENGTH_SHORT
+                ).show()
+            }
+        }
+        setOnPreferenceChangeListener { _, newValue ->
+            viewModel.settingContainer.value?.getBooleanUpdate(KEY_CUSTOM_TOOLBAR_BACKGROUND_COLOR, newValue as Boolean)
+            if (newValue as Boolean) {
+                setToolbarBackgroundColor(preferenceManager.getString(KEY_TOOLBAR_BACKGROUND_COLOR, DEFAULT_TOOLBAR_BACKGROUND_COLOR)!!, this)
+            } else {
+                findActivityViewById<AppBarLayout>(R.id.appBarLayout).setBackgroundColor(Color.parseColor(DEFAULT_TOOLBAR_BACKGROUND_COLOR))
+                findPreference<Preference>(KEY_TOOLBAR_BACKGROUND_COLOR)?.isEnabled = false
+            }
             return@setOnPreferenceChangeListener true
         }
-        
-        findPreference<TwoSidedSwitchPreferenceCompat>(KEY_CUSTOM_TOOLBAR_BACKGROUND_COLOR)?.apply {
-            if (!preferenceManager.contains(KEY_TOOLBAR_BACKGROUND_COLOR)) {
-                @Suppress("ApplySharedPref")
-                preferenceManager.edit()
-                    .putString(KEY_TOOLBAR_BACKGROUND_COLOR, DEFAULT_TOOLBAR_BACKGROUND_COLOR)
-                    .commit()
-            }
-            icon.setTint(Color.parseColor(preferenceManager.getString(KEY_TOOLBAR_BACKGROUND_COLOR, null)))
-            setOnContentClickListener {
-                if (preferenceManager.getBoolean(KEY_CUSTOM_TOOLBAR_BACKGROUND_COLOR, false)) {
-                    setToolbarBackgroundColor(preferenceManager.getString(KEY_TOOLBAR_BACKGROUND_COLOR, DEFAULT_TOOLBAR_BACKGROUND_COLOR)!!, this)
-                } else {
-                    Snackbar.make(
-                        findActivityViewById<DrawerLayout>(R.id.drawer_layout),
-                        R.string.setting_toolbar_bg_snackbar_should_enable_to_set,
-                        LENGTH_SHORT
-                    ).show()
-                }
-            }
-            setOnPreferenceChangeListener { _, newValue ->
-                viewModel.settingContainer.value?.getBooleanUpdate(KEY_CUSTOM_TOOLBAR_BACKGROUND_COLOR, newValue as Boolean)
-                if (newValue as Boolean) {
-                    setToolbarBackgroundColor(preferenceManager.getString(KEY_TOOLBAR_BACKGROUND_COLOR, DEFAULT_TOOLBAR_BACKGROUND_COLOR)!!, this)
-                } else {
-                    findActivityViewById<AppBarLayout>(R.id.appBarLayout).setBackgroundColor(Color.parseColor(DEFAULT_TOOLBAR_BACKGROUND_COLOR))
-                    findPreference<Preference>(KEY_TOOLBAR_BACKGROUND_COLOR)?.isEnabled = false
-                }
-                return@setOnPreferenceChangeListener true
-            }
-        }
+    }
     
+    private fun initBackground(preferenceManager: SharedPreferences) {
         /**
          * Due to the limitation of Android Q [Build.VERSION_CODES.Q], application directories,
          * including the external directory fetched with application-owned [Context], e.g. [Context.getExternalFilesDir],
@@ -242,7 +258,6 @@ class SettingFragment: PreferenceFragmentCompat(), FingerprintUtil {
          * // @Suppress("DEPRECATION")
          * // cropImageUri = Uri.fromFile(File(Environment.getExternalStoragePublicDirectory(DIRECTORY_PICTURES), BACKGROUND_FILE))
          **/
-        
         val getImageContent = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { activityResult ->
             when (activityResult.resultCode) {
                 RESULT_OK -> {
@@ -253,7 +268,7 @@ class SettingFragment: PreferenceFragmentCompat(), FingerprintUtil {
                 }
             }
         }
-        
+    
         findPreference<TwoSidedSwitchPreferenceCompat>(KEY_CUSTOM_BACKGROUND_IMAGE)?.apply {
             setOnContentClickListener {
                 if (preferenceManager.getBoolean(KEY_CUSTOM_BACKGROUND_IMAGE, false)) {
@@ -277,7 +292,9 @@ class SettingFragment: PreferenceFragmentCompat(), FingerprintUtil {
                 return@setOnPreferenceChangeListener true
             }
         }
-        
+    }
+    
+    private fun initTitleColor(preferenceManager: SharedPreferences) =
         findPreference<TwoSidedSwitchPreferenceCompat>(KEY_CUSTOM_TITLE_COLOR)?.apply {
             if (!preferenceManager.contains(KEY_TITLE_COLOR)) {
                 @Suppress("ApplySharedPref")
@@ -307,8 +324,6 @@ class SettingFragment: PreferenceFragmentCompat(), FingerprintUtil {
                 }
             }
         }
-        
-    }
     
     private fun setStatusBarColor(color: String) = ColorPickDialogFragment(object : OnColorPickListener {
             
