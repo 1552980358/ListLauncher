@@ -31,7 +31,7 @@
             android:textColor="@color/black"
             android:maxLines="1"/>
         
-        <TextView
+        <sakuraba.saki.list.launcher.view.SummaryTextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/textViewPackageName"
