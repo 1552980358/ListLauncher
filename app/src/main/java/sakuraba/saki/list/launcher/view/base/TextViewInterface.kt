@@ -9,4 +9,9 @@ interface TextViewInterface {
     @ColorInt
     fun getTitleTextColor(): Int
     
+    fun hasCustomSummaryTextColor(): Boolean
+    
+    @ColorInt
+    fun getSummaryTextColor(): Int
+    
 }
