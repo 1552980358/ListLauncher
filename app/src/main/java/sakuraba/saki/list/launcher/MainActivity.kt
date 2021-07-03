@@ -23,13 +23,16 @@ import sakuraba.saki.list.launcher.main.setting.SettingContainer
 import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.KEY_CUSTOM_BACKGROUND_IMAGE
 import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.KEY_CUSTOM_STATUS_BAR_BLACK_TEXT
 import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.KEY_CUSTOM_STATUS_BAR_COLOR
+import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.KEY_CUSTOM_TITLE_COLOR
 import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.KEY_CUSTOM_TOOLBAR_BACKGROUND_COLOR
 import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.KEY_STATUS_BAR_COLOR
+import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.KEY_TITLE_COLOR
 import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.KEY_TOOLBAR_BACKGROUND_COLOR
 import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.SETTING_CONTAINER
 import sakuraba.saki.list.launcher.main.setting.SettingFragment.Companion.BACKGROUND_FILE
+import sakuraba.saki.list.launcher.view.base.TextViewInterface
 
-class MainActivity: AppCompatActivity() {
+class MainActivity: AppCompatActivity(), TextViewInterface {
     
     private lateinit var viewModel: MainViewModel
     private lateinit var appBarConfiguration: AppBarConfiguration
@@ -111,6 +114,16 @@ class MainActivity: AppCompatActivity() {
         viewModel.applicationChangeBroadcastReceiver.value?.getUnregistered(this)
         _activityMainBinding = null
         super.onDestroy()
+    }
+    
+    override fun hasCustomTitleTextColor(): Boolean {
+        return viewModel.settingContainer.value?.getBooleanValue(KEY_CUSTOM_TITLE_COLOR) == true
+    }
+    
+    override fun getTitleTextColor() = try {
+        Color.parseColor(viewModel.settingContainer.value?.getStringValue(KEY_TITLE_COLOR))
+    } catch (e: Exception) {
+        Color.BLACK
     }
     
 }

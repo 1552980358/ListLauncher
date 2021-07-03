@@ -41,6 +41,9 @@
     <string name="setting_background_snackbar_storing_image_fail">Storing image failed. Please try again later or contact the maintainer.</string>
     <string name="setting_background_snackbar_fetching_image_fail">Fetching image failed. Please try again later or contact the maintainer.</string>
     <string name="setting_background_snackbar_should_enable_to_set">You should enable this option before setting the custom image</string>
+    <string name="setting_custom_title_color_title">Custom title text color</string>
+    <string name="setting_custom_title_color_summary">Use custom color of all title text</string>
+    <string name="setting_custom_title_color_snackbar_should_enable_to_set">You should enable this option before setting the title text color</string>
     
     <string name="loading_dialog_title">Loading…</string>
     

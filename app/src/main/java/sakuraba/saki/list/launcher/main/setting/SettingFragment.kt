@@ -9,7 +9,6 @@ import android.os.Bundle
 import android.provider.MediaStore
 import android.view.Menu
 import android.view.MenuInflater
-import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.content.ContextCompat
@@ -34,13 +33,16 @@ import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.KEY_B
 import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.KEY_CUSTOM_BACKGROUND_IMAGE
 import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.KEY_CUSTOM_STATUS_BAR_BLACK_TEXT
 import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.KEY_CUSTOM_STATUS_BAR_COLOR
+import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.KEY_CUSTOM_TITLE_COLOR
 import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.KEY_CUSTOM_TOOLBAR_BACKGROUND_COLOR
 import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.KEY_PIN_CODE
 import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.KEY_STATUS_BAR_COLOR
+import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.KEY_TITLE_COLOR
 import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.KEY_TOOLBAR_BACKGROUND_COLOR
 import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.KEY_USE_FINGERPRINT
 import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.KEY_USE_PIN
 import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.SETTING_CONTAINER
+import sakuraba.saki.list.launcher.preference.TwoSidedSwitchPreferenceCompat
 import sakuraba.saki.list.launcher.util.findActivityViewById
 import sakuraba.saki.list.launcher.view.CropImageView
 
@@ -53,6 +55,7 @@ class SettingFragment: PreferenceFragmentCompat(), FingerprintUtil {
         
         private const val DEFAULT_STATUS_BAR_COLOR = "#FF3700B3"
         private const val DEFAULT_TOOLBAR_BACKGROUND_COLOR = "#FF6200EE"
+        private const val DEFAULT_TITLE_COLOR = "#FFFFFFFF"
         
         const val BACKGROUND_FILE = "ListLauncherBackground.jpeg"
         
@@ -274,6 +277,37 @@ class SettingFragment: PreferenceFragmentCompat(), FingerprintUtil {
                 return@setOnPreferenceChangeListener true
             }
         }
+        
+        findPreference<TwoSidedSwitchPreferenceCompat>(KEY_CUSTOM_TITLE_COLOR)?.apply {
+            if (!preferenceManager.contains(KEY_TITLE_COLOR)) {
+                @Suppress("ApplySharedPref")
+                preferenceManager.edit()
+                    .putString(KEY_TITLE_COLOR, DEFAULT_TITLE_COLOR)
+                    .commit()
+            }
+            icon.setTint(Color.parseColor(preferenceManager.getString(KEY_TITLE_COLOR, null)))
+            setOnPreferenceChangeListener { _, newValue ->
+                if (newValue as Boolean) {
+                    setTitleTextColor(preferenceManager.getString(KEY_TITLE_COLOR, DEFAULT_TITLE_COLOR)!!)
+                } else {
+                    startActivity(Intent(requireContext(), MainActivity::class.java))
+                    requireActivity().finish()
+                }
+                return@setOnPreferenceChangeListener true
+            }
+            setOnContentClickListener {
+                if (preferenceManager.getBoolean(KEY_CUSTOM_TITLE_COLOR, false)) {
+                    setTitleTextColor(preferenceManager.getString(KEY_TITLE_COLOR, DEFAULT_TITLE_COLOR)!!)
+                } else {
+                    Snackbar.make(
+                        findActivityViewById<DrawerLayout>(R.id.drawer_layout),
+                        R.string.setting_custom_title_color_snackbar_should_enable_to_set,
+                        LENGTH_SHORT
+                    ).show()
+                }
+            }
+        }
+        
     }
     
     private fun setStatusBarColor(color: String) = ColorPickDialogFragment(object : OnColorPickListener {
@@ -323,6 +357,33 @@ class SettingFragment: PreferenceFragmentCompat(), FingerprintUtil {
         override fun onCancel() {
             findActivityViewById<AppBarLayout>(R.id.appBarLayout).setBackgroundColor(Color.parseColor(color))
         }
+    }, Color.parseColor(color)).show(parentFragmentManager)
+    
+    private fun setTitleTextColor(color: String) = ColorPickDialogFragment(object : OnColorPickListener {
+        override fun onColorPick(color: Int, colorStr: String) {
+            viewModel.settingContainer.value?.getStringUpdate(KEY_TITLE_COLOR, colorStr)
+            @Suppress("ApplySharedPref")
+            PreferenceManager.getDefaultSharedPreferences(requireContext())
+                .edit()
+                .putString(KEY_TITLE_COLOR, colorStr)
+                .commit()
+            // preference.icon?.setTint(color)
+            startActivity(Intent(requireContext(), MainActivity::class.java))
+            requireActivity().finish()
+        }
+    
+        override fun onSelectDefault() {
+            viewModel.settingContainer.value?.getStringUpdate(KEY_TITLE_COLOR, DEFAULT_TITLE_COLOR)
+            @Suppress("ApplySharedPref")
+            PreferenceManager.getDefaultSharedPreferences(requireContext())
+                .edit()
+                .putString(KEY_TITLE_COLOR, DEFAULT_TITLE_COLOR)
+                .commit()
+            startActivity(Intent(requireContext(), MainActivity::class.java))
+            requireActivity().finish()
+        }
+    
+        override fun onCancel() {}
     }, Color.parseColor(color)).show(parentFragmentManager)
     
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
