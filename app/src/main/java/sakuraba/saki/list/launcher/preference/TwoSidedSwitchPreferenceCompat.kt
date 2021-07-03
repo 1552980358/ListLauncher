@@ -1,4 +1,4 @@
-package sakuraba.saki.list.launcher.main.setting
+package sakuraba.saki.list.launcher.preference
 
 import android.content.Context
 import android.util.AttributeSet
@@ -6,10 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.preference.Preference
 import androidx.preference.PreferenceViewHolder
-import androidx.preference.SwitchPreferenceCompat
 import sakuraba.saki.list.launcher.R
 
-class TwoSidedSwitchPreferenceCompat: SwitchPreferenceCompat {
+class TwoSidedSwitchPreferenceCompat: TextColorChangeSwitchPreferenceCompat {
     
     constructor(context: Context): this(context, null)
     constructor(context: Context, attributeSet: AttributeSet?): super(context, attributeSet)
