@@ -29,7 +29,7 @@
         android:summary="@string/setting_customize_summary"
         app:iconSpaceReserved="false">
         
-        <SwitchPreferenceCompat
+        <sakuraba.saki.list.launcher.preference.TextColorChangeSwitchPreferenceCompat
             android:key="key_status_bar_black_text"
             android:title="@string/setting_status_bar_black_text_title"
             android:summary="@string/setting_status_bar_black_text_summary"
