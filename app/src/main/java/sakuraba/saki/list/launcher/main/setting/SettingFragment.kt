@@ -34,10 +34,12 @@ import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.KEY_B
 import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.KEY_CUSTOM_BACKGROUND_IMAGE
 import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.KEY_CUSTOM_STATUS_BAR_BLACK_TEXT
 import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.KEY_CUSTOM_STATUS_BAR_COLOR
+import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.KEY_CUSTOM_SUMMARY_COLOR
 import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.KEY_CUSTOM_TITLE_COLOR
 import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.KEY_CUSTOM_TOOLBAR_BACKGROUND_COLOR
 import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.KEY_PIN_CODE
 import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.KEY_STATUS_BAR_COLOR
+import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.KEY_SUMMARY_COLOR
 import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.KEY_TITLE_COLOR
 import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.KEY_TOOLBAR_BACKGROUND_COLOR
 import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.KEY_USE_FINGERPRINT
@@ -57,6 +59,7 @@ class SettingFragment: PreferenceFragmentCompat(), FingerprintUtil {
         private const val DEFAULT_STATUS_BAR_COLOR = "#FF3700B3"
         private const val DEFAULT_TOOLBAR_BACKGROUND_COLOR = "#FF6200EE"
         private const val DEFAULT_TITLE_COLOR = "#FF000000"
+        private const val DEFAULT_SUMMARY_COLOR = "#FF757575"
         
         const val BACKGROUND_FILE = "ListLauncherBackground.jpeg"
         
@@ -83,6 +86,7 @@ class SettingFragment: PreferenceFragmentCompat(), FingerprintUtil {
         initToolbarBackgroundColor(preferenceManager)
         initBackground(preferenceManager)
         initTitleColor(preferenceManager)
+        initSummaryColor(preferenceManager)
     }
     
     private fun initFingerprint() =
@@ -302,7 +306,7 @@ class SettingFragment: PreferenceFragmentCompat(), FingerprintUtil {
                     .putString(KEY_TITLE_COLOR, DEFAULT_TITLE_COLOR)
                     .commit()
             }
-            icon.setTint(Color.parseColor(preferenceManager.getString(KEY_TITLE_COLOR, null)))
+            icon.setTint(Color.parseColor(preferenceManager.getString(KEY_TITLE_COLOR, DEFAULT_TITLE_COLOR)))
             setOnPreferenceChangeListener { _, newValue ->
                 if (newValue as Boolean) {
                     setTitleTextColor(preferenceManager.getString(KEY_TITLE_COLOR, DEFAULT_TITLE_COLOR)!!)
@@ -319,6 +323,37 @@ class SettingFragment: PreferenceFragmentCompat(), FingerprintUtil {
                     Snackbar.make(
                         findActivityViewById<DrawerLayout>(R.id.drawer_layout),
                         R.string.setting_custom_title_color_snackbar_should_enable_to_set,
+                        LENGTH_SHORT
+                    ).show()
+                }
+            }
+        }
+    
+    private fun initSummaryColor(preferenceManager: SharedPreferences) =
+        findPreference<TwoSidedSwitchPreferenceCompat>(KEY_CUSTOM_SUMMARY_COLOR)?.apply {
+            if (!preferenceManager.contains(KEY_SUMMARY_COLOR)) {
+                @Suppress("ApplySharedPref")
+                preferenceManager.edit()
+                    .putString(KEY_SUMMARY_COLOR, DEFAULT_SUMMARY_COLOR)
+                    .commit()
+            }
+            icon.setTint(Color.parseColor(preferenceManager.getString(KEY_SUMMARY_COLOR, DEFAULT_SUMMARY_COLOR)))
+            setOnPreferenceChangeListener { _, newValue ->
+                if (newValue as Boolean) {
+                    setTitleTextColor(preferenceManager.getString(KEY_SUMMARY_COLOR, DEFAULT_SUMMARY_COLOR)!!)
+                } else {
+                    startActivity(Intent(requireContext(), MainActivity::class.java))
+                    requireActivity().finish()
+                }
+                return@setOnPreferenceChangeListener true
+            }
+            setOnContentClickListener {
+                if (preferenceManager.getBoolean(KEY_CUSTOM_SUMMARY_COLOR, false)) {
+                    setTitleTextColor(preferenceManager.getString(KEY_SUMMARY_COLOR, DEFAULT_SUMMARY_COLOR)!!)
+                } else {
+                    Snackbar.make(
+                        findActivityViewById<DrawerLayout>(R.id.drawer_layout),
+                        R.string.setting_custom_summary_color_snackbar_should_enable_to_set,
                         LENGTH_SHORT
                     ).show()
                 }

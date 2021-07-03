@@ -44,6 +44,9 @@
     <string name="setting_custom_title_color_title">Custom title text color</string>
     <string name="setting_custom_title_color_summary">Use custom color of all title text</string>
     <string name="setting_custom_title_color_snackbar_should_enable_to_set">You should enable this option before setting the title text color</string>
+    <string name="setting_custom_summary_color_title">Custom summary text color</string>
+    <string name="setting_custom_summary_color_summary">Use custom color of all summary text</string>
+    <string name="setting_custom_summary_color_snackbar_should_enable_to_set">You should enable this option before setting the summary text color</string>
     
     <string name="loading_dialog_title">Loading…</string>
     

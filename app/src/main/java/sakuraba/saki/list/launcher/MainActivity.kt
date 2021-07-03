@@ -23,9 +23,11 @@ import sakuraba.saki.list.launcher.main.setting.SettingContainer
 import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.KEY_CUSTOM_BACKGROUND_IMAGE
 import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.KEY_CUSTOM_STATUS_BAR_BLACK_TEXT
 import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.KEY_CUSTOM_STATUS_BAR_COLOR
+import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.KEY_CUSTOM_SUMMARY_COLOR
 import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.KEY_CUSTOM_TITLE_COLOR
 import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.KEY_CUSTOM_TOOLBAR_BACKGROUND_COLOR
 import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.KEY_STATUS_BAR_COLOR
+import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.KEY_SUMMARY_COLOR
 import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.KEY_TITLE_COLOR
 import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.KEY_TOOLBAR_BACKGROUND_COLOR
 import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.SETTING_CONTAINER
@@ -122,6 +124,16 @@ class MainActivity: AppCompatActivity(), TextViewInterface {
     
     override fun getTitleTextColor() = try {
         Color.parseColor(viewModel.settingContainer.value?.getStringValue(KEY_TITLE_COLOR))
+    } catch (e: Exception) {
+        Color.BLACK
+    }
+    
+    override fun hasCustomSummaryTextColor(): Boolean {
+        return viewModel.settingContainer.value?.getBooleanValue(KEY_CUSTOM_SUMMARY_COLOR) == true
+    }
+    
+    override fun getSummaryTextColor()= try {
+        Color.parseColor(viewModel.settingContainer.value?.getStringValue(KEY_SUMMARY_COLOR))
     } catch (e: Exception) {
         Color.BLACK
     }
