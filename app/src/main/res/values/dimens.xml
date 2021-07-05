@@ -15,4 +15,7 @@
     
     <dimen name="crop_image_stroke_width">3dp</dimen>
     <dimen name="crop_image_stroke_circle_radius">10dp</dimen>
+    
+    <dimen name="side_char_text_letters_diff">5dp</dimen>
+    <dimen name="side_char_text_size">17sp</dimen>
 </resources>
