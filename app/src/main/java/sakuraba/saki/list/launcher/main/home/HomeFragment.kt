@@ -101,7 +101,44 @@ class HomeFragment: Fragment() {
         
             // Short by converting all Chinese into characters for comparing
             // Will further support more language
-            appInfos.sortBy { Pinyin.toPinyin(it.name, "").uppercase() }
+            appInfos.forEach {
+                it.pinYin = Pinyin.toPinyin(it.name, "").uppercase()
+            }
+            appInfos.sortBy { it.pinYin }
+            
+            val chars = homeViewModel.chars
+    
+            var indexChar: Int
+            for ((index, appInfo) in appInfos.withIndex()) {
+                indexChar = LETTERS.indexOf(appInfo.pinYin.first())
+                if (indexChar == -1) {
+                    if (chars[LETTERS.lastIndex] == -1) {
+                        chars[LETTERS.lastIndex] = index
+                    } else {
+                        break
+                    }
+                } else if (chars[indexChar] == -1) {
+                    chars[indexChar] = index
+                }
+            }
+            
+            for (index in 0 .. chars.lastIndex) {
+                if (chars[index] == -1) {
+                    if (index == 0) {
+                        chars[index] = 0
+                        continue
+                    }
+                    if (index == chars.lastIndex) {
+                        var i = index
+                        while (chars[i] == -1) {
+                            i--
+                        }
+                        chars[index] = chars[i]
+                        continue
+                    }
+                    chars[index] = chars[index - 1]
+                }
+            }
         
             // Call adapter for update of RecyclerView
             launch(Dispatchers.Main) {
