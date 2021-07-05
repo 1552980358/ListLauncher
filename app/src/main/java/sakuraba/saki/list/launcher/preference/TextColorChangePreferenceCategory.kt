@@ -1,17 +1,12 @@
 package sakuraba.saki.list.launcher.preference
 
 import android.content.Context
+import android.graphics.Typeface
 import android.util.AttributeSet
-import android.util.Log
 import android.widget.TextView
 import androidx.preference.PreferenceCategory
 import androidx.preference.PreferenceViewHolder
-import sakuraba.saki.list.launcher.MainActivity
 import sakuraba.saki.list.launcher.view.base.TextViewInterface
-
-/***
- * Because unknown reason, changing title text color may cause the disappear of the whole [PreferenceCategory]
- ***/
 
 class TextColorChangePreferenceCategory: PreferenceCategory {
     
@@ -22,9 +17,17 @@ class TextColorChangePreferenceCategory: PreferenceCategory {
         super.onBindViewHolder(holder)
     
         (context as TextViewInterface).apply {
-            Log.e("CONTEXT", (context is MainActivity).toString())
             if (hasCustomTitleTextColor()) {
-                (holder?.findViewById(android.R.id.title) as TextView?)?.setTextColor(getTitleTextColor())
+                (holder?.findViewById(android.R.id.title) as TextView?)?.apply {
+                    setTextColor(getTitleTextColor())
+                    // Identification as category title
+                    setTypeface(typeface, Typeface.BOLD)
+                }
+            }
+            if (hasCustomSummaryTextColor()) {
+                (holder?.findViewById(android.R.id.summary) as TextView?)?.apply {
+                    setTextColor(getSummaryTextColor())
+                }
             }
         }
         
