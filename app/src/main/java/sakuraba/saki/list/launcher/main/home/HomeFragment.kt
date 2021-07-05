@@ -29,6 +29,8 @@ import sakuraba.saki.list.launcher.databinding.FragmentHomeBinding
 import sakuraba.saki.list.launcher.main.setting.SettingContainer
 import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.SETTING_CONTAINER
 import sakuraba.saki.list.launcher.util.findActivityViewById
+import sakuraba.saki.list.launcher.view.SideCharView.Companion.LETTERS
+import sakuraba.saki.list.launcher.view.SideCharView.Companion.OnLetterTouchListener
 
 class HomeFragment: Fragment() {
     
@@ -41,7 +43,7 @@ class HomeFragment: Fragment() {
         homeViewModel.setSettingContainer(requireActivity().intent.getSerializableExtra(SETTING_CONTAINER) as SettingContainer?)
         // val root = inflater.inflate(R.layout.fragment_home, container, false)
         _fragmentHomeBinding = FragmentHomeBinding.inflate(inflater)
-        fragmentHomeBinding.root.isRefreshing = true
+        fragmentHomeBinding.swipeRefreshLayout.isRefreshing = true
         return fragmentHomeBinding.root
     }
     
@@ -58,12 +60,34 @@ class HomeFragment: Fragment() {
             LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
         fragmentHomeBinding.recyclerView.adapter = RecyclerViewAdapter(appInfos, requireActivity())
         updateAppList()
-        fragmentHomeBinding.root.setOnRefreshListener { updateAppList() }
+        fragmentHomeBinding.swipeRefreshLayout.setOnRefreshListener { updateAppList() }
         (requireActivity().intent.getSerializableExtra(APPLICATION_CHANGE_BROADCAST_RECEIVER) as ApplicationChangeBroadcastReceiver).setApplicationChangeListener {
             Snackbar.make(findActivityViewById<CoordinatorLayout>(R.id.coordinatorLayout), R.string.main_application_change, LENGTH_SHORT).show()
-            fragmentHomeBinding.root.isRefreshing = true
+            fragmentHomeBinding.swipeRefreshLayout.isRefreshing = true
             updateAppList()
         }
+        fragmentHomeBinding.sideCharView.setOnLetterTouchListener (object : OnLetterTouchListener {
+            override fun onTouch(index: Int, char: Char) {
+                if (!fragmentHomeBinding.swipeRefreshLayout.isRefreshing) {
+                    (fragmentHomeBinding.recyclerView.layoutManager as LinearLayoutManager).scrollToPositionWithOffset(homeViewModel.chars[index], 0)
+                    fragmentHomeBinding.textView.text = char.toString()
+                    fragmentHomeBinding.textView.visibility = View.VISIBLE
+                }
+            }
+            override fun onMove(index: Int, char: Char) {
+                if (!fragmentHomeBinding.swipeRefreshLayout.isRefreshing) {
+                    (fragmentHomeBinding.recyclerView.layoutManager as LinearLayoutManager).scrollToPositionWithOffset(homeViewModel.chars[index], 0)
+                    fragmentHomeBinding.textView.text = char.toString()
+                }
+            }
+            override fun onCancel(index: Int, char: Char) {
+                if (!fragmentHomeBinding.swipeRefreshLayout.isRefreshing) {
+                    (fragmentHomeBinding.recyclerView.layoutManager as LinearLayoutManager).scrollToPositionWithOffset(homeViewModel.chars[index], 0)
+                    fragmentHomeBinding.textView.text = char.toString()
+                    fragmentHomeBinding.textView.visibility = View.GONE
+                }
+            }
+        })
     }
     
     private fun updateAppList() {
@@ -146,7 +170,7 @@ class HomeFragment: Fragment() {
                 // Dismiss and remove LoadingDialogFragment
                 // homeViewModel.loadingDialogFragment.value?.dismiss()
                 // homeViewModel.setLoadingDialogFragment()
-                fragmentHomeBinding.root.isRefreshing = false
+                fragmentHomeBinding.swipeRefreshLayout.isRefreshing = false
             }
         }
     }
@@ -158,7 +182,7 @@ class HomeFragment: Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.action_settings -> {
-                if (fragmentHomeBinding.root.isRefreshing) {
+                if (fragmentHomeBinding.swipeRefreshLayout.isRefreshing) {
                     return false
                 }
                 findNavController().navigate(R.id.nav_setting, Bundle().apply { putSerializable(SETTING_CONTAINER, homeViewModel.settingContainer.value) })
