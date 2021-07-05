@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import sakuraba.saki.list.launcher.main.setting.SettingContainer
+import sakuraba.saki.list.launcher.view.SideCharView.Companion.LETTERS
 
 class HomeViewModel: ViewModel() {
     
@@ -18,5 +19,7 @@ class HomeViewModel: ViewModel() {
         _appInfos.value = arrayList
     }
     val appInfos get() = _appInfos as LiveData<ArrayList<AppInfo>>
+    
+    val chars = IntArray(LETTERS.length) { -1 }
     
 }
