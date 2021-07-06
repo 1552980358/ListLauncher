@@ -34,4 +34,62 @@
     <dimen name="img_color_cube_size">10dp</dimen>
     <dimen name="img_pointer_width">7dp</dimen>
     <dimen name="img_pointer_height">8.1510dp</dimen>
+    
+    <dimen name="fragment_application_info_dialog_root_padding_top">2dp</dimen>
+    <dimen name="fragment_application_info_dialog_root_paddings">10dp</dimen>
+    <dimen name="fragment_application_info_dialog_view_width">80dp</dimen>
+    <dimen name="fragment_application_info_dialog_view_height">4dp</dimen>
+    <dimen name="fragment_application_info_dialog_image_view_size">50dp</dimen>
+    <dimen name="fragment_application_info_dialog_application_name_text_size">20sp</dimen>
+    <dimen name="fragment_application_info_dialog_package_name_text_size">17sp</dimen>
+    <dimen name="fragment_application_info_dialog_version_name_text_size">17sp</dimen>
+    <dimen name="fragment_application_info_dialog_version_code_text_size">17sp</dimen>
+    
+    <dimen name="fragment_color_pick_dialog_root_padding">20dp</dimen>
+    <dimen name="fragment_color_pick_dialog_color_select_relative_layout_height">200dp</dimen>
+    <dimen name="fragment_color_pick_dialog_color_plate_size">200dp</dimen>
+    <dimen name="fragment_color_pick_dialog_color_pad_width">30dp</dimen>
+    <dimen name="fragment_color_pick_dialog_color_pad_height">200dp</dimen>
+    <dimen name="fragment_color_pick_dialog_color_transparency_width">30dp</dimen>
+    <dimen name="fragment_color_pick_dialog_color_transparency_height">200dp</dimen>
+    <dimen name="fragment_color_pick_dialog_color_present_relative_layout_padding_bottom">10dp</dimen>
+    <dimen name="fragment_color_pick_dialog_image_view_size">35dp</dimen>
+    <dimen name="fragment_color_pick_dialog_image_view_margins">20dp</dimen>
+    <dimen name="fragment_color_pick_dialog_color_present_width">70dp</dimen>
+    <dimen name="fragment_color_pick_dialog_color_present_height">35dp</dimen>
+    
+    <dimen name="fragment_crop_image_crop_image_view_margins">10dp</dimen>
+    
+    <dimen name="fragment_fingerprint_dialog_root_padding">10dp</dimen>
+    <dimen name="fragment_fingerprint_dialog_image_view_size">50dp</dimen>
+    <dimen name="fragment_fingerprint_dialog_image_view_margin_bottom">10dp</dimen>
+    
+    <dimen name="fragment_home_side_char_view_width">20dp</dimen>
+    <dimen name="fragment_home_text_view_size">50dp</dimen>
+    <dimen name="fragment_home_text_view_text_size">25sp</dimen>
+    
+    <dimen name="fragment_launch_app_image_view_size">100dp</dimen>
+    <dimen name="fragment_launch_app_text_view_text_size">17sp</dimen>
+    
+    <dimen name="fragment_pin_authorize_root_paddings">10dp</dimen>
+    <dimen name="fragment_pin_authorize_text_view_text_size">17sp</dimen>
+    
+    <dimen name="fragment_pin_input_dialog_root_padding">10dp</dimen>
+    <dimen name="fragment_pin_input_dialog_view_width">80dp</dimen>
+    <dimen name="fragment_pin_input_dialog_view_height">4dp</dimen>
+    <dimen name="fragment_pin_input_dialog_view_bottom">10dp</dimen>
+    <dimen name="fragment_pin_input_dialog_text_view_text_size">17sp</dimen>
+    <dimen name="fragment_pin_input_dialog_pin_input_layout_height">250dp</dimen>
+    
+    <dimen name="fragment_set_pin_root_padding">10dp</dimen>
+    <dimen name="fragment_set_pin_text_view_text_size">17sp</dimen>
+    
+    <dimen name="layout_pin_input_pin_code_view_height">50dp</dimen>
+    <dimen name="layout_pin_input_linear_layout_height">50dp</dimen>
+    <dimen name="layout_pin_input_text_view_text_size">17sp</dimen>
+    
+    <dimen name="recycler_view_sub_view_root_height">50dp</dimen>
+    <dimen name="recycler_view_sub_view_image_view_size">40dp</dimen>
+    <dimen name="recycler_view_sub_view_image_view_margins">5dp</dimen>
+    <dimen name="recycler_view_sub_view_text_view_text_size">17sp</dimen>
 </resources>

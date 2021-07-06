@@ -5,31 +5,31 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="20dp">
+    android:padding="@dimen/fragment_color_pick_dialog_root_padding">
     
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="@dimen/fragment_color_pick_dialog_color_select_relative_layout_height"
         android:orientation="horizontal"
         android:layout_marginBottom="10dp">
         
         <sakuraba.saki.list.launcher.view.ColorPlateView
-            android:layout_width="200dp"
-            android:layout_height="200dp"
+            android:layout_width="@dimen/fragment_color_pick_dialog_color_plate_size"
+            android:layout_height="@dimen/fragment_color_pick_dialog_color_plate_size"
             android:id="@+id/colorPlateView"
             android:layout_centerHorizontal="true"
             android:layout_marginStart="20dp"
             android:layout_marginEnd="20dp" />
         
         <sakuraba.saki.list.launcher.view.ColorPadView
-            android:layout_width="30dp"
-            android:layout_height="200dp"
+            android:layout_width="@dimen/fragment_color_pick_dialog_color_pad_width"
+            android:layout_height="@dimen/fragment_color_pick_dialog_color_pad_height"
             android:id="@+id/colorPadView"
             android:layout_toStartOf="@id/colorPlateView" />
         
         <sakuraba.saki.list.launcher.view.ColorTransparencyView
-            android:layout_width="30dp"
-            android:layout_height="200dp"
+            android:layout_width="@dimen/fragment_color_pick_dialog_color_transparency_width"
+            android:layout_height="@dimen/fragment_color_pick_dialog_color_transparency_height"
             android:id="@+id/colorTransparencyView"
             android:layout_toEndOf="@id/colorPlateView" />
     
@@ -39,27 +39,27 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:paddingBottom="10dp">
+        android:paddingBottom="@dimen/fragment_color_pick_dialog_color_present_relative_layout_padding_bottom">
         
         <ImageView
-            android:layout_width="35dp"
-            android:layout_height="35dp"
+            android:layout_width="@dimen/fragment_color_pick_dialog_image_view_size"
+            android:layout_height="@dimen/fragment_color_pick_dialog_image_view_size"
             android:id="@+id/imageView"
             android:src="@drawable/img_arrow"
             android:layout_centerInParent="true"
             tools:ignore="ContentDescription"
-            android:layout_marginStart="20dp"
-            android:layout_marginEnd="20dp" />
+            android:layout_marginStart="@dimen/fragment_color_pick_dialog_image_view_margins"
+            android:layout_marginEnd="@dimen/fragment_color_pick_dialog_image_view_margins" />
         
         <sakuraba.saki.list.launcher.view.ColorPresentView
-            android:layout_width="70dp"
-            android:layout_height="35dp"
+            android:layout_width="@dimen/fragment_color_pick_dialog_color_present_width"
+            android:layout_height="@dimen/fragment_color_pick_dialog_color_present_height"
             android:id="@+id/colorPresentViewOrigin"
             android:layout_toStartOf="@id/imageView" />
         
         <sakuraba.saki.list.launcher.view.ColorPresentView
-            android:layout_width="70dp"
-            android:layout_height="35dp"
+            android:layout_width="@dimen/fragment_color_pick_dialog_color_present_width"
+            android:layout_height="@dimen/fragment_color_pick_dialog_color_present_height"
             android:id="@+id/colorPresentViewNew"
             android:layout_toEndOf="@id/imageView" />
     

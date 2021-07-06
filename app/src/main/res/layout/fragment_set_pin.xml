@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".main.setting.SetPinFragment"
-    android:padding="10dp">
+    android:padding="@dimen/fragment_set_pin_root_padding">
     
     <TextView
         android:layout_width="match_parent"
@@ -15,7 +15,7 @@
         android:gravity="center"
         android:text="@string/set_pin_title_1"
         android:textColor="@color/black"
-        android:textSize="17sp" />
+        android:textSize="@dimen/fragment_set_pin_text_view_text_size" />
     
     <sakuraba.saki.list.launcher.viewGroup.PinInputLayout
         android:layout_width="match_parent"

@@ -5,22 +5,22 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:paddingTop="2dp"
-    android:paddingStart="10dp"
-    android:paddingEnd="10dp"
-    android:paddingBottom="10dp"
+    android:paddingTop="@dimen/fragment_application_info_dialog_root_padding_top"
+    android:paddingStart="@dimen/fragment_application_info_dialog_root_paddings"
+    android:paddingEnd="@dimen/fragment_application_info_dialog_root_paddings"
+    android:paddingBottom="@dimen/fragment_application_info_dialog_root_paddings"
     android:background="@drawable/bg_bottom_sheet_root">
     
     <View
-        android:layout_width="80dp"
-        android:layout_height="4dp"
+        android:layout_width="@dimen/fragment_application_info_dialog_view_width"
+        android:layout_height="@dimen/fragment_application_info_dialog_view_height"
         android:background="@drawable/bg_bottom_sheet_pull_bar"
         android:layout_gravity="center"
         android:layout_marginBottom="10dp" />
     
     <ImageView
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_width="@dimen/fragment_application_info_dialog_image_view_size"
+        android:layout_height="@dimen/fragment_application_info_dialog_image_view_size"
         android:id="@+id/imageView_icon"
         tools:ignore="ContentDescription"
         android:layout_gravity="center_horizontal" />
@@ -37,7 +37,7 @@
         android:id="@+id/textViewApplicationName"
         android:gravity="center"
         android:maxLines="1"
-        android:textSize="20sp"
+        android:textSize="@dimen/fragment_application_info_dialog_application_name_text_size"
         android:textColor="@color/black" />
     
     <TextView
@@ -51,7 +51,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/textViewPackageName"
         android:gravity="center"
-        android:textSize="17sp"
+        android:textSize="@dimen/fragment_application_info_dialog_package_name_text_size"
         android:textColor="@color/black" />
     
     <TextView
@@ -96,7 +96,7 @@
             android:layout_below="@id/textViewVersionNameTitle"
             android:layout_toStartOf="@id/textViewDivider"
             android:textColor="@color/black"
-            android:textSize="17sp" />
+            android:textSize="@dimen/fragment_application_info_dialog_version_name_text_size" />
         
         <TextView
             android:layout_width="wrap_content"
@@ -105,7 +105,7 @@
             android:layout_below="@id/textViewVersionCodeTitle"
             android:layout_toEndOf="@id/textViewDivider"
             android:textColor="@color/black"
-            android:textSize="17sp" />
+            android:textSize="@dimen/fragment_application_info_dialog_version_code_text_size" />
     
     </RelativeLayout>
 

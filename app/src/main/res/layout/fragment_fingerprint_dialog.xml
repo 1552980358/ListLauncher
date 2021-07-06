@@ -4,14 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="10dp"
+    android:padding="@dimen/fragment_fingerprint_dialog_root_padding"
     tools:ignore="UseCompoundDrawables">
     
     <ImageView
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_width="@dimen/fragment_fingerprint_dialog_image_view_size"
+        android:layout_height="@dimen/fragment_fingerprint_dialog_image_view_size"
         android:id="@+id/imageView"
-        android:layout_marginBottom="10dp"
+        android:layout_marginBottom="@dimen/fragment_fingerprint_dialog_image_view_margin_bottom"
         tools:ignore="ContentDescription"
         android:src="@drawable/ic_fingerprint"
         android:layout_centerHorizontal="true" />

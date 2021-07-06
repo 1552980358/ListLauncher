@@ -8,12 +8,12 @@
     
     <sakuraba.saki.list.launcher.view.PinCodeView
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="@dimen/layout_pin_input_pin_code_view_height"
         android:id="@+id/pinCodeView" />
     
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="@dimen/layout_pin_input_linear_layout_height"
         android:orientation="horizontal"
         tools:ignore="HardcodedText" >
         
@@ -25,7 +25,7 @@
             android:gravity="center"
             android:text="1"
             android:textColor="@color/black"
-            android:textSize="17sp"
+            android:textSize="@dimen/layout_pin_input_text_view_text_size"
             android:layout_weight="1" />
         
         <TextView
@@ -36,7 +36,7 @@
             android:gravity="center"
             android:text="2"
             android:textColor="@color/black"
-            android:textSize="17sp"
+            android:textSize="@dimen/layout_pin_input_text_view_text_size"
             android:layout_weight="1" />
         
         <TextView
@@ -47,14 +47,14 @@
             android:gravity="center"
             android:text="3"
             android:textColor="@color/black"
-            android:textSize="17sp"
+            android:textSize="@dimen/layout_pin_input_text_view_text_size"
             android:layout_weight="1" />
     
     </LinearLayout>
     
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="@dimen/layout_pin_input_linear_layout_height"
         android:orientation="horizontal"
         tools:ignore="HardcodedText">
         
@@ -66,7 +66,7 @@
             android:gravity="center"
             android:text="4"
             android:textColor="@color/black"
-            android:textSize="17sp"
+            android:textSize="@dimen/layout_pin_input_text_view_text_size"
             android:layout_weight="1" />
         
         <TextView
@@ -77,7 +77,7 @@
             android:gravity="center"
             android:text="5"
             android:textColor="@color/black"
-            android:textSize="17sp"
+            android:textSize="@dimen/layout_pin_input_text_view_text_size"
             android:layout_weight="1" />
         
         <TextView
@@ -88,14 +88,14 @@
             android:gravity="center"
             android:text="6"
             android:textColor="@color/black"
-            android:textSize="17sp"
+            android:textSize="@dimen/layout_pin_input_text_view_text_size"
             android:layout_weight="1" />
     
     </LinearLayout>
     
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="@dimen/layout_pin_input_linear_layout_height"
         android:orientation="horizontal"
         tools:ignore="HardcodedText">
         
@@ -107,7 +107,7 @@
             android:gravity="center"
             android:text="7"
             android:textColor="@color/black"
-            android:textSize="17sp"
+            android:textSize="@dimen/layout_pin_input_text_view_text_size"
             android:layout_weight="1" />
         
         <TextView
@@ -118,7 +118,7 @@
             android:gravity="center"
             android:text="8"
             android:textColor="@color/black"
-            android:textSize="17sp"
+            android:textSize="@dimen/layout_pin_input_text_view_text_size"
             android:layout_weight="1" />
         
         <TextView
@@ -129,14 +129,14 @@
             android:gravity="center"
             android:text="9"
             android:textColor="@color/black"
-            android:textSize="17sp"
+            android:textSize="@dimen/layout_pin_input_text_view_text_size"
             android:layout_weight="1" />
     
     </LinearLayout>
     
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="@dimen/layout_pin_input_linear_layout_height"
         android:orientation="horizontal">
         
         <TextView
@@ -147,7 +147,7 @@
             android:gravity="center"
             android:text=""
             android:textColor="@color/black"
-            android:textSize="17sp"
+            android:textSize="@dimen/layout_pin_input_text_view_text_size"
             android:layout_weight="1"
             tools:ignore="HardcodedText" />
         
@@ -159,7 +159,7 @@
             android:gravity="center"
             android:text="0"
             android:textColor="@color/black"
-            android:textSize="17sp"
+            android:textSize="@dimen/layout_pin_input_text_view_text_size"
             android:layout_weight="1"
             tools:ignore="HardcodedText" />
         

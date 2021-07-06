@@ -3,17 +3,17 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="50dp"
+    android:layout_height="@dimen/recycler_view_sub_view_root_height"
     android:id="@+id/relativeView_root"
     android:background="?android:attr/selectableItemBackground">
     
     <ImageView
-        android:layout_width="40dp"
-        android:layout_height="40dp"
+        android:layout_width="@dimen/recycler_view_sub_view_image_view_size"
+        android:layout_height="@dimen/recycler_view_sub_view_image_view_size"
         android:id="@+id/imageView_icon"
         android:layout_centerVertical="true"
-        android:layout_marginStart="5dp"
-        android:layout_marginEnd="5dp"
+        android:layout_marginStart="@dimen/recycler_view_sub_view_image_view_margins"
+        android:layout_marginEnd="@dimen/recycler_view_sub_view_image_view_margins"
         tools:ignore="ContentDescription" />
     
     <LinearLayout
@@ -26,7 +26,7 @@
         <sakuraba.saki.list.launcher.view.TitleTextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="16sp"
+            android:textSize="@dimen/recycler_view_sub_view_text_view_text_size"
             android:id="@+id/textView_app_name"
             android:textColor="@color/black"
             android:maxLines="1"/>

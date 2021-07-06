@@ -4,15 +4,15 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="10dp"
+    android:padding="@dimen/fragment_pin_input_dialog_root_padding"
     android:background="@drawable/bg_bottom_sheet_root" >
     
     <View
-        android:layout_width="80dp"
-        android:layout_height="4dp"
+        android:layout_width="@dimen/fragment_pin_input_dialog_view_width"
+        android:layout_height="@dimen/fragment_pin_input_dialog_view_height"
         android:background="@drawable/bg_bottom_sheet_pull_bar"
         android:layout_gravity="center"
-        android:layout_marginBottom="10dp" />
+        android:layout_marginBottom="@dimen/fragment_pin_input_dialog_view_bottom" />
     
     <TextView
         android:layout_width="match_parent"
@@ -20,11 +20,11 @@
         android:gravity="center"
         android:text="@string/pin_auth_title"
         android:textColor="@color/black"
-        android:textSize="16sp" />
+        android:textSize="@dimen/fragment_pin_input_dialog_text_view_text_size" />
     
     <sakuraba.saki.list.launcher.viewGroup.PinInputLayout
         android:layout_width="match_parent"
-        android:layout_height="250dp"
+        android:layout_height="@dimen/fragment_pin_input_dialog_pin_input_layout_height"
         android:id="@+id/pinInputLayout" />
 
 </LinearLayout>

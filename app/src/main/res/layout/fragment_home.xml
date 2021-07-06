@@ -7,7 +7,7 @@
     tools:context=".main.home.HomeFragment">
     
     <sakuraba.saki.list.launcher.view.SideCharView
-        android:layout_width="20dp"
+        android:layout_width="@dimen/fragment_home_side_char_view_width"
         android:layout_height="match_parent"
         android:id="@+id/side_char_view"
         android:layout_alignParentEnd="true"/>
@@ -26,15 +26,15 @@
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
     
     <TextView
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_width="@dimen/fragment_home_text_view_size"
+        android:layout_height="@dimen/fragment_home_text_view_size"
         android:id="@+id/text_view"
         android:clickable="false"
         android:background="@drawable/bg_text_view_home_char"
         android:layout_centerInParent="true"
         android:gravity="center"
         android:textColor="@color/white"
-        android:textSize="25sp"
+        android:textSize="@dimen/fragment_home_text_view_text_size"
         android:textIsSelectable="false"
         android:visibility="gone" />
     

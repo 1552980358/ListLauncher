@@ -15,8 +15,8 @@
         android:layout_weight="1">
         
         <ImageView
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_width="@dimen/fragment_launch_app_image_view_size"
+            android:layout_height="@dimen/fragment_launch_app_image_view_size"
             android:id="@+id/imageViewIcon"
             android:layout_gravity="center_horizontal"
             tools:ignore="ContentDescription"
@@ -37,7 +37,7 @@
             android:id="@+id/textViewAppName"
             android:gravity="center"
             android:textColor="@color/white"
-            android:textSize="17sp"
+            android:textSize="@dimen/fragment_launch_app_text_view_text_size"
             android:layout_above="@id/textViewPkgName" />
         
         <TextView
