@@ -35,7 +35,9 @@ class CropImageView: BaseView {
     private var moveState = MOVE_STATE_UP
     
     private var downX = 0F
+    private var downStartX = 0F
     private var downY = 0F
+    private var downStartY = 0F
     
     init {
         boundaryPaint.color = Color.WHITE
@@ -60,7 +62,9 @@ class CropImageView: BaseView {
                         event.x in (0F .. startX + cropWidth) && event.y in (0F .. startY + cropHeight) -> {
                             moveState = MOVE_STATE_FREE
                             downX = event.x
+                            downStartX = startX
                             downY = event.y
+                            downStartY = startY
                         }
                         else -> { }
                     }
@@ -119,55 +123,87 @@ class CropImageView: BaseView {
                         }
                         MOVE_STATE_FREE -> {
                             val bitmap = bitmap?:return@setOnTouchListener true
-                            var diff: Float
-                            when {
-                                event.x < 0 -> {
-                                    startX = 0F
-                                }
-                                event.x >= bitmap.width -> {
-                                    startX = bitmap.width - cropWidth
-                                }
-                                else -> {
-                                    if (event.x > downX) {
-                                        diff = event.x - downX
-                                        if (bitmap.width - startX - cropWidth > diff) {
-                                            startX += diff
-                                        } else {
-                                            startX = bitmap.width - cropWidth
-                                        }
-                                    } else {
-                                        diff = downX - event.x
-                                        if (startX >= diff) {
-                                            startX -= diff
-                                        } else {
-                                            startX = 0F
-                                        }
+                            // var diff: Float
+                            startX = when {
+                                event.x < 0 -> 0F
+                                event.x >= bitmap.width -> bitmap.width - cropWidth
+                                else -> when  {
+                                    (event.x > downX) -> when {
+                                        (event.x - downX >= bitmap.width - downStartX - cropWidth) ->
+                                            bitmap.width - cropWidth
+                                        else -> event.x - (downX - downStartX)
+                                    }
+                                    else -> when {
+                                        (downStartX <= downX - event.x) -> 0F
+                                        else -> downStartX - (downX - event.x)
                                     }
                                 }
+                                /**
+                                 * ***************************
+                                 * *****DEPRECATED METHOD*****
+                                 * ***************************
+                                 * The frame may move suddenly to the left or right
+                                 * even you just move a little distance.
+                                 * With optimized code, the movement of the frame is much
+                                 * better
+                                 *
+                                 * if (event.x > downX) {
+                                 *     diff = event.x - downX
+                                 *         if (bitmap.width - startX - cropWidth > diff) {
+                                 *             startX += diff
+                                 *         } else {
+                                 *             startX = bitmap.width - cropWidth
+                                 *         }
+                                 * } else {
+                                 *     diff = downX - event.x
+                                 *     if (startX >= diff) {
+                                 *         startX -= diff
+                                 *     } else {
+                                 *         startX = 0F
+                                 *     }
+                                 * }
+                                 **/
                             }
-                            when {
-                                event.y < 0 -> {
-                                    startY = 0F
-                                }
-                                event.y >= bitmap.height -> {
-                                    startY = bitmap.height - cropHeight
-                                }
+                            startY = when {
+                                event.y < 0 -> 0F
+                                event.y >= bitmap.height -> bitmap.height - cropHeight
                                 else -> {
-                                    if (event.y > downY) {
-                                        diff = event.y - downY
-                                        if (bitmap.height - startY - cropHeight >= diff) {
-                                            startY += diff
-                                        } else {
-                                            startY = bitmap.height - cropHeight
+                                    when  {
+                                        (event.y > downY) -> when {
+                                            (event.y - downY >= bitmap.height - downStartY - cropHeight) ->
+                                                bitmap.heightFloat - cropHeight
+                                            else -> event.y - (downY - downStartY)
                                         }
-                                    } else {
-                                        diff = downY - event.y
-                                        if (startY >= diff) {
-                                            startY -= diff
-                                        } else {
-                                            startY = 0F
+                                        else -> when {
+                                            (downStartY <= downY - event.y) -> 0F
+                                            else -> downStartY - (downY - event.y)
                                         }
                                     }
+                                    /**
+                                     * ***************************
+                                     * *****DEPRECATED METHOD*****
+                                     * ***************************
+                                     * The frame may move suddenly to the left or right
+                                     * even you just move a little distance.
+                                     * With optimized code, the movement of the frame is much
+                                     * better
+                                     *
+                                     * if (event.y > downY) {
+                                     *     diff = event.y - downY
+                                     *     if (bitmap.height - startY - cropHeight >= diff) {
+                                     *         startY += diff
+                                     *     } else {
+                                     *         startY = bitmap.height - cropHeight
+                                     *     }
+                                     * } else {
+                                     *     diff = downY - event.y
+                                     *     if (startY >= diff) {
+                                     *         startY -= diff
+                                     *     } else {
+                                     *         startY = 0F
+                                     *     }
+                                     * }
+                                     **/
                                 }
                             }
                         }
