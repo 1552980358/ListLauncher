@@ -76,7 +76,12 @@ class LaunchAppFragment: Fragment(), FingerprintUtil {
                 viewModel.settingContainer.value?.getBooleanValue(KEY_USE_PIN) == true -> {
                     pinAuth()
                 }
-                else -> launchApplication()
+                else -> {
+                    launchApplication()
+                    launch(Dispatchers.Main) {
+                        findNavController().navigateUp()
+                    }
+                }
             }
         }
     }
