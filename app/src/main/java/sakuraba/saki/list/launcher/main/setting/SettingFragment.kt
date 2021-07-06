@@ -369,7 +369,7 @@ class SettingFragment: PreferenceFragmentCompat(), FingerprintUtil {
     private fun initTransparentNavigationBar(preferenceManager: SharedPreferences) = findPreference<TwoSidedSwitchPreferenceCompat>(KEY_CUSTOM_NAVIGATION_BAR_COLOR)?.apply {
         if (!hasNavigationBar) {
             isEnabled = false
-            setSummary(R.string.setting_use_transparent_navigation_bar_not_supported)
+            setSummary(R.string.setting_custom_navigation_bar_not_supported)
             return@apply
         }
         if (!preferenceManager.contains(KEY_NAVIGATION_BAR_COLOR)) {
@@ -394,7 +394,7 @@ class SettingFragment: PreferenceFragmentCompat(), FingerprintUtil {
             } else {
                 Snackbar.make(
                     findActivityViewById<DrawerLayout>(R.id.drawer_layout),
-                    R.string.setting_use_transparent_navigation_bar_should_enable_to_set,
+                    R.string.setting_custom_navigation_bar_should_enable_to_set,
                     LENGTH_SHORT
                 ).show()
             }

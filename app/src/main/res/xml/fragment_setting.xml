@@ -31,8 +31,8 @@
         
         <sakuraba.saki.list.launcher.preference.TwoSidedSwitchPreferenceCompat
             android:key="key_custom_navigation_bar_color"
-            android:title="@string/setting_use_transparent_navigation_bar_title"
-            android:summary="@string/setting_use_transparent_navigation_bar_summary"
+            android:title="@string/setting_custom_navigation_bar_title"
+            android:summary="@string/setting_custom_navigation_bar_summary"
             app:defaultValue="false"
             app:icon="@drawable/ic_preference_color_block" />
         
