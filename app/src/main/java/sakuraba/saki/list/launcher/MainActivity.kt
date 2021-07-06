@@ -145,4 +145,10 @@ class MainActivity: AppCompatActivity(), TextViewInterface {
         Color.BLACK
     }
     
+    override fun onBackPressed() {
+        if (findNavController(R.id.nav_host_fragment).currentDestination?.id != R.id.nav_home) {
+            super.onBackPressed()
+        }
+    }
+    
 }
