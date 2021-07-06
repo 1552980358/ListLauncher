@@ -23,6 +23,12 @@
 ## IDE
 - Intellij Idea
 
+## Screenshot
+
+Default             |  Customized
+:-------------------------:|:-------------------------:
+![Default](screenshot/default.jpg)  |  ![Customized](screenshot/customized.jpg)
+
 ## Comment
 
 - Quoted with `/** **/` with code
