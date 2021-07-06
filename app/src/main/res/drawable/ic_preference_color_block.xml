@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <vector
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:width="40dp"
-    android:height="30dp"
+    android:width="@dimen/ic_preference_color_block_width"
+    android:height="@dimen/ic_preference_color_block_height"
     android:viewportWidth="40"
     android:viewportHeight="30" >
     

@@ -2,7 +2,7 @@
 <shape xmlns:android="http://schemas.android.com/apk/res/android">
 
     <!-- Set Corner -->
-    <corners android:radius="2dp" />
+    <corners android:radius="@dimen/bg_bottom_sheet_pull_bar_radius" />
     
     <!-- Set color -->
     <solid android:color="@android:color/darker_gray" />

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <vector
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:width="24sp"
-    android:height="24sp"
+    android:width="@dimen/img_arrow_size"
+    android:height="@dimen/img_arrow_size"
     android:viewportWidth="30"
     android:viewportHeight="30"
     android:tint="@color/black">
