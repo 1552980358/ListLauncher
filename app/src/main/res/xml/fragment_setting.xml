@@ -29,6 +29,13 @@
         android:summary="@string/setting_customize_summary"
         app:iconSpaceReserved="false">
         
+        <sakuraba.saki.list.launcher.preference.TwoSidedSwitchPreferenceCompat
+            android:key="key_custom_navigation_bar_color"
+            android:title="@string/setting_use_transparent_navigation_bar_title"
+            android:summary="@string/setting_use_transparent_navigation_bar_summary"
+            app:defaultValue="false"
+            app:icon="@drawable/ic_preference_color_block" />
+        
         <sakuraba.saki.list.launcher.preference.TextColorChangeSwitchPreferenceCompat
             android:key="key_status_bar_black_text"
             android:title="@string/setting_status_bar_black_text_title"

@@ -28,6 +28,10 @@
     
     <string name="setting_customize_title">Customize</string>
     <string name="setting_customize_summary">Customize your launcher</string>
+    <string name="setting_use_transparent_navigation_bar_title">Transparent navigation bar</string>
+    <string name="setting_use_transparent_navigation_bar_summary">Make background full screen, and set navigation bar be transparent</string>
+    <string name="setting_use_transparent_navigation_bar_not_supported">The navigation bar is not enabled or not supported</string>
+    <string name="setting_use_transparent_navigation_bar_should_enable_to_set">You should enable this option before setting the navigation bar text color</string>
     <string name="setting_status_bar_black_text_title">Status bar text color</string>
     <string name="setting_status_bar_black_text_summary">Set text of text color as black\n(Some devices with Android L (both SDK 21, 22) may not work)</string>
     <string name="setting_custom_status_bar_color_title">Status bar color</string>

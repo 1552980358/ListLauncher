@@ -13,6 +13,7 @@ import android.view.MenuInflater
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.content.ContextCompat
+import androidx.core.view.WindowCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -32,11 +33,13 @@ import sakuraba.saki.list.launcher.main.launchApp.FingerprintUtil
 import sakuraba.saki.list.launcher.main.setting.ColorPickDialogFragment.Companion.OnColorPickListener
 import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.KEY_BACKGROUND_IMAGE
 import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.KEY_CUSTOM_BACKGROUND_IMAGE
+import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.KEY_CUSTOM_NAVIGATION_BAR_COLOR
 import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.KEY_CUSTOM_STATUS_BAR_BLACK_TEXT
 import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.KEY_CUSTOM_STATUS_BAR_COLOR
 import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.KEY_CUSTOM_SUMMARY_COLOR
 import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.KEY_CUSTOM_TITLE_COLOR
 import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.KEY_CUSTOM_TOOLBAR_BACKGROUND_COLOR
+import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.KEY_NAVIGATION_BAR_COLOR
 import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.KEY_PIN_CODE
 import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.KEY_STATUS_BAR_COLOR
 import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.KEY_SUMMARY_COLOR
@@ -47,6 +50,7 @@ import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.KEY_U
 import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.SETTING_CONTAINER
 import sakuraba.saki.list.launcher.preference.TwoSidedSwitchPreferenceCompat
 import sakuraba.saki.list.launcher.util.findActivityViewById
+import sakuraba.saki.list.launcher.util.hasNavigationBar
 import sakuraba.saki.list.launcher.view.CropImageView
 
 class SettingFragment: PreferenceFragmentCompat(), FingerprintUtil {
@@ -60,6 +64,7 @@ class SettingFragment: PreferenceFragmentCompat(), FingerprintUtil {
         private const val DEFAULT_TOOLBAR_BACKGROUND_COLOR = "#FF6200EE"
         private const val DEFAULT_TITLE_COLOR = "#FF000000"
         private const val DEFAULT_SUMMARY_COLOR = "#FF757575"
+        private const val DEFAULT_NAVIGATION_BAR_COLOR = "#00FFFFFF"
         
         const val BACKGROUND_FILE = "ListLauncherBackground.jpeg"
         
@@ -87,6 +92,7 @@ class SettingFragment: PreferenceFragmentCompat(), FingerprintUtil {
         initBackground(preferenceManager)
         initTitleColor(preferenceManager)
         initSummaryColor(preferenceManager)
+        initTransparentNavigationBar(preferenceManager)
     }
     
     private fun initFingerprint() =
@@ -360,6 +366,41 @@ class SettingFragment: PreferenceFragmentCompat(), FingerprintUtil {
             }
         }
     
+    private fun initTransparentNavigationBar(preferenceManager: SharedPreferences) = findPreference<TwoSidedSwitchPreferenceCompat>(KEY_CUSTOM_NAVIGATION_BAR_COLOR)?.apply {
+        if (!hasNavigationBar) {
+            isEnabled = false
+            setSummary(R.string.setting_use_transparent_navigation_bar_not_supported)
+            return@apply
+        }
+        if (!preferenceManager.contains(KEY_NAVIGATION_BAR_COLOR)) {
+            @Suppress("ApplySharedPref")
+            preferenceManager.edit()
+                .putString(KEY_NAVIGATION_BAR_COLOR, DEFAULT_NAVIGATION_BAR_COLOR)
+                .commit()
+        }
+        icon.setTint(Color.parseColor(preferenceManager.getString(KEY_NAVIGATION_BAR_COLOR, DEFAULT_NAVIGATION_BAR_COLOR)))
+        setOnPreferenceChangeListener { _, newValue ->
+            if (newValue as Boolean) {
+                setNavigationBarColor(preferenceManager.getString(KEY_NAVIGATION_BAR_COLOR, DEFAULT_NAVIGATION_BAR_COLOR)!!)
+            } else {
+                startActivity(Intent(requireContext(), MainActivity::class.java))
+                requireActivity().finish()
+            }
+            return@setOnPreferenceChangeListener true
+        }
+        setOnContentClickListener {
+            if (preferenceManager.getBoolean(KEY_CUSTOM_NAVIGATION_BAR_COLOR, false)) {
+                setNavigationBarColor(preferenceManager.getString(KEY_NAVIGATION_BAR_COLOR, DEFAULT_NAVIGATION_BAR_COLOR)!!)
+            } else {
+                Snackbar.make(
+                    findActivityViewById<DrawerLayout>(R.id.drawer_layout),
+                    R.string.setting_use_transparent_navigation_bar_should_enable_to_set,
+                    LENGTH_SHORT
+                ).show()
+            }
+        }
+    }
+    
     private fun setStatusBarColor(color: String) = ColorPickDialogFragment(object : OnColorPickListener {
             
             override fun onColorPick(color: Int, colorStr: String) {
@@ -463,6 +504,33 @@ class SettingFragment: PreferenceFragmentCompat(), FingerprintUtil {
         
             override fun onCancel() {}
         }, Color.parseColor(color)).show(parentFragmentManager)
+    
+    private fun setNavigationBarColor(colorString: String) = ColorPickDialogFragment(object : OnColorPickListener {
+        override fun onColorPick(color: Int, colorStr: String) {
+            viewModel.settingContainer.value?.getStringUpdate(KEY_NAVIGATION_BAR_COLOR, colorStr)
+            @Suppress("ApplySharedPref")
+            PreferenceManager.getDefaultSharedPreferences(requireContext())
+                .edit()
+                .putString(KEY_NAVIGATION_BAR_COLOR, colorStr)
+                .commit()
+            WindowCompat.setDecorFitsSystemWindows(requireActivity().window, false)
+            requireActivity().window.navigationBarColor = Color.parseColor(colorString)
+        }
+    
+        override fun onSelectDefault() {
+            viewModel.settingContainer.value?.getStringUpdate(KEY_NAVIGATION_BAR_COLOR, DEFAULT_NAVIGATION_BAR_COLOR)
+            @Suppress("ApplySharedPref")
+            PreferenceManager.getDefaultSharedPreferences(requireContext())
+                .edit()
+                .putString(KEY_NAVIGATION_BAR_COLOR, DEFAULT_NAVIGATION_BAR_COLOR)
+                .commit()
+            WindowCompat.setDecorFitsSystemWindows(requireActivity().window, false)
+            requireActivity().window.navigationBarColor = Color.parseColor(DEFAULT_NAVIGATION_BAR_COLOR)
+        }
+    
+        override fun onCancel() {}
+    
+    }, Color.parseColor(colorString)).show(parentFragmentManager)
     
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         menu.clear()
