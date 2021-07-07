@@ -9,6 +9,13 @@
     <dimen name="view_pin_code_radius">10dp</dimen>
     <dimen name="view_pin_code_circle_margin">5dp</dimen>
     
+    <dimen name="view_floating_quick_access_icon_size">40dp</dimen>
+    <dimen name="view_floating_quick_access_circle_radius">25dp</dimen>
+    <dimen name="view_floating_quick_access_circle_stroke">2dp</dimen>
+    <dimen name="view_floating_quick_access_margins">20dp</dimen>
+    <dimen name="view_floating_quick_access_normal_size">50dp</dimen>
+    <dimen name="view_floating_quick_access_clicked_size">150dp</dimen>
+    
     <dimen name="color_plate_circle_radius">5dp</dimen>
     <dimen name="color_plate_circle_stroke">2dp</dimen>
     
