@@ -26,7 +26,7 @@ class FloatingQuickAccessView: BaseView {
             fun onMove(selectedNumber: Int)
         }
         
-        private const val SELECTED_NONE = 0
+        const val SELECTED_NONE = 0
         const val SELECTED_PHONE = 1
         const val SELECTED_MESSAGE = 2
         const val SELECTED_BROWSER = 3
@@ -124,9 +124,9 @@ class FloatingQuickAccessView: BaseView {
                 ACTION_UP -> {
                     isOnTouched = false
                     selectedObject = when {
-                        event.x in (point1.x .. point1.x + iconSize) && event.y in (point1.y .. point1.y + iconSize)-> 1
-                        event.x in (point2.x .. point2.x + iconSize) && event.y in (point2.y .. point2.y + iconSize)-> 2
-                        event.x in (point3.x .. point3.x + iconSize) && event.y in (point3.y .. point3.y + iconSize)-> 3
+                        event.x in (point1.x .. point1.x + iconSize) && event.y in (point1.y .. point1.y + iconSize)-> SELECTED_PHONE
+                        event.x in (point2.x .. point2.x + iconSize) && event.y in (point2.y .. point2.y + iconSize)-> SELECTED_MESSAGE
+                        event.x in (point3.x .. point3.x + iconSize) && event.y in (point3.y .. point3.y + iconSize)-> SELECTED_BROWSER
                         else -> 0
                     }
                     listener?.onSelected(selectedObject)
@@ -136,6 +136,10 @@ class FloatingQuickAccessView: BaseView {
             invalidate()
             return@setOnTouchListener true
         }
+    }
+    
+    fun setOnIconSelectedListener(listener: OnIconSelectedListener?) {
+        this.listener = listener
     }
     
     fun setIconColor(newColor: Int) {
