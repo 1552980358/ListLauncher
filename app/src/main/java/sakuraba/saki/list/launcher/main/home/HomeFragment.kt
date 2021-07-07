@@ -2,13 +2,18 @@ package sakuraba.saki.list.launcher.main.home
 
 import android.content.Intent
 import android.content.pm.ApplicationInfo
+import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.provider.Telephony
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.fragment.app.Fragment
@@ -29,6 +34,11 @@ import sakuraba.saki.list.launcher.databinding.FragmentHomeBinding
 import sakuraba.saki.list.launcher.main.setting.SettingContainer
 import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.SETTING_CONTAINER
 import sakuraba.saki.list.launcher.util.findActivityViewById
+import sakuraba.saki.list.launcher.view.FloatingQuickAccessView.Companion.OnIconSelectedListener
+import sakuraba.saki.list.launcher.view.FloatingQuickAccessView.Companion.SELECTED_BROWSER
+import sakuraba.saki.list.launcher.view.FloatingQuickAccessView.Companion.SELECTED_MESSAGE
+import sakuraba.saki.list.launcher.view.FloatingQuickAccessView.Companion.SELECTED_NONE
+import sakuraba.saki.list.launcher.view.FloatingQuickAccessView.Companion.SELECTED_PHONE
 import sakuraba.saki.list.launcher.view.SideCharView.Companion.LETTERS
 import sakuraba.saki.list.launcher.view.SideCharView.Companion.OnLetterTouchListener
 
@@ -71,7 +81,7 @@ class HomeFragment: Fragment() {
                 if (!fragmentHomeBinding.swipeRefreshLayout.isRefreshing) {
                     (fragmentHomeBinding.recyclerView.layoutManager as LinearLayoutManager).scrollToPositionWithOffset(homeViewModel.chars[index], 0)
                     fragmentHomeBinding.textView.text = char.toString()
-                    fragmentHomeBinding.textView.visibility = View.VISIBLE
+                    fragmentHomeBinding.textView.visibility = VISIBLE
                 }
             }
             override fun onMove(index: Int, char: Char) {
@@ -84,7 +94,75 @@ class HomeFragment: Fragment() {
                 if (!fragmentHomeBinding.swipeRefreshLayout.isRefreshing) {
                     (fragmentHomeBinding.recyclerView.layoutManager as LinearLayoutManager).scrollToPositionWithOffset(homeViewModel.chars[index], 0)
                     fragmentHomeBinding.textView.text = char.toString()
-                    fragmentHomeBinding.textView.visibility = View.GONE
+                    fragmentHomeBinding.textView.visibility = GONE
+                }
+            }
+        })
+        fragmentHomeBinding.floatingQuickAccessView.setOnIconSelectedListener(object : OnIconSelectedListener {
+            override fun onSelected(selectedNumber: Int) {
+                fragmentHomeBinding.textViewSelectedIcon.visibility = GONE
+                when (selectedNumber) {
+                    SELECTED_PHONE -> {
+                        Intent(Intent.ACTION_DIAL).apply {
+                            requireContext()
+                                .packageManager
+                                .resolveActivity(this, PackageManager.MATCH_DEFAULT_ONLY)
+                                ?.let { startActivity(this) }
+                        }
+                    }
+                    SELECTED_MESSAGE -> {
+                        /**
+                         * Following Code does not work at all.
+                         * [Telephony.Sms.getDefaultSmsPackage] is workable
+                         *
+                         * requireContext()
+                         *     .packageManager
+                         *     .resolveActivity(Intent(Intent.ACTION_SEND, Uri.parse("smsto:")), PackageManager.MATCH_DEFAULT_ONLY)
+                         *     ?.activityInfo
+                         *     ?.packageName?.apply {
+                         *         startActivity(requireContext().packageManager.getLaunchIntentForPackage(this))
+                         *     }
+                         **/
+                        Telephony.Sms.getDefaultSmsPackage(requireContext())?.apply {
+                            startActivity(requireContext().packageManager.getLaunchIntentForPackage(this))
+                        }
+                    }
+                    SELECTED_BROWSER -> {
+                        requireContext()
+                            .packageManager
+                            .resolveActivity(
+                                Intent(
+                                    Intent.ACTION_VIEW,
+                                    Uri.parse("https://example.com")
+                                ), PackageManager.MATCH_DEFAULT_ONLY
+                            )?.activityInfo?.packageName?.apply {
+                                startActivity(requireContext().packageManager.getLaunchIntentForPackage(this))
+                            }
+                    }
+                }
+            }
+    
+            override fun onMove(selectedNumber: Int) {
+                when (selectedNumber) {
+                    SELECTED_NONE -> fragmentHomeBinding.textViewSelectedIcon.visibility = GONE
+                    SELECTED_PHONE -> {
+                        fragmentHomeBinding.textViewSelectedIcon.apply {
+                            setText(R.string.main_text_view_selected_icon_phone)
+                            visibility = VISIBLE
+                        }
+                    }
+                    SELECTED_MESSAGE -> {
+                        fragmentHomeBinding.textViewSelectedIcon.apply {
+                            setText(R.string.main_text_view_selected_icon_message)
+                            visibility = VISIBLE
+                        }
+                    }
+                    SELECTED_BROWSER -> {
+                        fragmentHomeBinding.textViewSelectedIcon.apply {
+                            setText(R.string.main_text_view_selected_icon_browser)
+                            visibility = VISIBLE
+                        }
+                    }
                 }
             }
         })

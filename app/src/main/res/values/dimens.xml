@@ -74,6 +74,7 @@
     <dimen name="fragment_home_side_char_view_width">20dp</dimen>
     <dimen name="fragment_home_text_view_size">50dp</dimen>
     <dimen name="fragment_home_text_view_text_size">25sp</dimen>
+    <dimen name="fragment_home_text_view_selected_icon_text_size">20sp</dimen>
     
     <dimen name="fragment_launch_app_image_view_size">100dp</dimen>
     <dimen name="fragment_launch_app_text_view_text_size">17sp</dimen>

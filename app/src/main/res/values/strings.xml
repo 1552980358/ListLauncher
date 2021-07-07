@@ -85,5 +85,8 @@
     <string name="color_pick_default">Default</string>
     
     <string name="main_application_change">Application change detected. Refreshing…</string>
+    <string name="main_text_view_selected_icon_phone">Phone</string>
+    <string name="main_text_view_selected_icon_message">Message</string>
+    <string name="main_text_view_selected_icon_browser">Browser</string>
 
 </resources>
