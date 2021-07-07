@@ -14,6 +14,7 @@ import android.widget.RelativeLayout.ALIGN_PARENT_END
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.toBitmap
 import androidx.core.view.setMargins
+import lib.github1552980358.ktExtension.jvm.keyword.tryOnly
 import sakuraba.saki.list.launcher.R
 import sakuraba.saki.list.launcher.view.base.BaseView
 
@@ -180,7 +181,7 @@ class FloatingQuickAccessView: BaseView {
     
         // Make a copy of LayoutParams
         if (!::normalLayoutParam.isInitialized) {
-            normalLayoutParam = layoutParams as RelativeLayout.LayoutParams
+            tryOnly { normalLayoutParam = layoutParams as RelativeLayout.LayoutParams }
         }
     }
     
