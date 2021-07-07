@@ -27,6 +27,7 @@ class SettingContainer(context: Context): Serializable {
         const val KEY_SUMMARY_COLOR = "key_summary_color"
         const val KEY_CUSTOM_NAVIGATION_BAR_COLOR = "key_custom_navigation_bar_color"
         const val KEY_NAVIGATION_BAR_COLOR = "key_navigation_bar_color"
+        const val KEY_USE_SYSTEM_BACKGROUND = "key_use_system_background"
     }
     
     private val stringMap = mutableMapOf<String, String?>()
@@ -44,7 +45,8 @@ class SettingContainer(context: Context): Serializable {
             KEY_CUSTOM_BACKGROUND_IMAGE,
             KEY_CUSTOM_TITLE_COLOR,
             KEY_CUSTOM_SUMMARY_COLOR,
-            KEY_CUSTOM_NAVIGATION_BAR_COLOR
+            KEY_CUSTOM_NAVIGATION_BAR_COLOR,
+            KEY_USE_SYSTEM_BACKGROUND
         ).forEach { key ->
             if (preferenceManager.contains(key)) {
                 booleanMap[key] = preferenceManager.getBoolean(key, false)

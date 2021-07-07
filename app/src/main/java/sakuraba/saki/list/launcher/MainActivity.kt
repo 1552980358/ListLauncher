@@ -1,5 +1,6 @@
 package sakuraba.saki.list.launcher
 
+import android.app.WallpaperManager
 import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.os.Build
@@ -33,6 +34,7 @@ import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.KEY_S
 import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.KEY_SUMMARY_COLOR
 import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.KEY_TITLE_COLOR
 import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.KEY_TOOLBAR_BACKGROUND_COLOR
+import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.KEY_USE_SYSTEM_BACKGROUND
 import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.SETTING_CONTAINER
 import sakuraba.saki.list.launcher.main.setting.SettingFragment.Companion.BACKGROUND_FILE
 import sakuraba.saki.list.launcher.view.base.TextViewInterface
@@ -110,6 +112,8 @@ class MainActivity: AppCompatActivity(), TextViewInterface {
                     activityMainBinding.drawerLayout.background =
                         BitmapFactory.decodeStream(openFileInput(BACKGROUND_FILE))?.toDrawable(resources)
                 }
+            } else if (getBooleanValue(KEY_USE_SYSTEM_BACKGROUND) == true) {
+                activityMainBinding.drawerLayout.background = WallpaperManager.getInstance(this@MainActivity).drawable
             }
         }
     }

@@ -1,6 +1,8 @@
 package sakuraba.saki.list.launcher.main.setting
 
+import android.Manifest
 import android.app.Activity.RESULT_OK
+import android.app.WallpaperManager
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
@@ -10,6 +12,8 @@ import android.os.Bundle
 import android.provider.MediaStore
 import android.view.Menu
 import android.view.MenuInflater
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContract
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.content.ContextCompat
@@ -24,6 +28,7 @@ import androidx.preference.SwitchPreferenceCompat
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.snackbar.BaseTransientBottomBar.LENGTH_SHORT
 import com.google.android.material.snackbar.Snackbar
+import org.w3c.dom.Text
 import sakuraba.saki.list.launcher.MainActivity
 import sakuraba.saki.list.launcher.R
 import sakuraba.saki.list.launcher.base.SettingValueChangeListener
@@ -47,7 +52,9 @@ import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.KEY_T
 import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.KEY_TOOLBAR_BACKGROUND_COLOR
 import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.KEY_USE_FINGERPRINT
 import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.KEY_USE_PIN
+import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.KEY_USE_SYSTEM_BACKGROUND
 import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.SETTING_CONTAINER
+import sakuraba.saki.list.launcher.preference.TextColorChangeSwitchPreferenceCompat
 import sakuraba.saki.list.launcher.preference.TwoSidedSwitchPreferenceCompat
 import sakuraba.saki.list.launcher.util.findActivityViewById
 import sakuraba.saki.list.launcher.util.hasNavigationBar
@@ -73,6 +80,7 @@ class SettingFragment: PreferenceFragmentCompat(), FingerprintUtil {
     
     private lateinit var viewModel: SettingViewModel
     // private lateinit var cropImageUri: Uri
+    private lateinit var readExternalStorageRequest: ActivityResultLauncher<String>
     
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         setPreferencesFromResource(R.xml.fragment_setting, rootKey)
@@ -83,6 +91,15 @@ class SettingFragment: PreferenceFragmentCompat(), FingerprintUtil {
         viewModel.setSettingContainer(requireActivity().intent?.getSerializableExtra(SETTING_CONTAINER) as SettingContainer?)
         
         val preferenceManager = PreferenceManager.getDefaultSharedPreferences(requireContext())
+    
+        readExternalStorageRequest = registerForActivityResult(ActivityResultContracts.RequestPermission()) {
+            if (!it) {
+                findPreference<TextColorChangeSwitchPreferenceCompat>(KEY_USE_SYSTEM_BACKGROUND)?.isChecked = false
+            } else {
+                findActivityViewById<DrawerLayout>(R.id.drawer_layout).background =
+                    WallpaperManager.getInstance(requireContext()).drawable
+            }
+        }
         
         initFingerprint()
         initPinCode()
@@ -93,6 +110,7 @@ class SettingFragment: PreferenceFragmentCompat(), FingerprintUtil {
         initTitleColor(preferenceManager)
         initSummaryColor(preferenceManager)
         initTransparentNavigationBar(preferenceManager)
+        initSystemWallpaper()
     }
     
     private fun initFingerprint() =
@@ -295,6 +313,7 @@ class SettingFragment: PreferenceFragmentCompat(), FingerprintUtil {
                 viewModel.settingContainer.value?.getBooleanUpdate(KEY_CUSTOM_BACKGROUND_IMAGE, newValue as Boolean)
                 findPreference<Preference>(KEY_BACKGROUND_IMAGE)?.isEnabled = newValue as Boolean
                 if (newValue) {
+                    findPreference<TextColorChangeSwitchPreferenceCompat>(KEY_USE_SYSTEM_BACKGROUND)?.isChecked = false
                     getImageContent.launch(Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI))
                 } else {
                     findActivityViewById<DrawerLayout>(R.id.drawer_layout).background = null
@@ -398,6 +417,18 @@ class SettingFragment: PreferenceFragmentCompat(), FingerprintUtil {
                     LENGTH_SHORT
                 ).show()
             }
+        }
+    }
+    
+    private fun initSystemWallpaper() = findPreference<TextColorChangeSwitchPreferenceCompat>(KEY_USE_SYSTEM_BACKGROUND)?.apply {
+        setOnPreferenceChangeListener { _, newValue ->
+            if (newValue as Boolean) {
+                findPreference<TextColorChangeSwitchPreferenceCompat>(KEY_CUSTOM_BACKGROUND_IMAGE)?.isChecked = false
+                readExternalStorageRequest.launch(Manifest.permission.READ_EXTERNAL_STORAGE)
+            } else {
+                findActivityViewById<DrawerLayout>(R.id.drawer_layout).background = null
+            }
+            return@setOnPreferenceChangeListener true
         }
     }
     

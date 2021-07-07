@@ -65,6 +65,13 @@
             android:defaultValue="false"
             app:iconSpaceReserved="false" />
         
+        <sakuraba.saki.list.launcher.preference.TextColorChangeSwitchPreferenceCompat
+            android:key="key_use_system_background"
+            android:title="@string/setting_use_system_background_title"
+            android:summary="@string/setting_use_system_background_summary"
+            android:defaultValue="false"
+            app:iconSpaceReserved="false" />
+        
         <sakuraba.saki.list.launcher.preference.TwoSidedSwitchPreferenceCompat
             android:key="key_custom_title_color"
             android:title="@string/setting_custom_title_color_title"
