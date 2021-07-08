@@ -27,7 +27,6 @@ class SideCharView: BaseView {
     constructor(context: Context): this(context, null)
     constructor(context: Context, attributeSet: AttributeSet?): super(context, attributeSet)
     
-    private var startX = 0F
     private var lettersDiff = 0F
     
     private var listener: OnLetterTouchListener? = null
@@ -42,7 +41,7 @@ class SideCharView: BaseView {
     
         /**
          * For syntax '((event.y - lettersDiff) / lettersDiff)',
-         * due to the drawing of 'A' on ([startX], 0) will cause the disappear of 'A'.
+         * due to the drawing of 'A' (y-axis on 0) will cause the disappear of 'A'.
          * To solve this problem, just move downward to origin position of 'B'.
          * For getting relative position of all char, we need to remove a [lettersDiff]
          **/
@@ -104,14 +103,9 @@ class SideCharView: BaseView {
         this.listener = listener
     }
     
-    
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec)
         @Suppress("DrawAllocation")
-        Rect().apply {
-            paint.getTextBounds(LETTERS.first().toString(), 0, 1, this)
-            startX = (MeasureSpec.getSize(widthMeasureSpec) - width()) / 2F
-        }
         lettersDiff = MeasureSpec.getSize(heightMeasureSpec).toFloat() / (LETTERS.length + 1F)
     }
     
@@ -121,7 +115,7 @@ class SideCharView: BaseView {
         canvas?:return
         
         for ((index, char) in LETTERS.withIndex()) {
-            canvas.drawText(char.toString(), startX, (index + 1) * lettersDiff, paint)
+            canvas.drawText(char.toString(), (width - paint.measureText(char.toString())) / 2, (index + 1) * lettersDiff, paint)
         }
         
     }
