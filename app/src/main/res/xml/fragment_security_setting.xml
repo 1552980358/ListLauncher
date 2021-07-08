@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    
+    <sakuraba.saki.list.launcher.preference.TextColorChangePreferenceCategory
+        android:title="@string/setting_auth_title"
+        android:summary="@string/setting_auth_summary"
+        app:iconSpaceReserved="false" >
+        
+        <sakuraba.saki.list.launcher.preference.TextColorChangeSwitchPreferenceCompat
+            android:key="key_use_fingerprint"
+            android:title="@string/setting_use_fingerprint_title"
+            android:summary="@string/setting_use_fingerprint_summary"
+            app:defaultValue="false"
+            app:iconSpaceReserved="false" />
+        
+        <sakuraba.saki.list.launcher.preference.TwoSidedSwitchPreferenceCompat
+            android:key="key_use_pin"
+            android:title="@string/setting_use_pin_title"
+            android:summary="@string/setting_use_pin_summary"
+            app:defaultValue="false"
+            app:iconSpaceReserved="false" />
+    
+    </sakuraba.saki.list.launcher.preference.TextColorChangePreferenceCategory>
+
+</PreferenceScreen>

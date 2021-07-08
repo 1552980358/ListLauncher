@@ -1,7 +1,6 @@
 package sakuraba.saki.list.launcher.main.setting
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,6 +9,8 @@ import androidx.navigation.fragment.findNavController
 import androidx.preference.PreferenceManager
 import sakuraba.saki.list.launcher.R
 import sakuraba.saki.list.launcher.databinding.FragmentSetPinBinding
+import sakuraba.saki.list.launcher.main.setting.SecuritySettingFragment.Companion.LAUNCH_TASK
+import sakuraba.saki.list.launcher.main.setting.SecuritySettingFragment.Companion.LAUNCH_TASK_MODIFY
 import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.KEY_PIN_CODE
 import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.KEY_USE_FINGERPRINT
 import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.KEY_USE_PIN
@@ -84,7 +85,7 @@ class SetPinFragment: Fragment() {
     
     private fun checkInputs() {
         if (_inputFirst.length != 4 || _inputSecond.length != 4 || _inputFirst != _inputSecond) {
-            if (arguments?.getInt(SettingFragment.LAUNCH_TASK) != SettingFragment.LAUNCH_TASK_MODIFY) {
+            if (arguments?.getInt(LAUNCH_TASK) != LAUNCH_TASK_MODIFY) {
                 @Suppress("ApplySharedPref")
                 PreferenceManager.getDefaultSharedPreferences(requireContext())
                     .edit()

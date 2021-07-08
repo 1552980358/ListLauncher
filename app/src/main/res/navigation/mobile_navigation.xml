@@ -17,6 +17,16 @@
         android:label="@string/menu_setting" />
     
     <fragment
+        android:id="@+id/nav_security_setting"
+        android:name="sakuraba.saki.list.launcher.main.setting.SecuritySettingFragment"
+        android:label="@string/menu_security_setting" />
+    
+    <fragment
+        android:id="@+id/nav_user_interface_setting"
+        android:name="sakuraba.saki.list.launcher.main.setting.UserInterfaceSettingFragment"
+        android:label="@string/menu_user_interface_setting"/>
+    
+    <fragment
         android:id="@+id/nav_launch_app"
         android:name="sakuraba.saki.list.launcher.main.launchApp.LaunchAppFragment"
         android:label="@string/menu_launch_app"

@@ -9,10 +9,14 @@
     
     <string name="menu_home">Home</string>
     <string name="menu_setting">Setting</string>
+    <string name="menu_security_setting">Security Setting</string>
+    <string name="menu_user_interface_setting">User Interface</string>
     <string name="menu_launch_app">Launching application…</string>
     <string name="menu_set_pin">Set Pin</string>
     <string name="menu_pin_auth">Verify Pin</string>
     <string name="menu_crop_image">Crop Image</string>
+    
+    <string name="setting_category_security">Security</string>
     
     <string name="menu_crop_image_save">Save</string>
     <string name="menu_crop_image_change_image">Change as…</string>
@@ -26,6 +30,17 @@
     <string name="setting_use_pin_summary">Use 4-digit Pin to Authorize</string>
     <string name="setting_use_pin_should_enable_to_set">You should enable this option before editing the pin</string>
     
+    <string name="user_interface_setting_background_title">Background</string>
+    <string name="user_interface_setting_background_summary">Options on customizing background of the ListLauncher</string>
+    <string name="user_interface_setting_nav_bar_title">Navigation Bar</string>
+    <string name="user_interface_setting_nav_bar_summary">Option on customizing system navigation bar</string>
+    <string name="user_interface_setting_status_bar_title">Status Bar</string>
+    <string name="user_interface_setting_status_bar_summary">Option on customizing system status bar</string>
+    <string name="user_interface_setting_toolbar_title">Toolbar</string>
+    <string name="user_interface_setting_toolbar_summary">Option on customizing toolbar</string>
+    <string name="user_interface_setting_text_title">Text color</string>
+    <string name="user_interface_setting_text_summary">Option on customizing text color</string>
+    
     <string name="setting_customize_title">Customize</string>
     <string name="setting_customize_summary">Customize your launcher</string>
     <string name="setting_custom_navigation_bar_title">Custom navigation bar</string>
@@ -37,7 +52,7 @@
     <string name="setting_custom_status_bar_color_title">Status bar color</string>
     <string name="setting_custom_status_bar_color_summary">Customize status bar color</string>
     <string name="setting_status_bar_snackbar_should_enable_to_set">You should enable this option before setting the status bar color</string>
-    <string name="setting_custom_toolbar_bg_color_title">Status toolbar color</string>
+    <string name="setting_custom_toolbar_bg_color_title">Toolbar color</string>
     <string name="setting_custom_toolbar_bg_color_summary">Customize toolbar color</string>
     <string name="setting_toolbar_bg_snackbar_should_enable_to_set">You should enable this option before setting the custom color</string>
     <string name="setting_custom_background_image_title">Custom background image</string>
