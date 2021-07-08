@@ -43,4 +43,6 @@ class TwoSidedSwitchPreferenceCompat: TextColorChangeSwitchPreferenceCompat {
         
     }
     
+    override fun iconTintChange() = false
+    
 }
