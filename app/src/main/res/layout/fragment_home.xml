@@ -6,17 +6,10 @@
     android:layout_width="match_parent"
     tools:context=".main.home.HomeFragment">
     
-    <sakuraba.saki.list.launcher.view.SideCharView
-        android:layout_width="@dimen/fragment_home_side_char_view_width"
-        android:layout_height="match_parent"
-        android:id="@+id/side_char_view"
-        android:layout_alignParentEnd="true"/>
-    
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:layout_height="match_parent"
         android:layout_width="match_parent"
-        android:id="@+id/swipe_refresh_layout"
-        android:layout_toStartOf="@id/side_char_view">
+        android:id="@+id/swipe_refresh_layout">
         
         <androidx.recyclerview.widget.RecyclerView
             android:layout_width="match_parent"
@@ -24,6 +17,12 @@
             android:id="@+id/recyclerView" />
     
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+    
+    <sakuraba.saki.list.launcher.view.SideCharView
+        android:layout_width="@dimen/fragment_home_side_char_view_width"
+        android:layout_height="match_parent"
+        android:id="@+id/side_char_view"
+        android:layout_alignParentEnd="true"/>
     
     <TextView
         android:layout_width="@dimen/fragment_home_text_view_size"
