@@ -299,15 +299,30 @@ class CropImageView: BaseView {
             bitmapWidth = widthFloat
         }
         
-        when {
-            bitmapWidth > bitmapHeight -> {
-                cropWidth = bitmapWidth
-                cropHeight = heightMax * cropWidth / widthMax
-            }
-            else -> {
-                cropHeight = bitmapHeight
-                cropWidth = widthMax * cropHeight / heightMax
-            }
+        /**
+         * The crop frame will not be correct if we use following method determining
+         * the length and width of the frame.
+         *
+         * Same as above, should
+         *
+         * when {
+         *     bitmapWidth > bitmapHeight -> {
+         *         cropWidth = bitmapWidth
+         *         cropHeight = heightMax * cropWidth / widthMax
+         *     }
+         *     else -> {
+         *         cropHeight = bitmapHeight
+         *         cropWidth = widthMax * cropHeight / heightMax
+         *     }
+         * }
+         **/
+        
+        cropHeight = bitmapHeight
+        cropWidth = widthMax * cropHeight / heightMax
+        
+        if (cropWidth > bitmapWidth) {
+            cropWidth = bitmapWidth
+            cropHeight = heightMax * cropWidth / widthMax
         }
         
         this.bitmap = Bitmap.createScaledBitmap(bitmap, bitmapWidth.toInt(), bitmapHeight.toInt(), false)
