@@ -118,7 +118,7 @@
         android:text="@string/bottom_dialog_home_button_setting"
         android:textColor="@color/purple_500"
         android:textStyle="bold"
-        android:padding="5dp" />
+        android:padding="@dimen/fragment_application_info_dialog_text_view_cancel_padding" />
     
     <TextView
         android:layout_width="wrap_content"
@@ -128,6 +128,6 @@
         android:text="@string/bottom_dialog_home_button_cancel"
         android:textColor="@color/purple_500"
         android:textStyle="bold"
-        android:padding="5dp" />
+        android:padding="@dimen/fragment_application_info_dialog_text_view_setting_padding" />
         
 </LinearLayout>
