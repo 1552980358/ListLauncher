@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">ListLauncher</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -75,6 +75,8 @@
     <string name="bottom_dialog_home_package_name">Package Name</string>
     <string name="bottom_dialog_home_system_yes">[System Application]</string>
     <string name="bottom_dialog_home_system_no">[User-installed Application]</string>
+    <string name="bottom_dialog_home_button_setting">SETTING</string>
+    <string name="bottom_dialog_home_button_cancel" tools:ignore="ButtonCase">CANCEL</string>
     
     <string name="bottom_dialog_home_version_name">Version Name</string>
     <string name="bottom_dialog_home_version_code">Version Code</string>

@@ -1,6 +1,9 @@
 package sakuraba.saki.list.launcher.main.home
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
+import android.provider.Settings
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -40,6 +43,12 @@ class ApplicationInfoDialogFragment(private val appInfo: AppInfo): BottomSheetDi
         }
         fragmentApplicationInfoDialogBinding.textViewVersionName.text = appInfo.versionName
         fragmentApplicationInfoDialogBinding.textViewVersionCode.text = appInfo.versionCode.toString()
+        fragmentApplicationInfoDialogBinding.textViewSetting.setOnClickListener {
+            dismiss()
+            requireContext().startActivity(Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).setData(Uri.fromParts("package", appInfo.packageName, null)))
+        }
+        
+        fragmentApplicationInfoDialogBinding.textViewCancel.setOnClickListener { dismiss() }
         return fragmentApplicationInfoDialogBinding.root
     }
     

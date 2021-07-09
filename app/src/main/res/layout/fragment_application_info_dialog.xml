@@ -108,5 +108,26 @@
             android:textSize="@dimen/fragment_application_info_dialog_version_code_text_size" />
     
     </RelativeLayout>
-
+    
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/text_view_setting"
+        android:background="?attr/selectableItemBackground"
+        android:layout_gravity="end"
+        android:text="@string/bottom_dialog_home_button_setting"
+        android:textColor="@color/purple_500"
+        android:textStyle="bold"
+        android:padding="5dp" />
+    
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/text_view_cancel"
+        android:layout_gravity="end"
+        android:text="@string/bottom_dialog_home_button_cancel"
+        android:textColor="@color/purple_500"
+        android:textStyle="bold"
+        android:padding="5dp" />
+        
 </LinearLayout>
