@@ -27,6 +27,11 @@
         android:label="@string/menu_user_interface_setting"/>
     
     <fragment
+        android:id="@+id/nav_search"
+        android:name="sakuraba.saki.list.launcher.main.search.SearchFragment"
+        android:label="@string/menu_search" />
+    
+    <fragment
         android:id="@+id/nav_launch_app"
         android:name="sakuraba.saki.list.launcher.main.launchApp.LaunchAppFragment"
         android:label="@string/menu_launch_app"

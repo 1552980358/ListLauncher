@@ -6,11 +6,13 @@
     <string name="nav_header_subtitle">android.studio@android.com</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
+    <string name="action_search">Search</string>
     
     <string name="menu_home">Home</string>
     <string name="menu_setting">Setting</string>
     <string name="menu_security_setting">Security Setting</string>
     <string name="menu_user_interface_setting">User Interface</string>
+    <string name="menu_search">Search</string>
     <string name="menu_launch_app">Launching application…</string>
     <string name="menu_set_pin">Set Pin</string>
     <string name="menu_pin_auth">Verify Pin</string>

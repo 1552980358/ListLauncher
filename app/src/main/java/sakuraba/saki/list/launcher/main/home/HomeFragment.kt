@@ -31,6 +31,7 @@ import sakuraba.saki.list.launcher.R
 import sakuraba.saki.list.launcher.broadcast.ApplicationChangeBroadcastReceiver
 import sakuraba.saki.list.launcher.broadcast.ApplicationChangeBroadcastReceiver.Companion.APPLICATION_CHANGE_BROADCAST_RECEIVER
 import sakuraba.saki.list.launcher.databinding.FragmentHomeBinding
+import sakuraba.saki.list.launcher.main.search.SearchFragment.Companion.APP_INFOS
 import sakuraba.saki.list.launcher.main.setting.SettingContainer
 import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.SETTING_CONTAINER
 import sakuraba.saki.list.launcher.util.findActivityViewById
@@ -264,6 +265,13 @@ class HomeFragment: Fragment() {
                     return false
                 }
                 findNavController().navigate(R.id.nav_setting, Bundle().apply { putSerializable(SETTING_CONTAINER, homeViewModel.settingContainer.value) })
+                return true
+            }
+            R.id.action_search -> {
+                if (fragmentHomeBinding.swipeRefreshLayout.isRefreshing) {
+                    return false
+                }
+                findNavController().navigate(R.id.nav_search, Bundle().apply { putSerializable(APP_INFOS, homeViewModel.appInfos.value) })
                 return true
             }
         }
