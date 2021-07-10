@@ -105,5 +105,9 @@
     <string name="main_text_view_selected_icon_phone">Phone</string>
     <string name="main_text_view_selected_icon_message">Message</string>
     <string name="main_text_view_selected_icon_browser">Browser</string>
-
+    
+    <string name="search_search">Search</string>
+    <string name="search_hint">Type application name or package name to filter</string>
+    <string name="search_empty_filter_result">Empty filter result</string>
+    
 </resources>
