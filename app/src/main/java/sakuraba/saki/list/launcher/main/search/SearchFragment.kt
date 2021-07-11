@@ -10,7 +10,6 @@ import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import kotlinx.coroutines.Job
 import sakuraba.saki.list.launcher.R
 import sakuraba.saki.list.launcher.databinding.FragmentSearchBinding
 import sakuraba.saki.list.launcher.main.home.AppInfo
@@ -25,10 +24,7 @@ class SearchFragment: Fragment(), KeyboardUtil {
     private var _fragmentSearchBinding: FragmentSearchBinding? = null
     private val fragmentSearchBinding get() = _fragmentSearchBinding!!
     
-    private var job: Job? = null
-    
     private lateinit var viewModel: SearchViewModel
-    
     
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         setHasOptionsMenu(true)
