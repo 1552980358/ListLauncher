@@ -64,22 +64,19 @@ class SearchFragment: Fragment(), KeyboardUtil {
                         else -> {
                             newText.split(SPLIT_SPACE).toMutableList().apply {
                                 removeAll { it.isEmpty() }
-                                when {
-                                    isEmpty() -> fragmentSearchBinding.textView.setText(R.string.search_empty_filter_result)
-                                    else -> {
-                                        val appInfos = viewModel.appInfos
-                                        forEach { text ->
-                                            appInfos.forEach { appInfo ->
-                                                if (appInfo.name.contains(text) || appInfo.packageName.contains(text) || appInfo.pinYin.contains(text)) {
-                                                    if (!searchResult.contains(appInfo)) {
-                                                        searchResult.add(appInfo)
-                                                    }
-                                                }
+                                
+                                val appInfos = viewModel.appInfos
+                                forEach { text ->
+                                    appInfos.forEach { appInfo ->
+                                        if (appInfo.name.contains(text) || appInfo.packageName.contains(text) || appInfo.pinYin.contains(text)) {
+                                            if (!searchResult.contains(appInfo)) {
+                                                searchResult.add(appInfo)
                                             }
                                         }
                                     }
                                 }
                             }
+                            if (searchResult.isEmpty()) fragmentSearchBinding.textView.setText(R.string.search_empty_filter_result)
                         }
                     }
                     
