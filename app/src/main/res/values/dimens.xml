@@ -101,6 +101,8 @@
     <dimen name="recycler_view_sub_view_image_view_margins">5dp</dimen>
     <dimen name="recycler_view_sub_view_text_view_text_size">17sp</dimen>
     
-    <dimen name="fragment_application_info_dialog_text_view_setting_padding">5dp</dimen>
-    <dimen name="fragment_application_info_dialog_text_view_cancel_padding">5dp</dimen>
+    <dimen name="fragment_application_info_dialog_text_view_setting_padding_start_end">5dp</dimen>
+    <dimen name="fragment_application_info_dialog_text_view_setting_padding_top_bottom">10dp</dimen>
+    <dimen name="fragment_application_info_dialog_text_view_cancel_padding_start_end">5dp</dimen>
+    <dimen name="fragment_application_info_dialog_text_view_cancel_padding_top_bottom">10dp</dimen>
 </resources>
