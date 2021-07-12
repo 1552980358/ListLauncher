@@ -65,6 +65,7 @@ class HomeFragment: Fragment() {
         setHasOptionsMenu(true)
         
         homeViewModel.setAppInfos(arrayListOf())
+        requireActivity().intent.putExtra(APP_INFOS, homeViewModel.appInfos.value)
         val appInfos = homeViewModel.appInfos.value!!
         
         // val appInfos = requireContext().packageManager.queryIntent.getInstalledApplications(0)
@@ -271,7 +272,7 @@ class HomeFragment: Fragment() {
                 if (fragmentHomeBinding.swipeRefreshLayout.isRefreshing) {
                     return false
                 }
-                findNavController().navigate(R.id.nav_search, Bundle().apply { putSerializable(APP_INFOS, homeViewModel.appInfos.value) })
+                findNavController().navigate(R.id.nav_search)
                 return true
             }
         }

@@ -30,7 +30,7 @@ class SearchFragment: Fragment(), KeyboardUtil {
         setHasOptionsMenu(true)
         viewModel = ViewModelProvider(this).get(SearchViewModel::class.java)
         @Suppress("UNCHECKED_CAST")
-        viewModel.setAppInfos(arguments?.getSerializable(APP_INFOS) as ArrayList<AppInfo>?)
+        viewModel.setAppInfos(requireActivity().intent.getSerializableExtra(APP_INFOS) as ArrayList<AppInfo>?)
         _fragmentSearchBinding = FragmentSearchBinding.inflate(inflater)
         return fragmentSearchBinding.root
     }
