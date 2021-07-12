@@ -15,6 +15,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -67,8 +68,7 @@ class LaunchAppFragment: Fragment(), FingerprintUtil {
         super.onViewCreated(view, savedInstanceState)
         viewModel.setApplicationName(arguments?.getString(Constants.LAUNCH_APPLICATION_NAME))
         viewModel.setPackageName(arguments?.getString(Constants.LAUNCH_PACKAGE_NAME))
-        @Suppress("EXPERIMENTAL_API_USAGE")
-        GlobalScope.launch(Dispatchers.IO) {
+        CoroutineScope(Dispatchers.IO).launch {
             when {
                 viewModel.settingContainer.value?.getBooleanValue(KEY_USE_FINGERPRINT) == true -> {
                     fingerprintAuth()

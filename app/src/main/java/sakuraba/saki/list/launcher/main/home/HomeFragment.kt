@@ -23,6 +23,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.github.promeg.pinyinhelper.Pinyin
 import com.google.android.material.snackbar.BaseTransientBottomBar.LENGTH_SHORT
 import com.google.android.material.snackbar.Snackbar
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -174,8 +175,7 @@ class HomeFragment: Fragment() {
         appInfos.clear()
         // homeViewModel.setLoadingDialogFragment(LoadingDialogFragment())
         // homeViewModel.loadingDialogFragment.value?.show(requireActivity().supportFragmentManager)
-        @Suppress("EXPERIMENTAL_API_USAGE")
-        GlobalScope.launch(Dispatchers.IO) {
+        CoroutineScope(Dispatchers.IO).launch {
             // Query out all application packages that is launchable by a launcher
             requireContext().packageManager.queryIntentActivities(Intent(Intent.ACTION_MAIN, null).apply {
                 addCategory(Intent.CATEGORY_LAUNCHER)
