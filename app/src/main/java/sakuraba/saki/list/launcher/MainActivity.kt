@@ -14,6 +14,7 @@ import androidx.navigation.ui.setupWithNavController
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.graphics.drawable.toDrawable
 import androidx.core.view.WindowCompat
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.appbar.AppBarLayout
 import lib.github1552980358.ktExtension.jvm.keyword.tryOnly
@@ -21,6 +22,7 @@ import sakuraba.saki.list.launcher.broadcast.ApplicationChangeBroadcastReceiver
 import sakuraba.saki.list.launcher.broadcast.ApplicationChangeBroadcastReceiver.Companion.APPLICATION_CHANGE_BROADCAST_RECEIVER
 import sakuraba.saki.list.launcher.databinding.ActivityMainBinding
 import sakuraba.saki.list.launcher.main.MainViewModel
+import sakuraba.saki.list.launcher.main.home.TimeBroadcastReceiver
 import sakuraba.saki.list.launcher.main.setting.SettingContainer
 import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.KEY_CUSTOM_BACKGROUND_IMAGE
 import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.KEY_CUSTOM_NAVIGATION_BAR_COLOR
@@ -45,6 +47,8 @@ class MainActivity: AppCompatActivity(), TextViewInterface {
     private lateinit var appBarConfiguration: AppBarConfiguration
     private var _activityMainBinding: ActivityMainBinding? = null
     private val activityMainBinding get() = _activityMainBinding!!
+    
+    private val timeBroadcastReceiver = TimeBroadcastReceiver()
     
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -74,6 +78,27 @@ class MainActivity: AppCompatActivity(), TextViewInterface {
         appBarConfiguration = AppBarConfiguration(setOf(R.id.nav_home, R.id.nav_setting), activityMainBinding.drawerLayout)
         setupActionBarWithNavController(navController, appBarConfiguration)
         activityMainBinding.navView.setupWithNavController(navController)
+        activityMainBinding.drawerLayout.addDrawerListener(object : DrawerLayout.DrawerListener {
+            override fun onDrawerSlide(drawerView: View, slideOffset: Float) {
+                if (!timeBroadcastReceiver.hasInitialized) {
+                    timeBroadcastReceiver.setTextView(drawerView.findViewById(R.id.text_view_time), drawerView.findViewById(R.id.text_view_date))
+                }
+                timeBroadcastReceiver.getTimeInit()
+            }
+    
+            override fun onDrawerOpened(drawerView: View) {
+                timeBroadcastReceiver.getRegister(this@MainActivity)
+            }
+    
+            override fun onDrawerClosed(drawerView: View) {
+                timeBroadcastReceiver.getUnregister(this@MainActivity)
+                timeBroadcastReceiver.setTextView()
+            }
+    
+            override fun onDrawerStateChanged(newState: Int) {
+            
+            }
+        })
     }
     
     private fun getCustomizeSystem() {
