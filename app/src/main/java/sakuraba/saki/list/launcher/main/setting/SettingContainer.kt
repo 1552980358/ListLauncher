@@ -1,9 +1,28 @@
 package sakuraba.saki.list.launcher.main.setting
 
 import android.content.Context
+import android.content.SharedPreferences
 import androidx.preference.PreferenceManager
 import lib.github1552980358.ktExtension.jvm.keyword.tryRun
 import sakuraba.saki.list.launcher.base.SettingValueChangeListener
+import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.KEY_CUSTOM_BACKGROUND_IMAGE
+import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.KEY_CUSTOM_NAVIGATION_BAR_COLOR
+import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.KEY_CUSTOM_STATUS_BAR_BLACK_TEXT
+import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.KEY_CUSTOM_STATUS_BAR_COLOR
+import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.KEY_CUSTOM_SUMMARY_COLOR
+import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.KEY_CUSTOM_TITLE_COLOR
+import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.KEY_CUSTOM_TOOLBAR_BACKGROUND_COLOR
+import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.KEY_NAVIGATION_BAR_COLOR
+import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.KEY_STATUS_BAR_COLOR
+import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.KEY_SUMMARY_COLOR
+import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.KEY_TITLE_COLOR
+import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.KEY_TOOLBAR_BACKGROUND_COLOR
+import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.KEY_USE_SYSTEM_BACKGROUND
+import sakuraba.saki.list.launcher.main.setting.UserInterfaceSettingFragment.Companion.DEFAULT_NAVIGATION_BAR_COLOR
+import sakuraba.saki.list.launcher.main.setting.UserInterfaceSettingFragment.Companion.DEFAULT_STATUS_BAR_COLOR
+import sakuraba.saki.list.launcher.main.setting.UserInterfaceSettingFragment.Companion.DEFAULT_SUMMARY_COLOR
+import sakuraba.saki.list.launcher.main.setting.UserInterfaceSettingFragment.Companion.DEFAULT_TITLE_COLOR
+import sakuraba.saki.list.launcher.main.setting.UserInterfaceSettingFragment.Companion.DEFAULT_TOOLBAR_BACKGROUND_COLOR
 import java.io.Serializable
 
 class SettingContainer(context: Context): Serializable {
@@ -110,4 +129,25 @@ class SettingContainer(context: Context): Serializable {
         }
     }
     
+}
+
+fun SharedPreferences.Editor.getResetSharedPreferenceEditor(): SharedPreferences.Editor {
+    // Boolean
+    putBoolean(KEY_CUSTOM_STATUS_BAR_COLOR, false)
+    putBoolean(KEY_CUSTOM_STATUS_BAR_BLACK_TEXT, false)
+    putBoolean(KEY_CUSTOM_TOOLBAR_BACKGROUND_COLOR, false)
+    putBoolean(KEY_CUSTOM_BACKGROUND_IMAGE, false)
+    putBoolean(KEY_CUSTOM_TITLE_COLOR, false)
+    putBoolean(KEY_CUSTOM_SUMMARY_COLOR, false)
+    putBoolean(KEY_CUSTOM_NAVIGATION_BAR_COLOR, false)
+    putBoolean(KEY_USE_SYSTEM_BACKGROUND, false)
+    
+    // Strings
+    putString(KEY_STATUS_BAR_COLOR, DEFAULT_STATUS_BAR_COLOR)
+    putString(KEY_TOOLBAR_BACKGROUND_COLOR, DEFAULT_TOOLBAR_BACKGROUND_COLOR)
+    putString(KEY_TITLE_COLOR, DEFAULT_TITLE_COLOR)
+    putString(KEY_SUMMARY_COLOR, DEFAULT_SUMMARY_COLOR)
+    putString(KEY_NAVIGATION_BAR_COLOR, DEFAULT_NAVIGATION_BAR_COLOR)
+    
+    return this
 }
