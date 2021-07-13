@@ -57,7 +57,7 @@ class SideCharView: BaseView {
                             listener?.onTouch(LETTERS.lastIndex, LETTERS.last())
                         }
                         else -> {
-                            ((event.y - lettersDiff) / lettersDiff).toInt().apply {
+                            (event.y / lettersDiff).toInt().apply {
                                 listener?.onTouch(this, LETTERS[this])
                             }
                         }
@@ -72,7 +72,7 @@ class SideCharView: BaseView {
                             listener?.onMove(LETTERS.lastIndex, LETTERS.last())
                         }
                         else -> {
-                            ((event.y - lettersDiff) / lettersDiff).toInt().apply {
+                            (event.y / lettersDiff).toInt().apply {
                                 listener?.onMove(this, LETTERS[this])
                             }
                         }
@@ -87,7 +87,7 @@ class SideCharView: BaseView {
                             listener?.onCancel(LETTERS.lastIndex, LETTERS.last())
                         }
                         else -> {
-                            ((event.y - lettersDiff) / lettersDiff).toInt().apply {
+                            (event.y / lettersDiff).toInt().apply {
                                 listener?.onCancel(this, LETTERS[this])
                             }
                         }
@@ -106,7 +106,7 @@ class SideCharView: BaseView {
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec)
         @Suppress("DrawAllocation")
-        lettersDiff = MeasureSpec.getSize(heightMeasureSpec).toFloat() / (LETTERS.length + 1F)
+        lettersDiff = MeasureSpec.getSize(heightMeasureSpec).toFloat() / LETTERS.length
     }
     
     override fun onDraw(canvas: Canvas?) {
@@ -115,7 +115,7 @@ class SideCharView: BaseView {
         canvas?:return
         
         for ((index, char) in LETTERS.withIndex()) {
-            canvas.drawText(char.toString(), (width - paint.measureText(char.toString())) / 2, (index + 1) * lettersDiff, paint)
+            canvas.drawText(char.toString(), (width - paint.measureText(char.toString())) / 2, (index) * lettersDiff + lettersDiff / 2, paint)
         }
         
     }
