@@ -50,11 +50,11 @@ import sakuraba.saki.list.launcher.view.CropImageView
 class UserInterfaceSettingFragment: PreferenceFragmentCompat() {
     
     companion object {
-        private const val DEFAULT_STATUS_BAR_COLOR = "#FF3700B3"
-        private const val DEFAULT_TOOLBAR_BACKGROUND_COLOR = "#FF6200EE"
-        private const val DEFAULT_TITLE_COLOR = "#FF000000"
-        private const val DEFAULT_SUMMARY_COLOR = "#FF757575"
-        private const val DEFAULT_NAVIGATION_BAR_COLOR = "#00FFFFFF"
+        const val DEFAULT_STATUS_BAR_COLOR = "#FF3700B3"
+        const val DEFAULT_TOOLBAR_BACKGROUND_COLOR = "#FF6200EE"
+        const val DEFAULT_TITLE_COLOR = "#FF000000"
+        const val DEFAULT_SUMMARY_COLOR = "#FF757575"
+        const val DEFAULT_NAVIGATION_BAR_COLOR = "#00FFFFFF"
     
         const val CROP_URI = "crop_uri"
     }
