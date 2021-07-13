@@ -3,6 +3,8 @@ package sakuraba.saki.list.launcher.main.setting
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
+import android.view.MenuItem
+import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.preference.Preference
@@ -47,6 +49,22 @@ class SettingFragment: PreferenceFragmentCompat() {
     
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         menu.clear()
+        inflater.inflate(R.menu.menu_setting, menu)
+    }
+    
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.menu_reset -> {
+                AlertDialog.Builder(requireContext())
+                    .setTitle(R.string.setting_reset_dialog_title)
+                    .setMessage(R.string.setting_reset_dialog_message)
+                    .setPositiveButton(R.string.setting_reset_dialog_confirm) { _, _ ->
+                        ResetSettingsDialogFragment().show(parentFragmentManager)
+                    }.setNegativeButton(R.string.setting_reset_dialog_cancel) { _, _ -> }
+                    .show()
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
     
 }
