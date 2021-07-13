@@ -11,4 +11,5 @@
     <color name="green">@android:color/holo_green_light</color>
     <color name="color_cube_fill_color_gray">#DDD</color>
     <color name="color_text_view_home_char">#CC000000</color>
+    <color name="transparent">@android:color/transparent</color>
 </resources>
