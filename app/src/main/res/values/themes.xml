@@ -15,6 +15,13 @@
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
+    
+    <style name="Theme.ListLauncher.Translucent" parent="Theme.ListLauncher">
+        <item name="android:statusBarColor">@color/transparent</item>
+        <item name="android:windowBackground">@color/transparent</item>
+        <item name="android:windowIsTranslucent">true</item>
+    </style>
+    
     <style name="Theme.ListLauncher.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
     <style name="Theme.ListLauncher.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
     
