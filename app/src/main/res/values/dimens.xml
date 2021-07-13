@@ -71,6 +71,8 @@
     <dimen name="fragment_fingerprint_dialog_image_view_size">50dp</dimen>
     <dimen name="fragment_fingerprint_dialog_image_view_margin_bottom">10dp</dimen>
     
+    <!-- Radius: 25dp -> Dimension: 50dp, with 2*2dp width stoke -> total: 54dp -->
+    <dimen name="fragment_home_floating_quick_access_view_size">54dp</dimen>
     <dimen name="fragment_home_side_char_view_width">20dp</dimen>
     <dimen name="fragment_home_text_view_size">50dp</dimen>
     <dimen name="fragment_home_text_view_text_size">25sp</dimen>

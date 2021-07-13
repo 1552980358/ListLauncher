@@ -51,8 +51,8 @@
         android:visibility="gone" />
     
     <sakuraba.saki.list.launcher.view.FloatingQuickAccessView
-        android:layout_width="150dp"
-        android:layout_height="150dp"
+        android:layout_width="@dimen/fragment_home_floating_quick_access_view_size"
+        android:layout_height="@dimen/fragment_home_floating_quick_access_view_size"
         android:id="@+id/floatingQuickAccessView"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
