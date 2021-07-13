@@ -1,4 +1,4 @@
-package sakuraba.saki.list.launcher.main.launchApp
+package sakuraba.saki.list.launcher.dialog
 
 import android.app.Dialog
 import android.os.Bundle
@@ -7,6 +7,8 @@ import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import sakuraba.saki.list.launcher.R
 import sakuraba.saki.list.launcher.databinding.FragmentPinInputDialogBinding
+import sakuraba.saki.list.launcher.main.launchApp.AuthorizationListener
+import sakuraba.saki.list.launcher.main.launchApp.PinInputViewModel
 import sakuraba.saki.list.launcher.main.launchApp.PinInputViewModel.Companion.CLEAR_ALL
 import sakuraba.saki.list.launcher.main.setting.SettingContainer
 import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.KEY_PIN_CODE

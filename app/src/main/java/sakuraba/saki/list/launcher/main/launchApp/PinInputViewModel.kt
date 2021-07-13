@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import sakuraba.saki.list.launcher.dialog.PinInputDialogFragment
 import sakuraba.saki.list.launcher.main.setting.SettingContainer
 
 class PinInputViewModel: ViewModel() {

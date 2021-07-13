@@ -1,4 +1,4 @@
-package sakuraba.saki.list.launcher.main.setting
+package sakuraba.saki.list.launcher.dialog
 
 import android.app.Dialog
 import android.os.Bundle

@@ -6,7 +6,6 @@ import android.hardware.fingerprint.FingerprintManager.FINGERPRINT_ERROR_CANCELE
 import android.hardware.fingerprint.FingerprintManager.FINGERPRINT_ERROR_USER_CANCELED
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
@@ -17,10 +16,11 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import sakuraba.saki.list.launcher.base.Constants
 import sakuraba.saki.list.launcher.databinding.FragmentLaunchAppBinding
+import sakuraba.saki.list.launcher.dialog.FingerprintDialogFragment
+import sakuraba.saki.list.launcher.dialog.PinInputDialogFragment
 import sakuraba.saki.list.launcher.main.setting.SettingContainer
 import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.KEY_USE_FINGERPRINT
 import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.KEY_USE_PIN

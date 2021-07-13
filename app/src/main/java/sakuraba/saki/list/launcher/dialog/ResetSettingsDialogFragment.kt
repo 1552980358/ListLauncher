@@ -1,4 +1,4 @@
-package sakuraba.saki.list.launcher.main.setting
+package sakuraba.saki.list.launcher.dialog
 
 import android.app.Dialog
 import android.content.Intent
@@ -14,6 +14,7 @@ import sakuraba.saki.list.launcher.MainActivity
 import sakuraba.saki.list.launcher.R
 import sakuraba.saki.list.launcher.databinding.FragmentResetSettingDialogBinding
 import sakuraba.saki.list.launcher.main.setting.SettingFragment.Companion.BACKGROUND_FILE
+import sakuraba.saki.list.launcher.main.setting.getResetSharedPreferenceEditor
 
 class ResetSettingsDialogFragment: DialogFragment() {
     

@@ -1,4 +1,4 @@
-package sakuraba.saki.list.launcher.main.home
+package sakuraba.saki.list.launcher.dialog
 
 import android.content.Intent
 import android.net.Uri
@@ -12,6 +12,7 @@ import androidx.fragment.app.FragmentManager
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import sakuraba.saki.list.launcher.R
 import sakuraba.saki.list.launcher.databinding.FragmentApplicationInfoDialogBinding
+import sakuraba.saki.list.launcher.main.home.AppInfo
 
 class ApplicationInfoDialogFragment(private val appInfo: AppInfo): BottomSheetDialogFragment() {
     

@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import sakuraba.saki.list.launcher.R
 import sakuraba.saki.list.launcher.base.Constants.Companion.LAUNCH_APPLICATION_NAME
 import sakuraba.saki.list.launcher.base.Constants.Companion.LAUNCH_PACKAGE_NAME
+import sakuraba.saki.list.launcher.dialog.ApplicationInfoDialogFragment
 import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.SETTING_CONTAINER
 
 class RecyclerViewAdapter(

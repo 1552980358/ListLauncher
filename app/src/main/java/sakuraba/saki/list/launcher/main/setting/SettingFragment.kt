@@ -10,6 +10,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import sakuraba.saki.list.launcher.R
+import sakuraba.saki.list.launcher.dialog.ResetSettingsDialogFragment
 import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.SETTING_CONTAINER
 
 class SettingFragment: PreferenceFragmentCompat() {
