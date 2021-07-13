@@ -24,6 +24,7 @@ class ResetSettingsDialogFragment: DialogFragment() {
     
     private var _fragmentResetSettingDialog: FragmentResetSettingDialogBinding? = null
     private val fragmentResetSettingDialogBinding get() = _fragmentResetSettingDialog!!
+    private var restart = true
     
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         _fragmentResetSettingDialog = FragmentResetSettingDialogBinding.inflate(layoutInflater)
@@ -65,5 +66,10 @@ class ResetSettingsDialogFragment: DialogFragment() {
     }
     
     fun show(fragmentManager: FragmentManager) = show(fragmentManager, TAG)
+    
+    fun showInSystemSetting(fragmentManager: FragmentManager) {
+        restart = !restart
+        show(fragmentManager)
+    }
     
 }
