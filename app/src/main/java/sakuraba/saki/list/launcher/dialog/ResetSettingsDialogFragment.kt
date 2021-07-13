@@ -41,20 +41,23 @@ class ResetSettingsDialogFragment: DialogFragment() {
                 launch(Dispatchers.Main) { fragmentResetSettingDialogBinding.textView.setText(R.string.reset_setting_dialog_removing_files) }
         
                 requireContext().deleteFile(BACKGROUND_FILE)
-        
-                launch(Dispatchers.Main) { fragmentResetSettingDialogBinding.textView.setText(R.string.reset_setting_dialog_restart_3_second) }
-        
-                delay(1000)
-        
-                launch(Dispatchers.Main) { fragmentResetSettingDialogBinding.textView.setText(R.string.reset_setting_dialog_restart_2_second) }
-        
-                delay(1000)
-        
-                launch(Dispatchers.Main) { fragmentResetSettingDialogBinding.textView.setText(R.string.reset_setting_dialog_restart_1_second) }
-        
-                delay(1000)
-        
-                startActivity(Intent(requireContext(), MainActivity::class.java))
+                
+                if (restart) {
+                    launch(Dispatchers.Main) { fragmentResetSettingDialogBinding.textView.setText(R.string.reset_setting_dialog_restart_3_second) }
+    
+                    delay(1000)
+    
+                    launch(Dispatchers.Main) { fragmentResetSettingDialogBinding.textView.setText(R.string.reset_setting_dialog_restart_2_second) }
+    
+                    delay(1000)
+    
+                    launch(Dispatchers.Main) { fragmentResetSettingDialogBinding.textView.setText(R.string.reset_setting_dialog_restart_1_second) }
+    
+                    delay(1000)
+    
+                    startActivity(Intent(requireContext(), MainActivity::class.java))
+                }
+    
                 requireActivity().finish()
             }
         }

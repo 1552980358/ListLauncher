@@ -123,4 +123,9 @@
     <string name="search_hint">Type application name or package name to filter</string>
     <string name="search_empty_filter_result">Empty filter result</string>
     
+    <string name="space_management_dialog_title">Confirmation</string>
+    <string name="space_management_dialog_message">Are you sure to reset all setting?</string>
+    <string name="space_management_dialog_confirm">Confirm</string>
+    <string name="space_management_dialog_cancel">Cancel</string>
+    
 </resources>
