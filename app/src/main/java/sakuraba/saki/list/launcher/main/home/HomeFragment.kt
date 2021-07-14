@@ -20,12 +20,12 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.github.promeg.pinyinhelper.Pinyin
 import com.google.android.material.snackbar.BaseTransientBottomBar.LENGTH_SHORT
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import sakuraba.saki.list.launcher.BuildConfig
 import sakuraba.saki.list.launcher.R
@@ -169,6 +169,13 @@ class HomeFragment: Fragment() {
                 }
             }
         })
+        
+        fragmentHomeBinding.recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                fragmentHomeBinding.sideCharView
+                    .updatePosition(homeViewModel.appInfos.value!![(recyclerView.layoutManager as LinearLayoutManager).findFirstVisibleItemPosition()].pinYin.first())
+            }
+        })
     }
     
     private fun updateAppList() {
@@ -247,6 +254,9 @@ class HomeFragment: Fragment() {
             // Call adapter for update of RecyclerView
             launch(Dispatchers.Main) {
                 fragmentHomeBinding.recyclerView.adapter?.notifyDataSetChanged()
+                if (appInfos.isNotEmpty()) {
+                    fragmentHomeBinding.sideCharView.updatePosition(appInfos.first().pinYin.first())
+                }
                 // Dismiss and remove LoadingDialogFragment
                 // homeViewModel.loadingDialogFragment.value?.dismiss()
                 // homeViewModel.setLoadingDialogFragment()
