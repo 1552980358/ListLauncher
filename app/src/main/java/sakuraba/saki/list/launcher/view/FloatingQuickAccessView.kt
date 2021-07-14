@@ -14,6 +14,11 @@ import android.widget.RelativeLayout.ALIGN_PARENT_END
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.toBitmap
 import androidx.core.view.setMargins
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import lib.github1552980358.ktExtension.jvm.keyword.tryOnly
 import sakuraba.saki.list.launcher.R
 import sakuraba.saki.list.launcher.view.base.BaseView
@@ -75,6 +80,10 @@ class FloatingQuickAccessView: BaseView {
     
     private lateinit var normalLayoutParam: RelativeLayout.LayoutParams
     
+    private var animatingJob: Job? = null
+    private var isAnimating = false
+    private var animationPos = 0
+    
     init {
         paint.apply {
             strokeWidth = resources.getDimension(R.dimen.view_floating_quick_access_circle_stroke)
@@ -108,10 +117,29 @@ class FloatingQuickAccessView: BaseView {
         setOnTouchListener { _, event ->
             when (event.action) {
                 ACTION_DOWN -> {
+                    // Force stop any executing animation
+                    isAnimating = false
+                    animatingJob?.cancel()
+                    
                     isOnTouched = true
                     layoutParams = clickedLayoutParam
                     selectedObject = SELECTED_NONE
                     listener?.onMove(selectedObject)
+                    
+                    animatingJob = CoroutineScope(Dispatchers.IO).launch {
+                        isAnimating = true
+                        // Start pos
+                        animationPos = 0
+                        repeat(9) {
+                            if (!isAnimating) {
+                                return@launch
+                            }
+                            delay(10)
+                            animationPos++
+                            postInvalidate()
+                        }
+                        isAnimating = false
+                    }
                 }
                 ACTION_MOVE -> {
                     selectedObject = when {
@@ -123,6 +151,10 @@ class FloatingQuickAccessView: BaseView {
                     listener?.onMove(selectedObject)
                 }
                 ACTION_UP -> {
+                    // Force stop any executing animation
+                    isAnimating = false
+                    animatingJob?.cancel()
+                    
                     isOnTouched = false
                     selectedObject = when {
                         event.x in (point1.x .. point1.x + iconSize) && event.y in (point1.y .. point1.y + iconSize)-> SELECTED_PHONE
@@ -131,7 +163,24 @@ class FloatingQuickAccessView: BaseView {
                         else -> 0
                     }
                     listener?.onSelected(selectedObject)
-                    layoutParams = normalLayoutParam
+                    
+                    animatingJob = CoroutineScope(Dispatchers.IO).launch {
+                        isAnimating = true
+                        // Start pos
+                        animationPos = 9
+                        repeat(9) {
+                            if (!isAnimating) {
+                                return@launch
+                            }
+                            delay(10)
+                            animationPos--
+                            postInvalidate()
+                        }
+                        isAnimating = false
+                        launch(Dispatchers.Main) {
+                            layoutParams = normalLayoutParam
+                        }
+                    }
                 }
             }
             invalidate()
@@ -189,35 +238,58 @@ class FloatingQuickAccessView: BaseView {
         super.onDraw(canvas)
         canvas ?: return
         
-        if (isOnTouched) {
-    
-            paint.color = ContextCompat.getColor(context, R.color.purple_200)
-    
-            when (selectedObject) {
-                1 -> {
-                    drawSelectedPhone(canvas)
-                    drawNormalMessage(canvas)
-                    drawNormalBrowser(canvas)
-                }
-                2 -> {
-                    drawNormalPhone(canvas)
-                    drawSelectedMessage(canvas)
-                    drawNormalBrowser(canvas)
-                }
-                3 -> {
-                    drawNormalPhone(canvas)
-                    drawNormalMessage(canvas)
-                    drawSelectedBrowser(canvas)
-                }
-                else -> {
-                    drawNormalPhone(canvas)
-                    drawNormalMessage(canvas)
-                    drawNormalBrowser(canvas)
+        when {
+            isAnimating -> {
+                canvas.drawCircle(
+                    point1.x + iconSize / 2,
+                    (heightFloat - circleRadius - paint.strokeWidth) + ((point1.y + iconSize / 2) - (heightFloat - circleRadius - paint.strokeWidth)) / 10 * animationPos,
+                    circleRadius,
+                    normalPaint
+                )
+                canvas.drawCircle(
+                    (widthFloat - circleRadius - paint.strokeWidth) + ((point2.x + iconSize / 2) - (widthFloat - circleRadius - paint.strokeWidth)) / 10 * animationPos,
+                    (heightFloat - circleRadius - paint.strokeWidth) + ((point2.y + iconSize / 2) - (heightFloat - circleRadius - paint.strokeWidth)) / 10 * animationPos,
+                    circleRadius,
+                    normalPaint
+                )
+                canvas.drawCircle(
+                    (widthFloat - circleRadius - paint.strokeWidth) + ((point3.x + iconSize / 2) - (widthFloat - circleRadius - paint.strokeWidth)) / 10 * animationPos,
+                    point3.y + iconSize / 2,
+                    circleRadius,
+                    normalPaint
+                )
+            }
+            else -> {
+                if (isOnTouched) {
+                    when (selectedObject) {
+                        1 -> {
+                            drawSelectedPhone(canvas)
+                            drawNormalMessage(canvas)
+                            drawNormalBrowser(canvas)
+                        }
+                        2 -> {
+                            drawNormalPhone(canvas)
+                            drawSelectedMessage(canvas)
+                            drawNormalBrowser(canvas)
+                        }
+                        3 -> {
+                            drawNormalPhone(canvas)
+                            drawNormalMessage(canvas)
+                            drawSelectedBrowser(canvas)
+                        }
+                        else -> {
+                            drawNormalPhone(canvas)
+                            drawNormalMessage(canvas)
+                            drawNormalBrowser(canvas)
+                        }
+                    }
                 }
             }
-            paint.color = buttonClickColor
-        } else {
-            paint.color = buttonNormalColor
+        }
+        
+        paint.color = when {
+            isOnTouched -> buttonClickColor
+            else -> buttonNormalColor
         }
         
         canvas.drawCircle(widthFloat - circleRadius - paint.strokeWidth, heightFloat - circleRadius - paint.strokeWidth, circleRadius, paint)
