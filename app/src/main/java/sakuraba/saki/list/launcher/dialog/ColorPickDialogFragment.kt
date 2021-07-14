@@ -7,9 +7,9 @@ import androidx.appcompat.app.AlertDialog
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentManager
+import lib.github1552980358.ktExtension.jvm.kotlin.hexStrToInt
 import sakuraba.saki.list.launcher.R
 import sakuraba.saki.list.launcher.databinding.FragmentColorPickDialogBinding
-import sakuraba.saki.list.launcher.util.hexStrToInt
 import java.io.Serializable
 
 class ColorPickDialogFragment(private val listener: OnColorPickListener?, @ColorInt private val originColor: Int): DialogFragment() {
