@@ -2,7 +2,8 @@ package sakuraba.saki.list.launcher.view
 
 import android.content.Context
 import android.graphics.Canvas
-import android.graphics.Rect
+import android.graphics.Paint
+import android.graphics.Typeface
 import android.util.AttributeSet
 import android.view.MotionEvent.ACTION_DOWN
 import android.view.MotionEvent.ACTION_MOVE
@@ -31,13 +32,22 @@ class SideCharView: BaseView {
     
     private var listener: OnLetterTouchListener? = null
     
+    private var currentPosition = 0
+    
+    private val selectedPaint = Paint()
+    
     init {
         (context as TextViewInterface).apply {
             if (hasCustomTitleTextColor()) {
-                paint.color = getTitleTextColor()
+                paint.color = titleTextViewColor
+                selectedPaint.color = titleTextViewColor
             }
         }
+        // Same text size
         paint.textSize = resources.getDimension(R.dimen.side_char_text_size)
+        selectedPaint.textSize = resources.getDimension(R.dimen.side_char_text_size)
+        // Make as bold, indicating current app shown
+        selectedPaint.typeface = Typeface.create(selectedPaint.typeface, Typeface.BOLD)
     
         /**
          * For syntax '((event.y - lettersDiff) / lettersDiff)',
@@ -103,6 +113,14 @@ class SideCharView: BaseView {
         this.listener = listener
     }
     
+    fun updatePosition(char: Char) {
+        currentPosition = when (char) {
+            in 'A' .. 'Z' -> LETTERS.indexOf(char)
+            else -> LETTERS.lastIndex
+        }
+        invalidate()
+    }
+    
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec)
         @Suppress("DrawAllocation")
@@ -115,7 +133,14 @@ class SideCharView: BaseView {
         canvas?:return
         
         for ((index, char) in LETTERS.withIndex()) {
-            canvas.drawText(char.toString(), (width - paint.measureText(char.toString())) / 2, (index) * lettersDiff + lettersDiff / 2, paint)
+            // canvas.drawText(char.toString(), (width - paint.measureText(char.toString())) / 2, (index) * lettersDiff + lettersDiff / 2, paint)
+            
+            when (index) {
+                currentPosition ->
+                    canvas.drawText(char.toString(), (width - paint.measureText(char.toString())) / 2, (index) * lettersDiff + lettersDiff / 2, selectedPaint)
+                else -> canvas.drawText(char.toString(), (width - paint.measureText(char.toString())) / 2, (index) * lettersDiff + lettersDiff / 2, paint)
+            }
+            
         }
         
     }
