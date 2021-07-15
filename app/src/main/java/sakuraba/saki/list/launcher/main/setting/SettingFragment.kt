@@ -20,6 +20,7 @@ class SettingFragment: PreferenceFragmentCompat() {
         
         private const val KEY_SECURITY_SETTING = "key_security_setting"
         private const val KEY_USER_INTERFACE_SETTING = "key_user_interface_setting"
+        private const val KEY_QUICK_ACCESS_BUTTON_SETTING = "key_quick_access_button_setting"
     }
     
     private lateinit var viewModel: SettingViewModel
@@ -34,6 +35,7 @@ class SettingFragment: PreferenceFragmentCompat() {
         
         initSecurity()
         initUserInterface()
+        initQuickAccessButton()
     }
     
     private fun initSecurity() =
@@ -46,6 +48,12 @@ class SettingFragment: PreferenceFragmentCompat() {
         findPreference<Preference>(KEY_USER_INTERFACE_SETTING)?.setOnPreferenceClickListener {
             findNavController().navigate(R.id.nav_user_interface_setting, Bundle().apply { putSerializable(SETTING_CONTAINER, viewModel.settingContainer.value) })
             return@setOnPreferenceClickListener true
+        }
+    
+    private fun initQuickAccessButton() =
+        findPreference<Preference>(KEY_QUICK_ACCESS_BUTTON_SETTING)?.setOnPreferenceClickListener {
+            findNavController().navigate(R.id.nav_quick_access_setting, Bundle().apply { putSerializable(SETTING_CONTAINER, viewModel.settingContainer.value) })
+            return@setOnPreferenceClickListener false
         }
     
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {

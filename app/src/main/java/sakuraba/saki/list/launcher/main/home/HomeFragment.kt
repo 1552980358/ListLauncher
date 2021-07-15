@@ -3,6 +3,7 @@ package sakuraba.saki.list.launcher.main.home
 import android.content.Intent
 import android.content.pm.ApplicationInfo
 import android.content.pm.PackageManager
+import android.graphics.Color
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -34,6 +35,8 @@ import sakuraba.saki.list.launcher.broadcast.ApplicationChangeBroadcastReceiver.
 import sakuraba.saki.list.launcher.databinding.FragmentHomeBinding
 import sakuraba.saki.list.launcher.main.search.SearchFragment.Companion.APP_INFOS
 import sakuraba.saki.list.launcher.main.setting.SettingContainer
+import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.KEY_QUICK_ACCESS_BUTTON_ICON_COLOR_CLICKED
+import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.KEY_QUICK_ACCESS_BUTTON_ICON_COLOR_NORMAL
 import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.SETTING_CONTAINER
 import sakuraba.saki.list.launcher.util.findActivityViewById
 import sakuraba.saki.list.launcher.view.FloatingQuickAccessView.Companion.OnIconSelectedListener
@@ -176,6 +179,8 @@ class HomeFragment: Fragment() {
                     .updatePosition(homeViewModel.appInfos.value!![(recyclerView.layoutManager as LinearLayoutManager).findFirstVisibleItemPosition()].pinYin.first())
             }
         })
+        
+        initQuickAccessButton()
     }
     
     private fun updateAppList() {
@@ -261,6 +266,17 @@ class HomeFragment: Fragment() {
                 // homeViewModel.loadingDialogFragment.value?.dismiss()
                 // homeViewModel.setLoadingDialogFragment()
                 fragmentHomeBinding.swipeRefreshLayout.isRefreshing = false
+            }
+        }
+    }
+    
+    private fun initQuickAccessButton() {
+        homeViewModel.settingContainer.value?.apply {
+            getStringValue(KEY_QUICK_ACCESS_BUTTON_ICON_COLOR_NORMAL)?.apply {
+                fragmentHomeBinding.floatingQuickAccessView.setIconColor(Color.parseColor(this))
+            }
+            getStringValue(KEY_QUICK_ACCESS_BUTTON_ICON_COLOR_CLICKED)?.apply {
+                fragmentHomeBinding.floatingQuickAccessView.setIconSelectedColor(Color.parseColor(this))
             }
         }
     }

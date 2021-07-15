@@ -13,4 +13,9 @@
         android:title="@string/menu_user_interface_setting"
         app:icon="@drawable/ic_user_interface"/>
     
+    <sakuraba.saki.list.launcher.preference.TextColorChangePreference
+        android:key="key_quick_access_button_setting"
+        android:title="@string/menu_quick_access_setting"
+        android:icon="@drawable/ic_quick_access_button" />
+    
 </PreferenceScreen>
