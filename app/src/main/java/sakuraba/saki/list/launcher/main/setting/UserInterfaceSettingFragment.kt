@@ -46,6 +46,7 @@ import sakuraba.saki.list.launcher.preference.TextColorChangeSwitchPreferenceCom
 import sakuraba.saki.list.launcher.preference.TwoSidedSwitchPreferenceCompat
 import sakuraba.saki.list.launcher.util.findActivityViewById
 import sakuraba.saki.list.launcher.util.hasNavigationBar
+import sakuraba.saki.list.launcher.util.updateIconColor
 import sakuraba.saki.list.launcher.view.CropImageView
 
 class UserInterfaceSettingFragment: PreferenceFragmentCompat() {
@@ -180,7 +181,8 @@ class UserInterfaceSettingFragment: PreferenceFragmentCompat() {
                 .putString(KEY_NAVIGATION_BAR_COLOR, DEFAULT_NAVIGATION_BAR_COLOR)
                 .commit()
         }
-        icon.setTint(Color.parseColor(preferenceManager.getString(KEY_NAVIGATION_BAR_COLOR, DEFAULT_NAVIGATION_BAR_COLOR)))
+        // icon.setTint(Color.parseColor(preferenceManager.getString(KEY_NAVIGATION_BAR_COLOR, DEFAULT_NAVIGATION_BAR_COLOR)))
+        updateIconColor(preferenceManager.getString(KEY_NAVIGATION_BAR_COLOR, DEFAULT_NAVIGATION_BAR_COLOR))
         setOnPreferenceChangeListener { _, newValue ->
             if (newValue as Boolean) {
                 setNavigationBarColor(preferenceManager.getString(KEY_NAVIGATION_BAR_COLOR, DEFAULT_NAVIGATION_BAR_COLOR)!!)
@@ -211,11 +213,8 @@ class UserInterfaceSettingFragment: PreferenceFragmentCompat() {
                     .putString(KEY_STATUS_BAR_COLOR, DEFAULT_STATUS_BAR_COLOR)
                     .commit()
             }
-            icon.setTint(
-                Color.parseColor(preferenceManager.getString(
-                    KEY_STATUS_BAR_COLOR,
-                    DEFAULT_STATUS_BAR_COLOR
-                )!!))
+            // icon.setTint(Color.parseColor(preferenceManager.getString(KEY_STATUS_BAR_COLOR, DEFAULT_STATUS_BAR_COLOR)!!))
+            updateIconColor(preferenceManager.getString(KEY_STATUS_BAR_COLOR, DEFAULT_STATUS_BAR_COLOR))
             setOnContentClickListener {
                 if (preferenceManager.getBoolean(KEY_CUSTOM_STATUS_BAR_COLOR, false)) {
                     setStatusBarColor(preferenceManager.getString(
@@ -254,7 +253,8 @@ class UserInterfaceSettingFragment: PreferenceFragmentCompat() {
                     .putString(KEY_TOOLBAR_BACKGROUND_COLOR, DEFAULT_TOOLBAR_BACKGROUND_COLOR)
                     .commit()
             }
-            icon.setTint(Color.parseColor(preferenceManager.getString(KEY_TOOLBAR_BACKGROUND_COLOR, null)))
+            // icon.setTint(Color.parseColor(preferenceManager.getString(KEY_TOOLBAR_BACKGROUND_COLOR, DEFAULT_TOOLBAR_BACKGROUND_COLOR)))
+            updateIconColor(preferenceManager.getString(KEY_TOOLBAR_BACKGROUND_COLOR, DEFAULT_TOOLBAR_BACKGROUND_COLOR))
             setOnContentClickListener {
                 if (preferenceManager.getBoolean(KEY_CUSTOM_TOOLBAR_BACKGROUND_COLOR, false)) {
                     setToolbarBackgroundColor(preferenceManager.getString(KEY_TOOLBAR_BACKGROUND_COLOR, DEFAULT_TOOLBAR_BACKGROUND_COLOR)!!, this)
@@ -286,7 +286,8 @@ class UserInterfaceSettingFragment: PreferenceFragmentCompat() {
                     .putString(KEY_TITLE_COLOR, DEFAULT_TITLE_COLOR)
                     .commit()
             }
-            icon.setTint(Color.parseColor(preferenceManager.getString(KEY_TITLE_COLOR, DEFAULT_TITLE_COLOR)))
+            // icon.setTint(Color.parseColor(preferenceManager.getString(KEY_TITLE_COLOR, DEFAULT_TITLE_COLOR)))
+            updateIconColor(preferenceManager.getString(KEY_TITLE_COLOR, DEFAULT_TITLE_COLOR))
             setOnPreferenceChangeListener { _, newValue ->
                 if (newValue as Boolean) {
                     setTitleTextColor(preferenceManager.getString(KEY_TITLE_COLOR, DEFAULT_TITLE_COLOR)!!)
@@ -317,7 +318,8 @@ class UserInterfaceSettingFragment: PreferenceFragmentCompat() {
                     .putString(KEY_SUMMARY_COLOR, DEFAULT_SUMMARY_COLOR)
                     .commit()
             }
-            icon.setTint(Color.parseColor(preferenceManager.getString(KEY_SUMMARY_COLOR, DEFAULT_SUMMARY_COLOR)))
+            // icon.setTint(Color.parseColor(preferenceManager.getString(KEY_SUMMARY_COLOR, DEFAULT_SUMMARY_COLOR)))
+            updateIconColor(preferenceManager.getString(KEY_SUMMARY_COLOR, DEFAULT_SUMMARY_COLOR))
             setOnPreferenceChangeListener { _, newValue ->
                 if (newValue as Boolean) {
                     setSummaryTextColor(preferenceManager.getString(KEY_SUMMARY_COLOR, DEFAULT_SUMMARY_COLOR)!!)
@@ -411,7 +413,7 @@ class UserInterfaceSettingFragment: PreferenceFragmentCompat() {
                 .edit()
                 .putString(KEY_TOOLBAR_BACKGROUND_COLOR, colorStr)
                 .commit()
-            preference?.icon?.setTint(color)
+            preference?.updateIconColor(color)
             findActivityViewById<AppBarLayout>(R.id.appBarLayout).setBackgroundColor(color)
         }
         override fun onSelectDefault() {
@@ -421,7 +423,7 @@ class UserInterfaceSettingFragment: PreferenceFragmentCompat() {
                 .edit()
                 .putString(KEY_TOOLBAR_BACKGROUND_COLOR, DEFAULT_TOOLBAR_BACKGROUND_COLOR)
                 .commit()
-            preference?.icon?.setTint(Color.parseColor(DEFAULT_TOOLBAR_BACKGROUND_COLOR))
+            preference?.updateIconColor(DEFAULT_TOOLBAR_BACKGROUND_COLOR)
             findActivityViewById<AppBarLayout>(R.id.appBarLayout).setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.purple_500))
         }
         override fun onCancel() {
