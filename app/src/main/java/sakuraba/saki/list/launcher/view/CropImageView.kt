@@ -11,6 +11,7 @@ import android.util.AttributeSet
 import android.view.MotionEvent.ACTION_DOWN
 import android.view.MotionEvent.ACTION_MOVE
 import android.view.MotionEvent.ACTION_UP
+import lib.github1552980358.ktExtension.android.graphics.heightF
 import lib.github1552980358.ktExtension.android.graphics.widthF
 import lib.github1552980358.ktExtension.android.view.heightF
 import lib.github1552980358.ktExtension.android.view.widthF
@@ -132,7 +133,7 @@ class CropImageView: BaseView {
                                 else -> when  {
                                     (event.x > downX) -> when {
                                         (event.x - downX >= bitmap.width - downStartX - cropWidth) ->
-                                            bitmap.width - cropWidth
+                                            bitmap.widthF - cropWidth
                                         else -> event.x - (downX - downStartX)
                                     }
                                     else -> when {
@@ -173,7 +174,7 @@ class CropImageView: BaseView {
                                     when  {
                                         (event.y > downY) -> when {
                                             (event.y - downY >= bitmap.height - downStartY - cropHeight) ->
-                                                bitmap.heightFloat - cropHeight
+                                                bitmap.heightF - cropHeight
                                             else -> event.y - (downY - downStartY)
                                         }
                                         else -> when {
@@ -272,7 +273,7 @@ class CropImageView: BaseView {
         
         // Calculate out all data for further processing
         var bitmapWidth = bitmap.widthF
-        var bitmapHeight = bitmap.heightFloat
+        var bitmapHeight = bitmap.heightF
         
         //
         when {
