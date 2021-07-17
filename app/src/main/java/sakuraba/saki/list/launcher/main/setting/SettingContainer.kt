@@ -5,24 +5,8 @@ import android.content.SharedPreferences
 import androidx.preference.PreferenceManager
 import lib.github1552980358.ktExtension.jvm.keyword.tryRun
 import sakuraba.saki.list.launcher.base.SettingValueChangeListener
-import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.KEY_CUSTOM_BACKGROUND_IMAGE
-import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.KEY_CUSTOM_NAVIGATION_BAR_COLOR
-import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.KEY_CUSTOM_STATUS_BAR_BLACK_TEXT
-import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.KEY_CUSTOM_STATUS_BAR_COLOR
-import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.KEY_CUSTOM_SUMMARY_COLOR
-import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.KEY_CUSTOM_TITLE_COLOR
-import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.KEY_CUSTOM_TOOLBAR_BACKGROUND_COLOR
-import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.KEY_NAVIGATION_BAR_COLOR
-import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.KEY_STATUS_BAR_COLOR
-import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.KEY_SUMMARY_COLOR
-import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.KEY_TITLE_COLOR
-import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.KEY_TOOLBAR_BACKGROUND_COLOR
-import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.KEY_USE_SYSTEM_BACKGROUND
-import sakuraba.saki.list.launcher.main.setting.UserInterfaceSettingFragment.Companion.DEFAULT_NAVIGATION_BAR_COLOR
-import sakuraba.saki.list.launcher.main.setting.UserInterfaceSettingFragment.Companion.DEFAULT_STATUS_BAR_COLOR
-import sakuraba.saki.list.launcher.main.setting.UserInterfaceSettingFragment.Companion.DEFAULT_SUMMARY_COLOR
-import sakuraba.saki.list.launcher.main.setting.UserInterfaceSettingFragment.Companion.DEFAULT_TITLE_COLOR
-import sakuraba.saki.list.launcher.main.setting.UserInterfaceSettingFragment.Companion.DEFAULT_TOOLBAR_BACKGROUND_COLOR
+import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.booleanKeys
+import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.stringKeys
 import java.io.Serializable
 
 class SettingContainer(context: Context): Serializable {
@@ -49,17 +33,8 @@ class SettingContainer(context: Context): Serializable {
         const val KEY_USE_SYSTEM_BACKGROUND = "key_use_system_background"
         const val KEY_QUICK_ACCESS_BUTTON_ICON_COLOR_NORMAL = "key_quick_access_button_icon_color_normal"
         const val KEY_QUICK_ACCESS_BUTTON_ICON_COLOR_CLICKED = "key_quick_access_button_icon_color_clicked"
-    }
-    
-    private val stringMap = mutableMapOf<String, String?>()
-    private val booleanMap = mutableMapOf<String, Boolean>()
-    private val settingValueListeners = arrayListOf<SettingValueChangeListener>()
-    
-    init {
-        val preferenceManager = PreferenceManager.getDefaultSharedPreferences(context)
-        arrayOf(
-            KEY_USE_FINGERPRINT,
-            KEY_USE_PIN,
+        
+        val booleanKeys = arrayOf(
             KEY_CUSTOM_STATUS_BAR_COLOR,
             KEY_CUSTOM_STATUS_BAR_BLACK_TEXT,
             KEY_CUSTOM_TOOLBAR_BACKGROUND_COLOR,
@@ -68,13 +43,9 @@ class SettingContainer(context: Context): Serializable {
             KEY_CUSTOM_SUMMARY_COLOR,
             KEY_CUSTOM_NAVIGATION_BAR_COLOR,
             KEY_USE_SYSTEM_BACKGROUND
-        ).forEach { key ->
-            if (preferenceManager.contains(key)) {
-                booleanMap[key] = preferenceManager.getBoolean(key, false)
-            }
-        }
-        arrayOf(
-            KEY_PIN_CODE,
+        )
+        
+        val stringKeys = arrayOf(
             KEY_STATUS_BAR_COLOR,
             KEY_TOOLBAR_BACKGROUND_COLOR,
             KEY_TITLE_COLOR,
@@ -82,7 +53,35 @@ class SettingContainer(context: Context): Serializable {
             KEY_NAVIGATION_BAR_COLOR,
             KEY_QUICK_ACCESS_BUTTON_ICON_COLOR_NORMAL,
             KEY_QUICK_ACCESS_BUTTON_ICON_COLOR_CLICKED
-        ).forEach { key ->
+        )
+    }
+    
+    private val stringMap = mutableMapOf<String, String?>()
+    private val booleanMap = mutableMapOf<String, Boolean>()
+    private val settingValueListeners = arrayListOf<SettingValueChangeListener>()
+    
+    init {
+        val preferenceManager = PreferenceManager.getDefaultSharedPreferences(context)
+    
+        /**
+         * Important for security
+         **/
+        if (preferenceManager.contains(KEY_USE_PIN)) {
+            booleanMap[KEY_USE_PIN] = preferenceManager.getBoolean(KEY_USE_PIN, false)
+        }
+        if (preferenceManager.contains(KEY_USE_FINGERPRINT)) {
+            booleanMap[KEY_USE_FINGERPRINT] = preferenceManager.getBoolean(KEY_USE_FINGERPRINT, false)
+        }
+        if (preferenceManager.contains(KEY_PIN_CODE)) {
+            stringMap[KEY_PIN_CODE] = preferenceManager.getString(KEY_PIN_CODE, null)
+        }
+        
+        booleanKeys.forEach { key ->
+            if (preferenceManager.contains(key)) {
+                booleanMap[key] = preferenceManager.getBoolean(key, false)
+            }
+        }
+        stringKeys.forEach { key ->
             if (preferenceManager.contains(key)) {
                 stringMap[key] = preferenceManager.getString(key, null)
             }
@@ -137,21 +136,25 @@ class SettingContainer(context: Context): Serializable {
 
 fun SharedPreferences.Editor.getResetSharedPreferenceEditor(): SharedPreferences.Editor {
     // Boolean
-    putBoolean(KEY_CUSTOM_STATUS_BAR_COLOR, false)
-    putBoolean(KEY_CUSTOM_STATUS_BAR_BLACK_TEXT, false)
-    putBoolean(KEY_CUSTOM_TOOLBAR_BACKGROUND_COLOR, false)
-    putBoolean(KEY_CUSTOM_BACKGROUND_IMAGE, false)
-    putBoolean(KEY_CUSTOM_TITLE_COLOR, false)
-    putBoolean(KEY_CUSTOM_SUMMARY_COLOR, false)
-    putBoolean(KEY_CUSTOM_NAVIGATION_BAR_COLOR, false)
-    putBoolean(KEY_USE_SYSTEM_BACKGROUND, false)
+    // putBoolean(KEY_CUSTOM_STATUS_BAR_COLOR, false)
+    // putBoolean(KEY_CUSTOM_STATUS_BAR_BLACK_TEXT, false)
+    // putBoolean(KEY_CUSTOM_TOOLBAR_BACKGROUND_COLOR, false)
+    // putBoolean(KEY_CUSTOM_BACKGROUND_IMAGE, false)
+    // putBoolean(KEY_CUSTOM_TITLE_COLOR, false)
+    // putBoolean(KEY_CUSTOM_SUMMARY_COLOR, false)
+    // putBoolean(KEY_CUSTOM_NAVIGATION_BAR_COLOR, false)
+    // putBoolean(KEY_USE_SYSTEM_BACKGROUND, false)
+    
+    booleanKeys.forEach { key -> putBoolean(key, false) }
     
     // Strings
-    putString(KEY_STATUS_BAR_COLOR, DEFAULT_STATUS_BAR_COLOR)
-    putString(KEY_TOOLBAR_BACKGROUND_COLOR, DEFAULT_TOOLBAR_BACKGROUND_COLOR)
-    putString(KEY_TITLE_COLOR, DEFAULT_TITLE_COLOR)
-    putString(KEY_SUMMARY_COLOR, DEFAULT_SUMMARY_COLOR)
-    putString(KEY_NAVIGATION_BAR_COLOR, DEFAULT_NAVIGATION_BAR_COLOR)
+    // putString(KEY_STATUS_BAR_COLOR, DEFAULT_STATUS_BAR_COLOR)
+    // putString(KEY_TOOLBAR_BACKGROUND_COLOR, DEFAULT_TOOLBAR_BACKGROUND_COLOR)
+    // putString(KEY_TITLE_COLOR, DEFAULT_TITLE_COLOR)
+    // putString(KEY_SUMMARY_COLOR, DEFAULT_SUMMARY_COLOR)
+    // putString(KEY_NAVIGATION_BAR_COLOR, DEFAULT_NAVIGATION_BAR_COLOR)
+    
+    stringKeys.forEach { key -> remove(key) }
     
     return this
 }
