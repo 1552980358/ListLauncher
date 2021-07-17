@@ -16,7 +16,6 @@ import lib.github1552980358.ktExtension.android.graphics.widthF
 import lib.github1552980358.ktExtension.android.view.heightF
 import lib.github1552980358.ktExtension.android.view.widthF
 import sakuraba.saki.list.launcher.R
-import sakuraba.saki.list.launcher.util.heightFloat
 import sakuraba.saki.list.launcher.view.base.BaseView
 
 class CropImageView: BaseView {
