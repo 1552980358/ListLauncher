@@ -7,6 +7,8 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.preference.PreferenceManager
+import lib.github1552980358.ktExtension.android.content.commit
+import lib.github1552980358.ktExtension.android.content.putBooleansCommit
 import sakuraba.saki.list.launcher.R
 import sakuraba.saki.list.launcher.databinding.FragmentSetPinBinding
 import sakuraba.saki.list.launcher.main.setting.SecuritySettingFragment.Companion.LAUNCH_TASK
@@ -86,12 +88,13 @@ class SetPinFragment: Fragment() {
     private fun checkInputs() {
         if (_inputFirst.length != 4 || _inputSecond.length != 4 || _inputFirst != _inputSecond) {
             if (arguments?.getInt(LAUNCH_TASK) != LAUNCH_TASK_MODIFY) {
-                @Suppress("ApplySharedPref")
+                // @Suppress("ApplySharedPref")
                 PreferenceManager.getDefaultSharedPreferences(requireContext())
-                    .edit()
-                    .putBoolean(KEY_USE_FINGERPRINT, false)
-                    .putBoolean(KEY_USE_PIN, false)
-                    .commit()
+                //     .edit()
+                //     .putBoolean(KEY_USE_FINGERPRINT, false)
+                //     .putBoolean(KEY_USE_PIN, false)
+                //     .commit()
+                    .putBooleansCommit(mapOf(KEY_USE_FINGERPRINT to false, KEY_USE_PIN to false))
                 (arguments?.getSerializable(SETTING_CONTAINER) as SettingContainer?)?.apply {
                     getBooleanUpdate(KEY_USE_FINGERPRINT, false)
                     getBooleanUpdate(KEY_USE_PIN, false)
@@ -101,9 +104,10 @@ class SetPinFragment: Fragment() {
         }
         @Suppress("ApplySharedPref")
         PreferenceManager.getDefaultSharedPreferences(requireContext())
-            .edit()
-            .putString(KEY_PIN_CODE, _inputSecond)
-            .commit()
+        //     .edit()
+        //     .putString(KEY_PIN_CODE, _inputSecond)
+        //     .commit()
+            .commit(KEY_PIN_CODE, _inputSecond)
         (arguments?.getSerializable(SETTING_CONTAINER) as SettingContainer?)?.apply {
             getStringUpdate(KEY_PIN_CODE, _inputFirst)
             getBooleanUpdate(KEY_USE_PIN, true)

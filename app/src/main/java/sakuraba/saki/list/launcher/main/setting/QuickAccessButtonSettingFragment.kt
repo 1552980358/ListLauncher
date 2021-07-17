@@ -5,6 +5,7 @@ import android.graphics.Color
 import android.os.Bundle
 import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.PreferenceManager
+import lib.github1552980358.ktExtension.android.content.commit
 import sakuraba.saki.list.launcher.R
 import sakuraba.saki.list.launcher.dialog.ColorPickDialogFragment
 import sakuraba.saki.list.launcher.dialog.ColorPickDialogFragment.Companion.OnColorPickListener
@@ -50,10 +51,11 @@ class QuickAccessButtonSettingFragment: PreferenceFragmentCompat() {
     
     private fun initButtonIconColorNormal(sharedPreferences: SharedPreferences) = findPreference<TextColorChangePreference>(KEY_QUICK_ACCESS_ICON_COLOR_NORMAL)?.apply {
         if (!sharedPreferences.contains(KEY_QUICK_ACCESS_ICON_COLOR_NORMAL)) {
-            @Suppress("ApplySharedPref")
-            sharedPreferences.edit()
-                .putString(KEY_QUICK_ACCESS_ICON_COLOR_NORMAL, DEFAULT_QUICK_ACCESS_ICON_COLOR_NORMAL)
-                .commit()
+            // @Suppress("ApplySharedPref")
+            // sharedPreferences.edit()
+            //     .putString(KEY_QUICK_ACCESS_ICON_COLOR_NORMAL, DEFAULT_QUICK_ACCESS_ICON_COLOR_NORMAL)
+            //     .commit()
+            sharedPreferences.commit(KEY_QUICK_ACCESS_ICON_COLOR_NORMAL, DEFAULT_QUICK_ACCESS_ICON_COLOR_NORMAL)
         }
         // icon.setTint(Color.parseColor(sharedPreferences.getString(KEY_QUICK_ACCESS_BUTTON_ICON_COLOR_NORMAL, DEFAULT_QUICK_ACCESS_ICON_COLOR_NORMAL)))
         updateIconColor(sharedPreferences.getString(KEY_QUICK_ACCESS_ICON_COLOR_NORMAL, DEFAULT_QUICK_ACCESS_ICON_COLOR_NORMAL))
@@ -65,10 +67,11 @@ class QuickAccessButtonSettingFragment: PreferenceFragmentCompat() {
     
     private fun initButtonIconColorClicked(sharedPreferences: SharedPreferences) = findPreference<TextColorChangePreference>(KEY_QUICK_ACCESS_ICON_COLOR_CLICKED)?.apply {
         if (!sharedPreferences.contains(KEY_QUICK_ACCESS_ICON_COLOR_CLICKED)) {
-            @Suppress("ApplySharedPref")
-            sharedPreferences.edit()
-                .putString(KEY_QUICK_ACCESS_ICON_COLOR_CLICKED, DEFAULT_QUICK_ACCESS_ICON_COLOR_CLICKED)
-                .commit()
+            // @Suppress("ApplySharedPref")
+            // sharedPreferences.edit()
+            //     .putString(KEY_QUICK_ACCESS_ICON_COLOR_CLICKED, DEFAULT_QUICK_ACCESS_ICON_COLOR_CLICKED)
+            //     .commit()
+            sharedPreferences.commit(KEY_QUICK_ACCESS_ICON_COLOR_CLICKED, DEFAULT_QUICK_ACCESS_ICON_COLOR_CLICKED)
         }
         // icon.setTint(Color.parseColor(sharedPreferences.getString(KEY_QUICK_ACCESS_BUTTON_ICON_COLOR_CLICKED, DEFAULT_QUICK_ACCESS_ICON_COLOR_CLICKED)))
         updateIconColor(sharedPreferences.getString(KEY_QUICK_ACCESS_ICON_COLOR_CLICKED, DEFAULT_QUICK_ACCESS_ICON_COLOR_CLICKED))
@@ -81,10 +84,11 @@ class QuickAccessButtonSettingFragment: PreferenceFragmentCompat() {
     private fun initIconBackgroundColorNormal(sharedPreferences: SharedPreferences) =
         findPreference<TextColorChangePreference>(KEY_QUICK_ACCESS_ICON_BACKGROUND_NORMAL)?.apply {
             if (!sharedPreferences.contains(KEY_QUICK_ACCESS_ICON_BACKGROUND_NORMAL)) {
-                @Suppress("ApplySharedPref")
-                sharedPreferences.edit()
-                    .putString(KEY_QUICK_ACCESS_ICON_BACKGROUND_NORMAL, DEFAULT_QUICK_ACCESS_ICON_BACKGROUND_NORMAL)
-                    .commit()
+                // @Suppress("ApplySharedPref")
+                // sharedPreferences.edit()
+                //     .putString(KEY_QUICK_ACCESS_ICON_BACKGROUND_NORMAL, DEFAULT_QUICK_ACCESS_ICON_BACKGROUND_NORMAL)
+                //     .commit()
+                sharedPreferences.commit(KEY_QUICK_ACCESS_ICON_BACKGROUND_NORMAL, DEFAULT_QUICK_ACCESS_ICON_BACKGROUND_NORMAL)
             }
             updateIconColor(sharedPreferences.getString(KEY_QUICK_ACCESS_ICON_BACKGROUND_NORMAL, DEFAULT_QUICK_ACCESS_ICON_BACKGROUND_NORMAL))
             setOnPreferenceClickListener {
@@ -96,10 +100,11 @@ class QuickAccessButtonSettingFragment: PreferenceFragmentCompat() {
     private fun initIconBackgroundStrokeColorNormal(sharedPreferences: SharedPreferences) =
         findPreference<TextColorChangePreference>(KEY_QUICK_ACCESS_ICON_BACKGROUND_STROKE_NORMAL)?.apply {
             if (!sharedPreferences.contains(KEY_QUICK_ACCESS_ICON_BACKGROUND_STROKE_NORMAL)) {
-                @Suppress("ApplySharedPref")
-                sharedPreferences.edit()
-                    .putString(KEY_QUICK_ACCESS_ICON_BACKGROUND_STROKE_NORMAL, DEFAULT_QUICK_ACCESS_ICON_BACKGROUND_STROKE_NORMAL)
-                    .commit()
+                // @Suppress("ApplySharedPref")
+                // sharedPreferences.edit()
+                //     .putString(KEY_QUICK_ACCESS_ICON_BACKGROUND_STROKE_NORMAL, DEFAULT_QUICK_ACCESS_ICON_BACKGROUND_STROKE_NORMAL)
+                //     .commit()
+                sharedPreferences.commit(KEY_QUICK_ACCESS_ICON_BACKGROUND_STROKE_NORMAL, DEFAULT_QUICK_ACCESS_ICON_BACKGROUND_STROKE_NORMAL)
             }
             updateIconColor(sharedPreferences.getString(KEY_QUICK_ACCESS_ICON_BACKGROUND_STROKE_NORMAL, DEFAULT_QUICK_ACCESS_ICON_BACKGROUND_STROKE_NORMAL))
             setOnPreferenceClickListener {
@@ -111,10 +116,11 @@ class QuickAccessButtonSettingFragment: PreferenceFragmentCompat() {
     private fun initIconBackgroundColorClicked(sharedPreferences: SharedPreferences) =
         findPreference<TextColorChangePreference>(KEY_QUICK_ACCESS_ICON_BACKGROUND_CLICKED)?.apply {
             if (!sharedPreferences.contains(KEY_QUICK_ACCESS_ICON_BACKGROUND_CLICKED)) {
-                @Suppress("ApplySharedPref")
-                sharedPreferences.edit()
-                    .putString(KEY_QUICK_ACCESS_ICON_BACKGROUND_CLICKED, DEFAULT_QUICK_ACCESS_ICON_BACKGROUND_CLICKED)
-                    .commit()
+                // @Suppress("ApplySharedPref")
+                // sharedPreferences.edit()
+                //     .putString(KEY_QUICK_ACCESS_ICON_BACKGROUND_CLICKED, DEFAULT_QUICK_ACCESS_ICON_BACKGROUND_CLICKED)
+                //     .commit()
+                sharedPreferences.commit(KEY_QUICK_ACCESS_ICON_BACKGROUND_CLICKED, DEFAULT_QUICK_ACCESS_ICON_BACKGROUND_CLICKED)
             }
             updateIconColor(sharedPreferences.getString(KEY_QUICK_ACCESS_ICON_BACKGROUND_CLICKED, DEFAULT_QUICK_ACCESS_ICON_BACKGROUND_CLICKED))
             setOnPreferenceClickListener {
@@ -126,10 +132,11 @@ class QuickAccessButtonSettingFragment: PreferenceFragmentCompat() {
     private fun initIconBackgroundStrokeColorClicked(sharedPreferences: SharedPreferences) =
         findPreference<TextColorChangePreference>(KEY_QUICK_ACCESS_ICON_BACKGROUND_STROKE_CLICKED)?.apply {
             if (!sharedPreferences.contains(KEY_QUICK_ACCESS_ICON_BACKGROUND_STROKE_CLICKED)) {
-                @Suppress("ApplySharedPref")
-                sharedPreferences.edit()
-                    .putString(KEY_QUICK_ACCESS_ICON_BACKGROUND_STROKE_CLICKED, DEFAULT_QUICK_ACCESS_ICON_BACKGROUND_STROKE_NORMAL)
-                    .commit()
+                // @Suppress("ApplySharedPref")
+                // sharedPreferences.edit()
+                //     .putString(KEY_QUICK_ACCESS_ICON_BACKGROUND_STROKE_CLICKED, DEFAULT_QUICK_ACCESS_ICON_BACKGROUND_STROKE_NORMAL)
+                //     .commit()
+                sharedPreferences.commit(KEY_QUICK_ACCESS_ICON_BACKGROUND_STROKE_CLICKED, DEFAULT_QUICK_ACCESS_ICON_BACKGROUND_STROKE_NORMAL)
             }
             updateIconColor(sharedPreferences.getString(KEY_QUICK_ACCESS_ICON_BACKGROUND_STROKE_CLICKED, DEFAULT_QUICK_ACCESS_ICON_BACKGROUND_STROKE_CLICKED))
             setOnPreferenceClickListener {
@@ -142,17 +149,19 @@ class QuickAccessButtonSettingFragment: PreferenceFragmentCompat() {
         override fun onColorPick(color: Int, colorStr: String) {
             findPreference<TextColorChangePreference>(KEY_QUICK_ACCESS_ICON_COLOR_NORMAL)?.updateIconColor(color)
             @Suppress("ApplySharedPref")
-            sharedPreferences.edit()
-                .putString(KEY_QUICK_ACCESS_ICON_COLOR_NORMAL, colorStr)
-                .commit()
+            // sharedPreferences.edit()
+            //     .putString(KEY_QUICK_ACCESS_ICON_COLOR_NORMAL, colorStr)
+            //     .commit()
+            sharedPreferences.commit(KEY_QUICK_ACCESS_ICON_COLOR_NORMAL, colorStr)
             settingContainer.getStringUpdate(KEY_QUICK_ACCESS_ICON_COLOR_NORMAL, colorStr)
         }
         override fun onSelectDefault() {
             findPreference<TextColorChangePreference>(KEY_QUICK_ACCESS_ICON_COLOR_NORMAL)?.updateIconColor(DEFAULT_QUICK_ACCESS_ICON_COLOR_NORMAL)
             @Suppress("ApplySharedPref")
-            sharedPreferences.edit()
-                .putString(KEY_QUICK_ACCESS_ICON_COLOR_NORMAL, DEFAULT_QUICK_ACCESS_ICON_COLOR_NORMAL)
-                .commit()
+            // sharedPreferences.edit()
+            //     .putString(KEY_QUICK_ACCESS_ICON_COLOR_NORMAL, DEFAULT_QUICK_ACCESS_ICON_COLOR_NORMAL)
+            //     .commit()
+            sharedPreferences.commit(KEY_QUICK_ACCESS_ICON_COLOR_NORMAL, DEFAULT_QUICK_ACCESS_ICON_COLOR_NORMAL)
             settingContainer.getStringUpdate(KEY_QUICK_ACCESS_ICON_COLOR_NORMAL, DEFAULT_QUICK_ACCESS_ICON_COLOR_NORMAL)
         }
         override fun onCancel() { }
@@ -161,18 +170,20 @@ class QuickAccessButtonSettingFragment: PreferenceFragmentCompat() {
     private fun setButtonIconColorClicked(sharedPreferences: SharedPreferences, colorStr: String?) = ColorPickDialogFragment(object : OnColorPickListener {
         override fun onColorPick(color: Int, colorStr: String) {
             findPreference<TextColorChangePreference>(KEY_QUICK_ACCESS_ICON_COLOR_CLICKED)?.updateIconColor(colorStr)
-            @Suppress("ApplySharedPref")
-            sharedPreferences.edit()
-                .putString(KEY_QUICK_ACCESS_ICON_COLOR_CLICKED, colorStr)
-                .commit()
+            // @Suppress("ApplySharedPref")
+            // sharedPreferences.edit()
+            //     .putString(KEY_QUICK_ACCESS_ICON_COLOR_CLICKED, colorStr)
+            //     .commit()
+            sharedPreferences.commit(KEY_QUICK_ACCESS_ICON_COLOR_CLICKED, colorStr)
             settingContainer.getStringUpdate(KEY_QUICK_ACCESS_ICON_COLOR_CLICKED, colorStr)
         }
         override fun onSelectDefault() {
             findPreference<TextColorChangePreference>(KEY_QUICK_ACCESS_ICON_COLOR_CLICKED)?.updateIconColor(DEFAULT_QUICK_ACCESS_ICON_COLOR_CLICKED)
-            @Suppress("ApplySharedPref")
-            sharedPreferences.edit()
-                .putString(KEY_QUICK_ACCESS_ICON_COLOR_CLICKED, DEFAULT_QUICK_ACCESS_ICON_COLOR_CLICKED)
-                .commit()
+            // @Suppress("ApplySharedPref")
+            // sharedPreferences.edit()
+            //     .putString(KEY_QUICK_ACCESS_ICON_COLOR_CLICKED, DEFAULT_QUICK_ACCESS_ICON_COLOR_CLICKED)
+            //     .commit()
+            sharedPreferences.commit(KEY_QUICK_ACCESS_ICON_COLOR_CLICKED, DEFAULT_QUICK_ACCESS_ICON_COLOR_CLICKED)
             settingContainer.getStringUpdate(KEY_QUICK_ACCESS_ICON_COLOR_CLICKED, DEFAULT_QUICK_ACCESS_ICON_COLOR_CLICKED)
         }
         override fun onCancel() { }
@@ -182,18 +193,20 @@ class QuickAccessButtonSettingFragment: PreferenceFragmentCompat() {
         ColorPickDialogFragment(object : OnColorPickListener {
             override fun onColorPick(color: Int, colorStr: String) {
                 findPreference<TextColorChangePreference>(KEY_QUICK_ACCESS_ICON_BACKGROUND_NORMAL)?.updateIconColor(color)
-                @Suppress("ApplySharedPref")
-                sharedPreferences.edit()
-                    .putString(KEY_QUICK_ACCESS_ICON_BACKGROUND_NORMAL, colorStr)
-                    .commit()
+                // @Suppress("ApplySharedPref")
+                // sharedPreferences.edit()
+                //     .putString(KEY_QUICK_ACCESS_ICON_BACKGROUND_NORMAL, colorStr)
+                //     .commit()
+                sharedPreferences.commit(KEY_QUICK_ACCESS_ICON_BACKGROUND_NORMAL, colorStr)
                 settingContainer.getStringUpdate(KEY_QUICK_ACCESS_ICON_BACKGROUND_NORMAL, colorStr)
             }
             override fun onSelectDefault() {
                 findPreference<TextColorChangePreference>(KEY_QUICK_ACCESS_ICON_BACKGROUND_NORMAL)?.updateIconColor(DEFAULT_QUICK_ACCESS_ICON_BACKGROUND_NORMAL)
-                @Suppress("ApplySharedPref")
-                sharedPreferences.edit()
-                    .putString(KEY_QUICK_ACCESS_ICON_BACKGROUND_NORMAL, DEFAULT_QUICK_ACCESS_ICON_BACKGROUND_NORMAL)
-                    .commit()
+                // @Suppress("ApplySharedPref")
+                // sharedPreferences.edit()
+                //     .putString(KEY_QUICK_ACCESS_ICON_BACKGROUND_NORMAL, DEFAULT_QUICK_ACCESS_ICON_BACKGROUND_NORMAL)
+                //     .commit()
+                sharedPreferences.commit(KEY_QUICK_ACCESS_ICON_BACKGROUND_NORMAL, DEFAULT_QUICK_ACCESS_ICON_BACKGROUND_NORMAL)
                 settingContainer.getStringUpdate(KEY_QUICK_ACCESS_ICON_BACKGROUND_NORMAL, DEFAULT_QUICK_ACCESS_ICON_BACKGROUND_NORMAL)
             }
             override fun onCancel() { }
@@ -203,18 +216,20 @@ class QuickAccessButtonSettingFragment: PreferenceFragmentCompat() {
         ColorPickDialogFragment(object : OnColorPickListener {
             override fun onColorPick(color: Int, colorStr: String) {
                 findPreference<TextColorChangePreference>(KEY_QUICK_ACCESS_ICON_BACKGROUND_STROKE_NORMAL)?.updateIconColor(color)
-                @Suppress("ApplySharedPref")
-                sharedPreferences.edit()
-                    .putString(KEY_QUICK_ACCESS_ICON_BACKGROUND_STROKE_NORMAL, colorStr)
-                    .commit()
+                // @Suppress("ApplySharedPref")
+                // sharedPreferences.edit()
+                //     .putString(KEY_QUICK_ACCESS_ICON_BACKGROUND_STROKE_NORMAL, colorStr)
+                //     .commit()
+                sharedPreferences.commit(KEY_QUICK_ACCESS_ICON_BACKGROUND_STROKE_NORMAL, colorStr)
                 settingContainer.getStringUpdate(KEY_QUICK_ACCESS_ICON_BACKGROUND_STROKE_NORMAL, colorStr)
             }
             override fun onSelectDefault() {
                 findPreference<TextColorChangePreference>(KEY_QUICK_ACCESS_ICON_BACKGROUND_STROKE_NORMAL)?.updateIconColor(DEFAULT_QUICK_ACCESS_ICON_BACKGROUND_STROKE_NORMAL)
-                @Suppress("ApplySharedPref")
-                sharedPreferences.edit()
-                    .putString(KEY_QUICK_ACCESS_ICON_BACKGROUND_STROKE_NORMAL, DEFAULT_QUICK_ACCESS_ICON_BACKGROUND_STROKE_NORMAL)
-                    .commit()
+                // @Suppress("ApplySharedPref")
+                // sharedPreferences.edit()
+                //     .putString(KEY_QUICK_ACCESS_ICON_BACKGROUND_STROKE_NORMAL, DEFAULT_QUICK_ACCESS_ICON_BACKGROUND_STROKE_NORMAL)
+                //     .commit()
+                sharedPreferences.commit(KEY_QUICK_ACCESS_ICON_BACKGROUND_STROKE_NORMAL, DEFAULT_QUICK_ACCESS_ICON_BACKGROUND_STROKE_NORMAL)
                 settingContainer.getStringUpdate(KEY_QUICK_ACCESS_ICON_BACKGROUND_STROKE_NORMAL, DEFAULT_QUICK_ACCESS_ICON_BACKGROUND_STROKE_NORMAL)
             }
             override fun onCancel() { }
@@ -245,18 +260,20 @@ class QuickAccessButtonSettingFragment: PreferenceFragmentCompat() {
         ColorPickDialogFragment(object : OnColorPickListener {
             override fun onColorPick(color: Int, colorStr: String) {
                 findPreference<TextColorChangePreference>(KEY_QUICK_ACCESS_ICON_BACKGROUND_STROKE_CLICKED)?.updateIconColor(color)
-                @Suppress("ApplySharedPref")
-                sharedPreferences.edit()
-                    .putString(KEY_QUICK_ACCESS_ICON_BACKGROUND_STROKE_CLICKED, colorStr)
-                    .commit()
+                // @Suppress("ApplySharedPref")
+                // sharedPreferences.edit()
+                //     .putString(KEY_QUICK_ACCESS_ICON_BACKGROUND_STROKE_CLICKED, colorStr)
+                //     .commit()
+                sharedPreferences.commit(KEY_QUICK_ACCESS_ICON_BACKGROUND_STROKE_CLICKED, colorStr)
                 settingContainer.getStringUpdate(KEY_QUICK_ACCESS_ICON_BACKGROUND_STROKE_CLICKED, colorStr)
             }
             override fun onSelectDefault() {
                 findPreference<TextColorChangePreference>(KEY_QUICK_ACCESS_ICON_BACKGROUND_STROKE_CLICKED)?.updateIconColor(DEFAULT_QUICK_ACCESS_ICON_BACKGROUND_STROKE_CLICKED)
-                @Suppress("ApplySharedPref")
-                sharedPreferences.edit()
-                    .putString(KEY_QUICK_ACCESS_ICON_BACKGROUND_STROKE_CLICKED, DEFAULT_QUICK_ACCESS_ICON_BACKGROUND_STROKE_CLICKED)
-                    .commit()
+                // @Suppress("ApplySharedPref")
+                // sharedPreferences.edit()
+                //     .putString(KEY_QUICK_ACCESS_ICON_BACKGROUND_STROKE_CLICKED, DEFAULT_QUICK_ACCESS_ICON_BACKGROUND_STROKE_CLICKED)
+                //     .commit()
+                sharedPreferences.commit(KEY_QUICK_ACCESS_ICON_BACKGROUND_STROKE_CLICKED, DEFAULT_QUICK_ACCESS_ICON_BACKGROUND_STROKE_CLICKED)
                 settingContainer.getStringUpdate(KEY_QUICK_ACCESS_ICON_BACKGROUND_STROKE_CLICKED, DEFAULT_QUICK_ACCESS_ICON_BACKGROUND_STROKE_CLICKED)
             }
             override fun onCancel() { }

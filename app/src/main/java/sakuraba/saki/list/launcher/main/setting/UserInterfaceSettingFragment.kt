@@ -24,6 +24,7 @@ import androidx.preference.SwitchPreferenceCompat
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.snackbar.BaseTransientBottomBar.LENGTH_SHORT
 import com.google.android.material.snackbar.Snackbar
+import lib.github1552980358.ktExtension.android.content.commit
 import sakuraba.saki.list.launcher.MainActivity
 import sakuraba.saki.list.launcher.R
 import sakuraba.saki.list.launcher.dialog.ColorPickDialogFragment
@@ -176,16 +177,17 @@ class UserInterfaceSettingFragment: PreferenceFragmentCompat() {
             return@apply
         }
         if (!preferenceManager.contains(KEY_NAVIGATION_BAR_COLOR)) {
-            @Suppress("ApplySharedPref")
-            preferenceManager.edit()
-                .putString(KEY_NAVIGATION_BAR_COLOR, DEFAULT_NAVIGATION_BAR_COLOR)
-                .commit()
+            // @Suppress("ApplySharedPref")
+            // preferenceManager.edit()
+            //     .putString(KEY_NAVIGATION_BAR_COLOR, DEFAULT_NAVIGATION_BAR_COLOR)
+            //     .commit()
+            sharedPreferences.commit(KEY_NAVIGATION_BAR_COLOR, DEFAULT_NAVIGATION_BAR_COLOR)
         }
         // icon.setTint(Color.parseColor(preferenceManager.getString(KEY_NAVIGATION_BAR_COLOR, DEFAULT_NAVIGATION_BAR_COLOR)))
         updateIconColor(preferenceManager.getString(KEY_NAVIGATION_BAR_COLOR, DEFAULT_NAVIGATION_BAR_COLOR))
         setOnPreferenceChangeListener { _, newValue ->
             if (newValue as Boolean) {
-                setNavigationBarColor(preferenceManager.getString(KEY_NAVIGATION_BAR_COLOR, DEFAULT_NAVIGATION_BAR_COLOR)!!)
+                setNavigationBarColor(preferenceManager, preferenceManager.getString(KEY_NAVIGATION_BAR_COLOR, DEFAULT_NAVIGATION_BAR_COLOR)!!)
             } else {
                 startActivity(Intent(requireContext(), MainActivity::class.java))
                 requireActivity().finish()
@@ -194,7 +196,7 @@ class UserInterfaceSettingFragment: PreferenceFragmentCompat() {
         }
         setOnContentClickListener {
             if (preferenceManager.getBoolean(KEY_CUSTOM_NAVIGATION_BAR_COLOR, false)) {
-                setNavigationBarColor(preferenceManager.getString(KEY_NAVIGATION_BAR_COLOR, DEFAULT_NAVIGATION_BAR_COLOR)!!)
+                setNavigationBarColor(preferenceManager, preferenceManager.getString(KEY_NAVIGATION_BAR_COLOR, DEFAULT_NAVIGATION_BAR_COLOR)!!)
             } else {
                 Snackbar.make(
                     findActivityViewById<DrawerLayout>(R.id.drawer_layout),
@@ -208,19 +210,17 @@ class UserInterfaceSettingFragment: PreferenceFragmentCompat() {
     private fun initStatusBarColor(preferenceManager: SharedPreferences) =
         findPreference<TwoSidedSwitchPreferenceCompat>(KEY_CUSTOM_STATUS_BAR_COLOR)?.apply {
             if (!preferenceManager.contains(KEY_STATUS_BAR_COLOR)) {
-                @Suppress("ApplySharedPref")
-                preferenceManager.edit()
-                    .putString(KEY_STATUS_BAR_COLOR, DEFAULT_STATUS_BAR_COLOR)
-                    .commit()
+                // @Suppress("ApplySharedPref")
+                // preferenceManager.edit()
+                //     .putString(KEY_STATUS_BAR_COLOR, DEFAULT_STATUS_BAR_COLOR)
+                //     .commit()
+                preferenceManager.commit(KEY_STATUS_BAR_COLOR, DEFAULT_STATUS_BAR_COLOR)
             }
             // icon.setTint(Color.parseColor(preferenceManager.getString(KEY_STATUS_BAR_COLOR, DEFAULT_STATUS_BAR_COLOR)!!))
             updateIconColor(preferenceManager.getString(KEY_STATUS_BAR_COLOR, DEFAULT_STATUS_BAR_COLOR))
             setOnContentClickListener {
                 if (preferenceManager.getBoolean(KEY_CUSTOM_STATUS_BAR_COLOR, false)) {
-                    setStatusBarColor(preferenceManager.getString(
-                        KEY_STATUS_BAR_COLOR,
-                        DEFAULT_STATUS_BAR_COLOR
-                    )!!)
+                    setStatusBarColor(preferenceManager, preferenceManager.getString(KEY_STATUS_BAR_COLOR, DEFAULT_STATUS_BAR_COLOR)!!)
                 } else {
                     Snackbar.make(
                         findActivityViewById<DrawerLayout>(R.id.drawer_layout),
@@ -232,10 +232,7 @@ class UserInterfaceSettingFragment: PreferenceFragmentCompat() {
             setOnPreferenceChangeListener { _, newValue ->
                 settingContainer.getBooleanUpdate(KEY_CUSTOM_STATUS_BAR_COLOR, newValue as Boolean)
                 if (newValue) {
-                    setStatusBarColor(preferenceManager.getString(
-                        KEY_STATUS_BAR_COLOR,
-                        DEFAULT_STATUS_BAR_COLOR
-                    )!!)
+                    setStatusBarColor(preferenceManager, preferenceManager.getString(KEY_STATUS_BAR_COLOR, DEFAULT_STATUS_BAR_COLOR)!!)
                     findPreference<Preference>(KEY_STATUS_BAR_COLOR)?.isEnabled = true
                 } else {
                     requireActivity().window.statusBarColor = ContextCompat.getColor(requireContext(), R.color.purple_700)
@@ -248,16 +245,17 @@ class UserInterfaceSettingFragment: PreferenceFragmentCompat() {
     private fun initToolbarBackgroundColor(preferenceManager: SharedPreferences) =
         findPreference<TwoSidedSwitchPreferenceCompat>(KEY_CUSTOM_TOOLBAR_BACKGROUND_COLOR)?.apply {
             if (!preferenceManager.contains(KEY_TOOLBAR_BACKGROUND_COLOR)) {
-                @Suppress("ApplySharedPref")
-                preferenceManager.edit()
-                    .putString(KEY_TOOLBAR_BACKGROUND_COLOR, DEFAULT_TOOLBAR_BACKGROUND_COLOR)
-                    .commit()
+                // @Suppress("ApplySharedPref")
+                // preferenceManager.edit()
+                //     .putString(KEY_TOOLBAR_BACKGROUND_COLOR, DEFAULT_TOOLBAR_BACKGROUND_COLOR)
+                //     .commit()
+                preferenceManager.commit(KEY_TOOLBAR_BACKGROUND_COLOR, DEFAULT_TOOLBAR_BACKGROUND_COLOR)
             }
             // icon.setTint(Color.parseColor(preferenceManager.getString(KEY_TOOLBAR_BACKGROUND_COLOR, DEFAULT_TOOLBAR_BACKGROUND_COLOR)))
             updateIconColor(preferenceManager.getString(KEY_TOOLBAR_BACKGROUND_COLOR, DEFAULT_TOOLBAR_BACKGROUND_COLOR))
             setOnContentClickListener {
                 if (preferenceManager.getBoolean(KEY_CUSTOM_TOOLBAR_BACKGROUND_COLOR, false)) {
-                    setToolbarBackgroundColor(preferenceManager.getString(KEY_TOOLBAR_BACKGROUND_COLOR, DEFAULT_TOOLBAR_BACKGROUND_COLOR)!!, this)
+                    setToolbarBackgroundColor(preferenceManager, preferenceManager.getString(KEY_TOOLBAR_BACKGROUND_COLOR, DEFAULT_TOOLBAR_BACKGROUND_COLOR)!!, this)
                 } else {
                     Snackbar.make(
                         findActivityViewById<DrawerLayout>(R.id.drawer_layout),
@@ -269,7 +267,7 @@ class UserInterfaceSettingFragment: PreferenceFragmentCompat() {
             setOnPreferenceChangeListener { _, newValue ->
                 settingContainer.getBooleanUpdate(KEY_CUSTOM_TOOLBAR_BACKGROUND_COLOR, newValue as Boolean)
                 if (newValue) {
-                    setToolbarBackgroundColor(preferenceManager.getString(KEY_TOOLBAR_BACKGROUND_COLOR, DEFAULT_TOOLBAR_BACKGROUND_COLOR)!!, this)
+                    setToolbarBackgroundColor(preferenceManager, preferenceManager.getString(KEY_TOOLBAR_BACKGROUND_COLOR, DEFAULT_TOOLBAR_BACKGROUND_COLOR)!!, this)
                 } else {
                     findActivityViewById<AppBarLayout>(R.id.appBarLayout).setBackgroundColor(Color.parseColor(DEFAULT_TOOLBAR_BACKGROUND_COLOR))
                     findPreference<Preference>(KEY_TOOLBAR_BACKGROUND_COLOR)?.isEnabled = false
@@ -281,16 +279,17 @@ class UserInterfaceSettingFragment: PreferenceFragmentCompat() {
     private fun initTitleColor(preferenceManager: SharedPreferences) =
         findPreference<TwoSidedSwitchPreferenceCompat>(KEY_CUSTOM_TITLE_COLOR)?.apply {
             if (!preferenceManager.contains(KEY_TITLE_COLOR)) {
-                @Suppress("ApplySharedPref")
-                preferenceManager.edit()
-                    .putString(KEY_TITLE_COLOR, DEFAULT_TITLE_COLOR)
-                    .commit()
+                // @Suppress("ApplySharedPref")
+                // preferenceManager.edit()
+                //     .putString(KEY_TITLE_COLOR, DEFAULT_TITLE_COLOR)
+                //     .commit()
+                preferenceManager.commit(KEY_TITLE_COLOR, DEFAULT_TITLE_COLOR)
             }
             // icon.setTint(Color.parseColor(preferenceManager.getString(KEY_TITLE_COLOR, DEFAULT_TITLE_COLOR)))
             updateIconColor(preferenceManager.getString(KEY_TITLE_COLOR, DEFAULT_TITLE_COLOR))
             setOnPreferenceChangeListener { _, newValue ->
                 if (newValue as Boolean) {
-                    setTitleTextColor(preferenceManager.getString(KEY_TITLE_COLOR, DEFAULT_TITLE_COLOR)!!)
+                    setTitleTextColor(preferenceManager, preferenceManager.getString(KEY_TITLE_COLOR, DEFAULT_TITLE_COLOR)!!)
                 } else {
                     startActivity(Intent(requireContext(), MainActivity::class.java))
                     requireActivity().finish()
@@ -299,7 +298,7 @@ class UserInterfaceSettingFragment: PreferenceFragmentCompat() {
             }
             setOnContentClickListener {
                 if (preferenceManager.getBoolean(KEY_CUSTOM_TITLE_COLOR, false)) {
-                    setTitleTextColor(preferenceManager.getString(KEY_TITLE_COLOR, DEFAULT_TITLE_COLOR)!!)
+                    setTitleTextColor(preferenceManager, preferenceManager.getString(KEY_TITLE_COLOR, DEFAULT_TITLE_COLOR)!!)
                 } else {
                     Snackbar.make(
                         findActivityViewById<DrawerLayout>(R.id.drawer_layout),
@@ -313,16 +312,17 @@ class UserInterfaceSettingFragment: PreferenceFragmentCompat() {
     private fun initSummaryColor(preferenceManager: SharedPreferences) =
         findPreference<TwoSidedSwitchPreferenceCompat>(KEY_CUSTOM_SUMMARY_COLOR)?.apply {
             if (!preferenceManager.contains(KEY_SUMMARY_COLOR)) {
-                @Suppress("ApplySharedPref")
-                preferenceManager.edit()
-                    .putString(KEY_SUMMARY_COLOR, DEFAULT_SUMMARY_COLOR)
-                    .commit()
+                // @Suppress("ApplySharedPref")
+                // preferenceManager.edit()
+                //     .putString(KEY_SUMMARY_COLOR, DEFAULT_SUMMARY_COLOR)
+                //     .commit()
+                preferenceManager.commit(KEY_SUMMARY_COLOR, DEFAULT_SUMMARY_COLOR)
             }
             // icon.setTint(Color.parseColor(preferenceManager.getString(KEY_SUMMARY_COLOR, DEFAULT_SUMMARY_COLOR)))
             updateIconColor(preferenceManager.getString(KEY_SUMMARY_COLOR, DEFAULT_SUMMARY_COLOR))
             setOnPreferenceChangeListener { _, newValue ->
                 if (newValue as Boolean) {
-                    setSummaryTextColor(preferenceManager.getString(KEY_SUMMARY_COLOR, DEFAULT_SUMMARY_COLOR)!!)
+                    setSummaryTextColor(preferenceManager, preferenceManager.getString(KEY_SUMMARY_COLOR, DEFAULT_SUMMARY_COLOR)!!)
                 } else {
                     startActivity(Intent(requireContext(), MainActivity::class.java))
                     requireActivity().finish()
@@ -331,7 +331,7 @@ class UserInterfaceSettingFragment: PreferenceFragmentCompat() {
             }
             setOnContentClickListener {
                 if (preferenceManager.getBoolean(KEY_CUSTOM_SUMMARY_COLOR, false)) {
-                    setSummaryTextColor(preferenceManager.getString(KEY_SUMMARY_COLOR, DEFAULT_SUMMARY_COLOR)!!)
+                    setSummaryTextColor(preferenceManager, preferenceManager.getString(KEY_SUMMARY_COLOR, DEFAULT_SUMMARY_COLOR)!!)
                 } else {
                     Snackbar.make(
                         findActivityViewById<DrawerLayout>(R.id.drawer_layout),
@@ -342,26 +342,27 @@ class UserInterfaceSettingFragment: PreferenceFragmentCompat() {
             }
         }
     
-    private fun setNavigationBarColor(colorString: String) = ColorPickDialogFragment(object :
+    private fun setNavigationBarColor(sharedPreferences: SharedPreferences, colorString: String) = ColorPickDialogFragment(object :
         ColorPickDialogFragment.Companion.OnColorPickListener {
         override fun onColorPick(color: Int, colorStr: String) {
             settingContainer.getStringUpdate(KEY_NAVIGATION_BAR_COLOR, colorStr)
-            @Suppress("ApplySharedPref")
-            PreferenceManager.getDefaultSharedPreferences(requireContext())
-                .edit()
-                .putString(KEY_NAVIGATION_BAR_COLOR, colorStr)
-                .commit()
+            // @Suppress("ApplySharedPref")
+            //sharedPreferences.edit()
+            //     .putString(KEY_NAVIGATION_BAR_COLOR, colorStr)
+            //     .commit()
+            sharedPreferences.commit(KEY_NAVIGATION_BAR_COLOR, colorStr)
             WindowCompat.setDecorFitsSystemWindows(requireActivity().window, false)
             requireActivity().window.navigationBarColor = Color.parseColor(colorString)
         }
         
         override fun onSelectDefault() {
             settingContainer.getStringUpdate(KEY_NAVIGATION_BAR_COLOR, DEFAULT_NAVIGATION_BAR_COLOR)
-            @Suppress("ApplySharedPref")
-            PreferenceManager.getDefaultSharedPreferences(requireContext())
-                .edit()
-                .putString(KEY_NAVIGATION_BAR_COLOR, DEFAULT_NAVIGATION_BAR_COLOR)
-                .commit()
+            // @Suppress("ApplySharedPref")
+            // PreferenceManager.getDefaultSharedPreferences(requireContext())
+            //     .edit()
+            //     .putString(KEY_NAVIGATION_BAR_COLOR, DEFAULT_NAVIGATION_BAR_COLOR)
+            //     .commit()
+            sharedPreferences.commit(KEY_NAVIGATION_BAR_COLOR, DEFAULT_NAVIGATION_BAR_COLOR)
             WindowCompat.setDecorFitsSystemWindows(requireActivity().window, false)
             requireActivity().window.navigationBarColor = Color.parseColor(DEFAULT_NAVIGATION_BAR_COLOR)
         }
@@ -380,49 +381,53 @@ class UserInterfaceSettingFragment: PreferenceFragmentCompat() {
     
     /********************** Color setting dialog fragment **********************/
     
-    private fun setStatusBarColor(color: String) = ColorPickDialogFragment(object :
+    private fun setStatusBarColor(sharedPreferences: SharedPreferences, color: String) = ColorPickDialogFragment(object :
         ColorPickDialogFragment.Companion.OnColorPickListener {
         
         override fun onColorPick(color: Int, colorStr: String) {
             settingContainer.getStringUpdate(KEY_STATUS_BAR_COLOR, colorStr)
-            @Suppress("ApplySharedPref")
-            PreferenceManager.getDefaultSharedPreferences(requireContext())
-                .edit()
-                .putString(KEY_STATUS_BAR_COLOR, colorStr)
-                .commit()
+            // @Suppress("ApplySharedPref")
+            // PreferenceManager.getDefaultSharedPreferences(requireContext())
+            //      .edit()
+            //      .putString(KEY_STATUS_BAR_COLOR, colorStr)
+            //      .commit()
+            sharedPreferences.commit(KEY_STATUS_BAR_COLOR, colorStr)
             requireActivity().window?.statusBarColor = color
         }
         override fun onSelectDefault() {
             settingContainer.getStringUpdate(KEY_STATUS_BAR_COLOR, DEFAULT_STATUS_BAR_COLOR)
-            @Suppress("ApplySharedPref")
-            PreferenceManager.getDefaultSharedPreferences(requireContext())
-                .edit()
-                .putString(KEY_STATUS_BAR_COLOR, DEFAULT_STATUS_BAR_COLOR)
-                .commit()
+            // @Suppress("ApplySharedPref")
+            // PreferenceManager.getDefaultSharedPreferences(requireContext())
+            //     .edit()
+            //     .putString(KEY_STATUS_BAR_COLOR, DEFAULT_STATUS_BAR_COLOR)
+            //     .commit()
+            sharedPreferences.commit(KEY_STATUS_BAR_COLOR, DEFAULT_STATUS_BAR_COLOR)
             requireActivity().window?.statusBarColor = ContextCompat.getColor(requireContext(), R.color.purple_700)
         }
         override fun onCancel() { }
     }, Color.parseColor(color)).show(parentFragmentManager)
     
-    private fun setToolbarBackgroundColor(color: String, preference: Preference?) = ColorPickDialogFragment(object :
+    private fun setToolbarBackgroundColor(sharedPreferences: SharedPreferences, color: String, preference: Preference?) = ColorPickDialogFragment(object :
         ColorPickDialogFragment.Companion.OnColorPickListener {
         override fun onColorPick(color: Int, colorStr: String) {
             settingContainer.getStringUpdate(KEY_TOOLBAR_BACKGROUND_COLOR, colorStr)
-            @Suppress("ApplySharedPref")
-            PreferenceManager.getDefaultSharedPreferences(requireContext())
-                .edit()
-                .putString(KEY_TOOLBAR_BACKGROUND_COLOR, colorStr)
-                .commit()
+            // @Suppress("ApplySharedPref")
+            // PreferenceManager.getDefaultSharedPreferences(requireContext())
+            //     .edit()
+            //     .putString(KEY_TOOLBAR_BACKGROUND_COLOR, colorStr)
+            //     .commit()
+            sharedPreferences.commit(KEY_TOOLBAR_BACKGROUND_COLOR, colorStr)
             preference?.updateIconColor(color)
             findActivityViewById<AppBarLayout>(R.id.appBarLayout).setBackgroundColor(color)
         }
         override fun onSelectDefault() {
             settingContainer.getStringUpdate(KEY_TOOLBAR_BACKGROUND_COLOR, DEFAULT_TOOLBAR_BACKGROUND_COLOR)
-            @Suppress("ApplySharedPref")
-            PreferenceManager.getDefaultSharedPreferences(requireContext())
-                .edit()
-                .putString(KEY_TOOLBAR_BACKGROUND_COLOR, DEFAULT_TOOLBAR_BACKGROUND_COLOR)
-                .commit()
+            // @Suppress("ApplySharedPref")
+            // PreferenceManager.getDefaultSharedPreferences(requireContext())
+            //     .edit()
+            //     .putString(KEY_TOOLBAR_BACKGROUND_COLOR, DEFAULT_TOOLBAR_BACKGROUND_COLOR)
+            //     .commit()
+            sharedPreferences.commit(KEY_TOOLBAR_BACKGROUND_COLOR, DEFAULT_TOOLBAR_BACKGROUND_COLOR)
             preference?.updateIconColor(DEFAULT_TOOLBAR_BACKGROUND_COLOR)
             findActivityViewById<AppBarLayout>(R.id.appBarLayout).setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.purple_500))
         }
@@ -431,15 +436,16 @@ class UserInterfaceSettingFragment: PreferenceFragmentCompat() {
         }
     }, Color.parseColor(color)).show(parentFragmentManager)
     
-    private fun setTitleTextColor(color: String) = ColorPickDialogFragment(object :
+    private fun setTitleTextColor(sharedPreferences: SharedPreferences, color: String) = ColorPickDialogFragment(object :
         ColorPickDialogFragment.Companion.OnColorPickListener {
         override fun onColorPick(color: Int, colorStr: String) {
             settingContainer.getStringUpdate(KEY_TITLE_COLOR, colorStr)
-            @Suppress("ApplySharedPref")
-            PreferenceManager.getDefaultSharedPreferences(requireContext())
-                .edit()
-                .putString(KEY_TITLE_COLOR, colorStr)
-                .commit()
+            // @Suppress("ApplySharedPref")
+            // PreferenceManager.getDefaultSharedPreferences(requireContext())
+            //     .edit()
+            //     .putString(KEY_TITLE_COLOR, colorStr)
+            //     .commit()
+            sharedPreferences.commit(KEY_TITLE_COLOR, colorStr)
             // preference.icon?.setTint(color)
             startActivity(Intent(requireContext(), MainActivity::class.java))
             requireActivity().finish()
@@ -447,11 +453,12 @@ class UserInterfaceSettingFragment: PreferenceFragmentCompat() {
         
         override fun onSelectDefault() {
             settingContainer.getStringUpdate(KEY_TITLE_COLOR, DEFAULT_TITLE_COLOR)
-            @Suppress("ApplySharedPref")
-            PreferenceManager.getDefaultSharedPreferences(requireContext())
-                .edit()
-                .putString(KEY_TITLE_COLOR, DEFAULT_TITLE_COLOR)
-                .commit()
+            // @Suppress("ApplySharedPref")
+            // PreferenceManager.getDefaultSharedPreferences(requireContext())
+            //     .edit()
+            //     .putString(KEY_TITLE_COLOR, DEFAULT_TITLE_COLOR)
+            //     .commit()
+            sharedPreferences.commit(KEY_TITLE_COLOR, DEFAULT_TITLE_COLOR)
             startActivity(Intent(requireContext(), MainActivity::class.java))
             requireActivity().finish()
         }
@@ -459,15 +466,16 @@ class UserInterfaceSettingFragment: PreferenceFragmentCompat() {
         override fun onCancel() {}
     }, Color.parseColor(color)).show(parentFragmentManager)
     
-    private fun setSummaryTextColor(color: String) =
+    private fun setSummaryTextColor(sharedPreferences: SharedPreferences, color: String) =
         ColorPickDialogFragment(object : ColorPickDialogFragment.Companion.OnColorPickListener {
             override fun onColorPick(color: Int, colorStr: String) {
                 settingContainer.getStringUpdate(KEY_SUMMARY_COLOR, colorStr)
-                @Suppress("ApplySharedPref")
-                PreferenceManager.getDefaultSharedPreferences(requireContext())
-                    .edit()
-                    .putString(KEY_SUMMARY_COLOR, colorStr)
-                    .commit()
+                // @Suppress("ApplySharedPref")
+                // PreferenceManager.getDefaultSharedPreferences(requireContext())
+                //     .edit()
+                //    .putString(KEY_SUMMARY_COLOR, colorStr)
+                //    .commit()
+                sharedPreferences.commit(KEY_SUMMARY_COLOR, colorStr)
                 // preference.icon?.setTint(color)
                 startActivity(Intent(requireContext(), MainActivity::class.java))
                 requireActivity().finish()
@@ -475,11 +483,12 @@ class UserInterfaceSettingFragment: PreferenceFragmentCompat() {
             
             override fun onSelectDefault() {
                 settingContainer.getStringUpdate(KEY_SUMMARY_COLOR, DEFAULT_SUMMARY_COLOR)
-                @Suppress("ApplySharedPref")
-                PreferenceManager.getDefaultSharedPreferences(requireContext())
-                    .edit()
-                    .putString(KEY_SUMMARY_COLOR, DEFAULT_SUMMARY_COLOR)
-                    .commit()
+                // @Suppress("ApplySharedPref")
+                // PreferenceManager.getDefaultSharedPreferences(requireContext())
+                //     .edit()
+                //     .putString(KEY_SUMMARY_COLOR, DEFAULT_SUMMARY_COLOR)
+                //     .commit()
+                sharedPreferences.commit(KEY_SUMMARY_COLOR, DEFAULT_SUMMARY_COLOR)
                 startActivity(Intent(requireContext(), MainActivity::class.java))
                 requireActivity().finish()
             }
