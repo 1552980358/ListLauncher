@@ -11,9 +11,11 @@ import android.util.AttributeSet
 import android.view.MotionEvent.ACTION_DOWN
 import android.view.MotionEvent.ACTION_MOVE
 import android.view.MotionEvent.ACTION_UP
+import lib.github1552980358.ktExtension.android.graphics.widthF
+import lib.github1552980358.ktExtension.android.view.heightF
+import lib.github1552980358.ktExtension.android.view.widthF
 import sakuraba.saki.list.launcher.R
 import sakuraba.saki.list.launcher.util.heightFloat
-import sakuraba.saki.list.launcher.util.widthFloat
 import sakuraba.saki.list.launcher.view.base.BaseView
 
 class CropImageView: BaseView {
@@ -256,8 +258,8 @@ class CropImageView: BaseView {
          *                 }
          *             }
          *             else -> {
-         *                 (widthFloat / bitmap.width).apply { setScale(this, this) }
-         *                 cropWidth = widthFloat
+         *                 (widthF / bitmap.width).apply { setScale(this, this) }
+         *                 cropWidth = widthF
          *                 cropHeight = heightMax * (cropWidth / widthMax)
          *             }
          *         }
@@ -269,19 +271,19 @@ class CropImageView: BaseView {
          **/
         
         // Calculate out all data for further processing
-        var bitmapWidth = bitmap.widthFloat
+        var bitmapWidth = bitmap.widthF
         var bitmapHeight = bitmap.heightFloat
         
         //
         when {
             bitmapWidth < bitmapHeight -> {
                 bitmapHeight *= width / bitmapWidth
-                bitmapWidth = widthFloat
+                bitmapWidth = widthF
             }
             // bitmapWidth <= bitmapHeight
             else -> {
                 bitmapWidth *= height / bitmapHeight
-                bitmapHeight = heightFloat
+                bitmapHeight = heightF
                 
             }
         }
@@ -291,12 +293,12 @@ class CropImageView: BaseView {
          * [CropImageView.getHeight] or [CropImageView.getWidth]
          **/
         if (bitmapHeight > height) {
-            bitmapWidth *= heightFloat / bitmapHeight
-            bitmapHeight = heightFloat
+            bitmapWidth *= heightF / bitmapHeight
+            bitmapHeight = heightF
         }
         if (bitmapWidth > width) {
             bitmapHeight *= width / bitmapWidth
-            bitmapWidth = widthFloat
+            bitmapWidth = widthF
         }
         
         /**

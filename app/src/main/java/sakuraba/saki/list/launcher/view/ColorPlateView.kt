@@ -14,6 +14,8 @@ import android.util.AttributeSet
 import android.view.MotionEvent.ACTION_DOWN
 import android.view.MotionEvent.ACTION_MOVE
 import androidx.annotation.ColorInt
+import lib.github1552980358.ktExtension.android.view.heightF
+import lib.github1552980358.ktExtension.android.view.widthF
 import sakuraba.saki.list.launcher.R
 import sakuraba.saki.list.launcher.view.base.BaseView
 
@@ -37,7 +39,7 @@ class ColorPlateView: BaseView {
     }
     private val hsvData = floatArrayOf(1F, 1F, 1F)
     private val hsvTouch = floatArrayOf(1F, 1F, 1F)
-    private val linearGradient by lazy { LinearGradient(0F, 0F, 0F, heightFloat, WHITE, BLACK, Shader.TileMode.CLAMP) }
+    private val linearGradient by lazy { LinearGradient(0F, 0F, 0F, heightF, WHITE, BLACK, Shader.TileMode.CLAMP) }
     private var listener: OnColorChangeListener? = null
     private val circleRadius by lazy { resources.getDimension(R.dimen.color_plate_circle_radius) }
     
@@ -56,10 +58,10 @@ class ColorPlateView: BaseView {
                     }
                     event.x > width -> {
                         hsvTouch[1] = 1F
-                        touchX = widthFloat
+                        touchX = widthF
                     }
                     else -> {
-                        hsvTouch[1] = 1 / widthFloat * event.x
+                        hsvTouch[1] = 1 / widthF * event.x
                         touchX = event.x
                     }
                 }
@@ -69,11 +71,11 @@ class ColorPlateView: BaseView {
                         touchY = 0F
                     }
                     event.y > height -> {
-                        hsvTouch[2] = 1 - 1 / heightFloat * heightFloat
-                        touchY = heightFloat
+                        hsvTouch[2] = 1 - 1 / heightF * heightF
+                        touchY = heightF
                     }
                     else -> {
-                        hsvTouch[2] = 1 - 1 / heightFloat * event.y
+                        hsvTouch[2] = 1 - 1 / heightF * event.y
                         touchY = event.y
                     }
                 }
@@ -100,12 +102,12 @@ class ColorPlateView: BaseView {
         hsvData[0] = hsvTouch[0]
         touchX = when {
             hsvTouch[1] == 0F -> 0F
-            hsvTouch[1] == 1F -> widthFloat
-            else -> hsvTouch[1] * widthFloat
+            hsvTouch[1] == 1F -> widthF
+            else -> hsvTouch[1] * widthF
         }
         touchY = when {
             hsvTouch[2] == 1F -> 0F
-            else -> hsvTouch[2] + 1 - 1 / heightFloat
+            else -> hsvTouch[2] + 1 - 1 / heightF
         }
         invalidate()
         listener?.onColorChange(Color.parseColor(colorStr))
@@ -122,10 +124,10 @@ class ColorPlateView: BaseView {
         @Suppress("DrawAllocation")
         paint.shader = ComposeShader(
                 linearGradient,
-                LinearGradient(0F, 0F, widthFloat, 0F, WHITE, Color.HSVToColor(hsvData), Shader.TileMode.CLAMP),
+                LinearGradient(0F, 0F, widthF, 0F, WHITE, Color.HSVToColor(hsvData), Shader.TileMode.CLAMP),
                 PorterDuff.Mode.MULTIPLY
             )
-        canvas.drawRect(0F, 0F, widthFloat, heightFloat, paint)
+        canvas.drawRect(0F, 0F, widthF, heightF, paint)
         canvas.drawCircle(touchX, touchY, circleRadius, paintCircle)
     }
     

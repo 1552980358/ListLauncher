@@ -8,6 +8,8 @@ import android.graphics.Shader
 import android.util.AttributeSet
 import androidx.annotation.ColorInt
 import androidx.core.graphics.drawable.toBitmap
+import lib.github1552980358.ktExtension.android.view.heightF
+import lib.github1552980358.ktExtension.android.view.widthF
 import sakuraba.saki.list.launcher.R
 import sakuraba.saki.list.launcher.view.base.BaseView
 
@@ -37,11 +39,11 @@ class ColorPresentView: BaseView {
         canvas?:return
         // Draw background cubes
         // 绘制背景方格
-        canvas.drawRect(0F, 0F, widthFloat, heightFloat, paint)
+        canvas.drawRect(0F, 0F, widthF, heightF, paint)
         
         // Draw color
         // 绘制颜色
-        canvas.drawRect(0F, 0F, widthFloat, heightFloat, paintColor)
+        canvas.drawRect(0F, 0F, widthF, heightF, paintColor)
     }
     
 }

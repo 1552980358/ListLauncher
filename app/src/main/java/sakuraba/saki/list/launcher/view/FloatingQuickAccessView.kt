@@ -19,6 +19,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import lib.github1552980358.ktExtension.android.view.heightF
+import lib.github1552980358.ktExtension.android.view.widthF
 import lib.github1552980358.ktExtension.jvm.keyword.tryOnly
 import sakuraba.saki.list.launcher.R
 import sakuraba.saki.list.launcher.view.base.BaseView
@@ -266,54 +268,54 @@ class FloatingQuickAccessView: BaseView {
                     canvas,
                     iconBackgroundColor,
                     point1.x + iconSize / 2,
-                    (heightFloat - circleRadius - paint.strokeWidth) + ((point1.y + iconSize / 2) - (heightFloat - circleRadius - paint.strokeWidth)) / 10 * animationPos,
+                    (heightF - circleRadius - paint.strokeWidth) + ((point1.y + iconSize / 2) - (heightF - circleRadius - paint.strokeWidth)) / 10 * animationPos,
                 )
                 drawNormalBackgroundStroke(
                     canvas,
                     iconBackgroundStrokeColor,
                     point1.x + iconSize / 2,
-                    (heightFloat - circleRadius - paint.strokeWidth) + ((point1.y + iconSize / 2) - (heightFloat - circleRadius - paint.strokeWidth)) / 10 * animationPos,
+                    (heightF - circleRadius - paint.strokeWidth) + ((point1.y + iconSize / 2) - (heightF - circleRadius - paint.strokeWidth)) / 10 * animationPos,
                 )
     
                 drawNormalBackground(
                     canvas,
                     iconBackgroundColor,
-                    (widthFloat - circleRadius - paint.strokeWidth) + ((point2.x + iconSize / 2) - (widthFloat - circleRadius - paint.strokeWidth)) / 10 * animationPos,
-                    (heightFloat - circleRadius - paint.strokeWidth) + ((point2.y + iconSize / 2) - (heightFloat - circleRadius - paint.strokeWidth)) / 10 * animationPos
+                    (widthF - circleRadius - paint.strokeWidth) + ((point2.x + iconSize / 2) - (widthF - circleRadius - paint.strokeWidth)) / 10 * animationPos,
+                    (heightF - circleRadius - paint.strokeWidth) + ((point2.y + iconSize / 2) - (heightF - circleRadius - paint.strokeWidth)) / 10 * animationPos
                 )
                 drawNormalBackgroundStroke(
                     canvas,
                     iconBackgroundStrokeColor,
-                    (widthFloat - circleRadius - paint.strokeWidth) + ((point2.x + iconSize / 2) - (widthFloat - circleRadius - paint.strokeWidth)) / 10 * animationPos,
-                    (heightFloat - circleRadius - paint.strokeWidth) + ((point2.y + iconSize / 2) - (heightFloat - circleRadius - paint.strokeWidth)) / 10 * animationPos
+                    (widthF - circleRadius - paint.strokeWidth) + ((point2.x + iconSize / 2) - (widthF - circleRadius - paint.strokeWidth)) / 10 * animationPos,
+                    (heightF - circleRadius - paint.strokeWidth) + ((point2.y + iconSize / 2) - (heightF - circleRadius - paint.strokeWidth)) / 10 * animationPos
                 )
     
                 drawNormalBackground(
                     canvas,
                     iconBackgroundColor,
-                    (widthFloat - circleRadius - paint.strokeWidth) + ((point3.x + iconSize / 2) - (widthFloat - circleRadius - paint.strokeWidth)) / 10 * animationPos,
+                    (widthF - circleRadius - paint.strokeWidth) + ((point3.x + iconSize / 2) - (widthF - circleRadius - paint.strokeWidth)) / 10 * animationPos,
                     point3.y + iconSize / 2
                 )
                 drawNormalBackgroundStroke(
                     canvas,
                     iconBackgroundStrokeColor,
-                    (widthFloat - circleRadius - paint.strokeWidth) + ((point3.x + iconSize / 2) - (widthFloat - circleRadius - paint.strokeWidth)) / 10 * animationPos,
+                    (widthF - circleRadius - paint.strokeWidth) + ((point3.x + iconSize / 2) - (widthF - circleRadius - paint.strokeWidth)) / 10 * animationPos,
                     point3.y + iconSize / 2
                 )
                 // canvas.drawCircle(
                 //    point1.x + iconSize / 2,
-                //    (heightFloat - circleRadius - paint.strokeWidth) + ((point1.y + iconSize / 2) - (heightFloat - circleRadius - paint.strokeWidth)) / 10 * animationPos,
+                //    (heightF - circleRadius - paint.strokeWidth) + ((point1.y + iconSize / 2) - (heightF - circleRadius - paint.strokeWidth)) / 10 * animationPos,
                 //    circleRadius,
                 //    normalPaint
                 // )
                 // canvas.drawCircle(
-                //     (widthFloat - circleRadius - paint.strokeWidth) + ((point2.x + iconSize / 2) - (widthFloat - circleRadius - paint.strokeWidth)) / 10 * animationPos,
-                //     (heightFloat - circleRadius - paint.strokeWidth) + ((point2.y + iconSize / 2) - (heightFloat - circleRadius - paint.strokeWidth)) / 10 * animationPos,
+                //     (widthF - circleRadius - paint.strokeWidth) + ((point2.x + iconSize / 2) - (widthF - circleRadius - paint.strokeWidth)) / 10 * animationPos,
+                //     (heightF - circleRadius - paint.strokeWidth) + ((point2.y + iconSize / 2) - (heightF - circleRadius - paint.strokeWidth)) / 10 * animationPos,
                 //     circleRadius,
                 //     normalPaint
                 // )
                 // canvas.drawCircle(
-                //     (widthFloat - circleRadius - paint.strokeWidth) + ((point3.x + iconSize / 2) - (widthFloat - circleRadius - paint.strokeWidth)) / 10 * animationPos,
+                //     (widthF - circleRadius - paint.strokeWidth) + ((point3.x + iconSize / 2) - (widthF - circleRadius - paint.strokeWidth)) / 10 * animationPos,
                 //     point3.y + iconSize / 2,
                 //    circleRadius,
                 //    normalPaint
@@ -352,8 +354,8 @@ class FloatingQuickAccessView: BaseView {
             else -> buttonNormalColor
         }
         
-        canvas.drawCircle(widthFloat - circleRadius - paint.strokeWidth, heightFloat - circleRadius - paint.strokeWidth, circleRadius, paint)
-        canvas.drawBitmap(plusDrawable.toBitmap(), widthFloat - circleRadius - paint.strokeWidth - iconSize / 2, widthFloat - circleRadius - paint.strokeWidth - iconSize / 2, paint)
+        canvas.drawCircle(widthF - circleRadius - paint.strokeWidth, heightF - circleRadius - paint.strokeWidth, circleRadius, paint)
+        canvas.drawBitmap(plusDrawable.toBitmap(), widthF - circleRadius - paint.strokeWidth - iconSize / 2, widthF - circleRadius - paint.strokeWidth - iconSize / 2, paint)
     }
     
     /**

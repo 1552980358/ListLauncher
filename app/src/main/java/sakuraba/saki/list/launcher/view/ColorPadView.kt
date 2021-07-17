@@ -8,6 +8,8 @@ import android.graphics.Paint
 import android.util.AttributeSet
 import android.view.MotionEvent.ACTION_DOWN
 import android.view.MotionEvent.ACTION_MOVE
+import lib.github1552980358.ktExtension.android.view.heightF
+import lib.github1552980358.ktExtension.android.view.widthF
 import sakuraba.saki.list.launcher.view.base.BaseArrowView
 
 @SuppressLint("ClickableViewAccessibility")
@@ -57,7 +59,7 @@ class ColorPadView: BaseArrowView {
         "#EF3D1F", "#EF3D1F", "#EF3E1F", "#EF3D1F", "#EE3D1F", "#EE3D1F", "#EE3D1E", "#EE3D1F"
     )
     
-    private val eachHeight by lazy { heightFloat / colorPadData.size }
+    private val eachHeight by lazy { heightF / colorPadData.size }
     private var listener: OnHSEChangeListener? = null
     
     init {
@@ -75,13 +77,13 @@ class ColorPadView: BaseArrowView {
                 touchY = 0F
                 listener?.onHSEChange(0F)
             }
-            y > heightFloat -> {
-                touchY = heightFloat
-                listener?.onHSEChange(360F - 360F / heightFloat * (heightFloat - 0.001F))
+            y > heightF -> {
+                touchY = heightF
+                listener?.onHSEChange(360F - 360F / heightF * (heightF - 0.001F))
             }
             else -> {
                 touchY = y
-                listener?.onHSEChange(360F - 360F / heightFloat * y)
+                listener?.onHSEChange(360F - 360F / heightF * y)
             }
         }
         invalidate()
@@ -99,7 +101,7 @@ class ColorPadView: BaseArrowView {
         repeat(colorPadData.size) { index ->
             paint.color = Color.parseColor(colorPadData[index])
             paint.style = Paint.Style.FILL_AND_STROKE
-            canvas.drawRect(0F, eachHeight * index, widthFloat, eachHeight * (index + 1), paint)
+            canvas.drawRect(0F, eachHeight * index, widthF, eachHeight * (index + 1), paint)
         }
         // Draw pointer
         canvas.drawBitmap(pointer, pointerX, touchY - pointer.height / 2, paint)

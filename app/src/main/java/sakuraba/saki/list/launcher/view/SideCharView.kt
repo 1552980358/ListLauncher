@@ -8,6 +8,7 @@ import android.util.AttributeSet
 import android.view.MotionEvent.ACTION_DOWN
 import android.view.MotionEvent.ACTION_MOVE
 import android.view.MotionEvent.ACTION_UP
+import lib.github1552980358.ktExtension.android.view.heightF
 import sakuraba.saki.list.launcher.R
 import sakuraba.saki.list.launcher.view.base.BaseView
 import sakuraba.saki.list.launcher.view.base.TextViewInterface
@@ -63,7 +64,7 @@ class SideCharView: BaseView {
                         event.y <= 0 -> {
                             listener?.onTouch(0, LETTERS.first())
                         }
-                        event.y >= heightFloat -> {
+                        event.y >= heightF -> {
                             listener?.onTouch(LETTERS.lastIndex, LETTERS.last())
                         }
                         else -> {
@@ -78,7 +79,7 @@ class SideCharView: BaseView {
                         event.y <= 0 -> {
                             listener?.onMove(0, LETTERS.first())
                         }
-                        event.y >= heightFloat -> {
+                        event.y >= heightF -> {
                             listener?.onMove(LETTERS.lastIndex, LETTERS.last())
                         }
                         else -> {
@@ -93,7 +94,7 @@ class SideCharView: BaseView {
                         event.y <= 0 -> {
                             listener?.onCancel(0, LETTERS.first())
                         }
-                        event.y >= heightFloat -> {
+                        event.y >= heightF -> {
                             listener?.onCancel(LETTERS.lastIndex, LETTERS.last())
                         }
                         else -> {

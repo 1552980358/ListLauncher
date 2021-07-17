@@ -11,6 +11,8 @@ import android.view.MotionEvent.ACTION_DOWN
 import android.view.MotionEvent.ACTION_MOVE
 import androidx.annotation.ColorInt
 import androidx.core.graphics.drawable.toBitmap
+import lib.github1552980358.ktExtension.android.view.heightF
+import lib.github1552980358.ktExtension.android.view.widthF
 import sakuraba.saki.list.launcher.R
 import sakuraba.saki.list.launcher.view.base.BaseArrowView
 
@@ -42,7 +44,7 @@ class ColorTransparencyView: BaseArrowView {
             if (event.action in (ACTION_DOWN .. ACTION_MOVE)) {
                 touchY = when {
                     event.y < 0 -> 0F
-                    event.y > heightFloat -> heightFloat
+                    event.y > heightF -> heightF
                     else -> event.y
                 }
                 invalidate()
@@ -50,7 +52,7 @@ class ColorTransparencyView: BaseArrowView {
                     when {
                         event.y < 0 -> 1F
                         event.y > height -> 0F
-                        else -> 1F - event.y / heightFloat
+                        else -> 1F - event.y / heightF
                     }
                 )
             }
@@ -79,7 +81,7 @@ class ColorTransparencyView: BaseArrowView {
     
     fun updateAlpha(alpha: Int) {
         updateTransparency(alpha / 255F)
-        touchY = (1 - transparency) * heightFloat
+        touchY = (1 - transparency) * heightF
         invalidate()
     }
     
@@ -90,13 +92,13 @@ class ColorTransparencyView: BaseArrowView {
         // Background
         // 背景
         paint.shader = bitmapShader
-        canvas.drawRect(0F, 0F, widthFloat, heightFloat, paint)
+        canvas.drawRect(0F, 0F, widthF, heightF, paint)
         
         // Color
         // 颜色
         @Suppress("DrawAllocation")
-        paint.shader = LinearGradient(0F, 0F, widthFloat, heightFloat, color, Color.TRANSPARENT, Shader.TileMode.CLAMP)
-        canvas.drawRect(0F, 0F, widthFloat, heightFloat, paint)
+        paint.shader = LinearGradient(0F, 0F, widthF, heightF, color, Color.TRANSPARENT, Shader.TileMode.CLAMP)
+        canvas.drawRect(0F, 0F, widthF, heightF, paint)
         
         // Pointer
         // 指针
