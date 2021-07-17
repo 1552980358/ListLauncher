@@ -210,6 +210,22 @@ class FloatingQuickAccessView: BaseView {
         browserSelectedDrawable.setTint(newColor)
     }
     
+    fun setIconBackgroundColor(newColor: Int?) {
+        iconBackgroundColor = newColor
+    }
+    
+    fun setIconBackgroundStrokeColor(newColor: Int?) {
+        iconBackgroundStrokeColor = newColor
+    }
+    
+    fun setIconBackgroundSelectedColor(newColor: Int?) {
+        iconBackgroundSelectedColor = newColor
+    }
+    
+    fun setIconBackgroundSelectedStrokeColor(newColor: Int?) {
+        iconBackgroundSelectedStrokeColor = newColor
+    }
+    
     fun setButtonIconColor(newColor: Int) {
         plusDrawable.setTint(newColor)
     }

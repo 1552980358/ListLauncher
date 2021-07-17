@@ -35,6 +35,10 @@ import sakuraba.saki.list.launcher.broadcast.ApplicationChangeBroadcastReceiver.
 import sakuraba.saki.list.launcher.databinding.FragmentHomeBinding
 import sakuraba.saki.list.launcher.main.search.SearchFragment.Companion.APP_INFOS
 import sakuraba.saki.list.launcher.main.setting.SettingContainer
+import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.KEY_QUICK_ACCESS_ICON_BACKGROUND_CLICKED
+import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.KEY_QUICK_ACCESS_ICON_BACKGROUND_NORMAL
+import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.KEY_QUICK_ACCESS_ICON_BACKGROUND_STROKE_CLICKED
+import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.KEY_QUICK_ACCESS_ICON_BACKGROUND_STROKE_NORMAL
 import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.KEY_QUICK_ACCESS_ICON_COLOR_CLICKED
 import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.KEY_QUICK_ACCESS_ICON_COLOR_NORMAL
 import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.SETTING_CONTAINER
@@ -277,6 +281,18 @@ class HomeFragment: Fragment() {
             }
             getStringValue(KEY_QUICK_ACCESS_ICON_COLOR_CLICKED)?.apply {
                 fragmentHomeBinding.floatingQuickAccessView.setIconSelectedColor(Color.parseColor(this))
+            }
+            getStringValue(KEY_QUICK_ACCESS_ICON_BACKGROUND_NORMAL)?.apply {
+                fragmentHomeBinding.floatingQuickAccessView.setIconBackgroundColor(Color.parseColor(this))
+            }
+            getStringValue(KEY_QUICK_ACCESS_ICON_BACKGROUND_STROKE_NORMAL)?.apply {
+                fragmentHomeBinding.floatingQuickAccessView.setIconBackgroundStrokeColor(Color.parseColor(this))
+            }
+            getStringValue(KEY_QUICK_ACCESS_ICON_BACKGROUND_CLICKED)?.apply {
+                fragmentHomeBinding.floatingQuickAccessView.setIconBackgroundSelectedColor(Color.parseColor(this))
+            }
+            getStringValue(KEY_QUICK_ACCESS_ICON_BACKGROUND_STROKE_CLICKED)?.apply {
+                fragmentHomeBinding.floatingQuickAccessView.setIconBackgroundSelectedStrokeColor(Color.parseColor(this))
             }
         }
     }
