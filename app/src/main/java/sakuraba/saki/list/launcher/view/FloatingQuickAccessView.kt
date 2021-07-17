@@ -84,6 +84,11 @@ class FloatingQuickAccessView: BaseView {
     private var isAnimating = false
     private var animationPos = 0
     
+    private var iconBackgroundColor: Int? = null
+    private var iconBackgroundStrokeColor: Int? = null
+    private var iconBackgroundSelectedColor: Int? = null
+    private var iconBackgroundSelectedStrokeColor: Int? = null
+    
     init {
         paint.apply {
             strokeWidth = resources.getDimension(R.dimen.view_floating_quick_access_circle_stroke)
@@ -96,22 +101,23 @@ class FloatingQuickAccessView: BaseView {
     
         // Initialize all configurations of normalPaint
         normalPaint.apply {
-            style = Paint.Style.FILL_AND_STROKE
             strokeWidth = resources.getDimension(R.dimen.view_floating_quick_access_circle_stroke)
-            color = ContextCompat.getColor(context, R.color.purple_500)
             isAntiAlias = true
         }
         
         // Initialize all configurations of selectedPaint
         selectedPaint.apply {
-            style = Paint.Style.STROKE
             strokeWidth = resources.getDimension(R.dimen.view_floating_quick_access_circle_stroke)
-            color = ContextCompat.getColor(context, R.color.purple_500)
             isAntiAlias = true
         }
         
         point1.y = circleRadius - iconSize / 2 + normalPaint.strokeWidth
         point3.x = circleRadius - iconSize / 2 + normalPaint.strokeWidth
+        
+        iconBackgroundColor = ContextCompat.getColor(context, R.color.purple_500)
+        iconBackgroundStrokeColor = ContextCompat.getColor(context, R.color.purple_500)
+        iconBackgroundSelectedColor = ContextCompat.getColor(context, R.color.white)
+        iconBackgroundSelectedStrokeColor = ContextCompat.getColor(context, R.color.purple_500)
         
         @Suppress("ClickableViewAccessibility")
         setOnTouchListener { _, event ->
@@ -240,24 +246,62 @@ class FloatingQuickAccessView: BaseView {
         
         when {
             isAnimating -> {
-                canvas.drawCircle(
+                drawNormalBackground(
+                    canvas,
+                    iconBackgroundColor,
                     point1.x + iconSize / 2,
                     (heightFloat - circleRadius - paint.strokeWidth) + ((point1.y + iconSize / 2) - (heightFloat - circleRadius - paint.strokeWidth)) / 10 * animationPos,
-                    circleRadius,
-                    normalPaint
                 )
-                canvas.drawCircle(
+                drawNormalBackgroundStroke(
+                    canvas,
+                    iconBackgroundStrokeColor,
+                    point1.x + iconSize / 2,
+                    (heightFloat - circleRadius - paint.strokeWidth) + ((point1.y + iconSize / 2) - (heightFloat - circleRadius - paint.strokeWidth)) / 10 * animationPos,
+                )
+    
+                drawNormalBackground(
+                    canvas,
+                    iconBackgroundColor,
                     (widthFloat - circleRadius - paint.strokeWidth) + ((point2.x + iconSize / 2) - (widthFloat - circleRadius - paint.strokeWidth)) / 10 * animationPos,
-                    (heightFloat - circleRadius - paint.strokeWidth) + ((point2.y + iconSize / 2) - (heightFloat - circleRadius - paint.strokeWidth)) / 10 * animationPos,
-                    circleRadius,
-                    normalPaint
+                    (heightFloat - circleRadius - paint.strokeWidth) + ((point2.y + iconSize / 2) - (heightFloat - circleRadius - paint.strokeWidth)) / 10 * animationPos
                 )
-                canvas.drawCircle(
+                drawNormalBackgroundStroke(
+                    canvas,
+                    iconBackgroundStrokeColor,
+                    (widthFloat - circleRadius - paint.strokeWidth) + ((point2.x + iconSize / 2) - (widthFloat - circleRadius - paint.strokeWidth)) / 10 * animationPos,
+                    (heightFloat - circleRadius - paint.strokeWidth) + ((point2.y + iconSize / 2) - (heightFloat - circleRadius - paint.strokeWidth)) / 10 * animationPos
+                )
+    
+                drawNormalBackground(
+                    canvas,
+                    iconBackgroundColor,
                     (widthFloat - circleRadius - paint.strokeWidth) + ((point3.x + iconSize / 2) - (widthFloat - circleRadius - paint.strokeWidth)) / 10 * animationPos,
-                    point3.y + iconSize / 2,
-                    circleRadius,
-                    normalPaint
+                    point3.y + iconSize / 2
                 )
+                drawNormalBackgroundStroke(
+                    canvas,
+                    iconBackgroundStrokeColor,
+                    (widthFloat - circleRadius - paint.strokeWidth) + ((point3.x + iconSize / 2) - (widthFloat - circleRadius - paint.strokeWidth)) / 10 * animationPos,
+                    point3.y + iconSize / 2
+                )
+                // canvas.drawCircle(
+                //    point1.x + iconSize / 2,
+                //    (heightFloat - circleRadius - paint.strokeWidth) + ((point1.y + iconSize / 2) - (heightFloat - circleRadius - paint.strokeWidth)) / 10 * animationPos,
+                //    circleRadius,
+                //    normalPaint
+                // )
+                // canvas.drawCircle(
+                //     (widthFloat - circleRadius - paint.strokeWidth) + ((point2.x + iconSize / 2) - (widthFloat - circleRadius - paint.strokeWidth)) / 10 * animationPos,
+                //     (heightFloat - circleRadius - paint.strokeWidth) + ((point2.y + iconSize / 2) - (heightFloat - circleRadius - paint.strokeWidth)) / 10 * animationPos,
+                //     circleRadius,
+                //     normalPaint
+                // )
+                // canvas.drawCircle(
+                //     (widthFloat - circleRadius - paint.strokeWidth) + ((point3.x + iconSize / 2) - (widthFloat - circleRadius - paint.strokeWidth)) / 10 * animationPos,
+                //     point3.y + iconSize / 2,
+                //    circleRadius,
+                //    normalPaint
+                // )
             }
             else -> {
                 if (isOnTouched) {
@@ -304,34 +348,73 @@ class FloatingQuickAccessView: BaseView {
      * Otherwise, drawn circle will be incorrect, that part of circle disappear.
      **/
     private fun drawNormalPhone(canvas: Canvas) {
-        canvas.drawCircle(point1.x + iconSize / 2, point1.y + iconSize / 2, circleRadius, normalPaint)
+        drawNormalBackground(canvas, iconBackgroundColor, point1.x + iconSize / 2, point1.y + iconSize / 2)
+        drawNormalBackgroundStroke(canvas, iconBackgroundStrokeColor, point1.x + iconSize / 2, point1.y + iconSize / 2)
         canvas.drawBitmap(phoneDrawable.toBitmap(), point1.x, point1.y, normalPaint)
     }
     
     private fun drawSelectedPhone(canvas: Canvas) {
-        canvas.drawCircle(point1.x + iconSize / 2, point1.y + iconSize / 2, circleRadius, selectedPaint)
+        drawSelectedBackground(canvas, iconBackgroundSelectedColor, point1.x + iconSize / 2, point1.y + iconSize / 2)
+        drawSelectedBackgroundStroke(canvas, iconBackgroundSelectedStrokeColor, point1.x + iconSize / 2, point1.y + iconSize / 2)
         canvas.drawBitmap(phoneSelectedDrawable.toBitmap(), point1.x, point1.y, selectedPaint)
     }
     
     private fun drawNormalMessage(canvas: Canvas) {
-        canvas.drawCircle(point2.x + iconSize / 2, point2.y + iconSize / 2, circleRadius, normalPaint)
+        drawNormalBackground(canvas, iconBackgroundColor, point2.x + iconSize / 2, point2.y + iconSize / 2)
+        drawNormalBackgroundStroke(canvas, iconBackgroundStrokeColor, point2.x + iconSize / 2, point2.y + iconSize / 2)
         canvas.drawBitmap(messageDrawable.toBitmap(), point2.x, point2.y, normalPaint)
     }
     
     private fun drawSelectedMessage(canvas: Canvas) {
-        canvas.drawCircle(point2.x + iconSize / 2, point2.y + iconSize / 2, circleRadius, selectedPaint)
+        drawSelectedBackground(canvas, iconBackgroundSelectedColor, point2.x + iconSize / 2, point2.y + iconSize / 2)
+        drawSelectedBackgroundStroke(canvas, iconBackgroundSelectedStrokeColor, point2.x + iconSize / 2, point2.y + iconSize / 2)
         canvas.drawBitmap(messageSelectedDrawable.toBitmap(), point2.x, point2.y, selectedPaint)
     }
     
     private fun drawNormalBrowser(canvas: Canvas) {
-        canvas.drawCircle(point3.x + iconSize / 2, point3.y + iconSize / 2, circleRadius, normalPaint)
+        drawSelectedBackground(canvas, iconBackgroundColor, point3.x + iconSize / 2, point3.y + iconSize / 2)
+        drawSelectedBackgroundStroke(canvas, iconBackgroundStrokeColor, point3.x + iconSize / 2, point3.y + iconSize / 2)
         canvas.drawBitmap(browserDrawable.toBitmap(), point3.x, point3.y, normalPaint)
     }
     
     private fun drawSelectedBrowser(canvas: Canvas) {
-        canvas.drawCircle(point3.x + iconSize / 2, point3.y + iconSize / 2, circleRadius, selectedPaint)
+        drawSelectedBackground(canvas, iconBackgroundSelectedColor, point3.x + iconSize / 2, point3.y + iconSize / 2)
+        drawSelectedBackgroundStroke(canvas, iconBackgroundSelectedStrokeColor, point3.x + iconSize / 2, point3.y + iconSize / 2)
         canvas.drawBitmap(browserSelectedDrawable.toBitmap(), point3.x, point3.y, selectedPaint)
     }
+    
+    private fun drawNormalBackground(canvas: Canvas, iconBackgroundColor: Int?,x: Float, y: Float) {
+        if (iconBackgroundColor != null) {
+            normalPaint.style = Paint.Style.FILL
+            normalPaint.color = iconBackgroundColor
+            canvas.drawCircle(x, y, circleRadius, normalPaint)
+        }
+    }
+    
+    private fun drawNormalBackgroundStroke(canvas: Canvas, iconBackgroundStrokeColor: Int?,x: Float, y: Float) {
+        if (iconBackgroundStrokeColor != null) {
+            normalPaint.style = Paint.Style.STROKE
+            normalPaint.color = iconBackgroundStrokeColor
+            canvas.drawCircle(x, y, circleRadius, normalPaint)
+        }
+    }
+    
+    private fun drawSelectedBackground(canvas: Canvas, iconBackgroundSelectedColor: Int?, x: Float, y: Float) {
+        if (iconBackgroundSelectedColor != null) {
+            selectedPaint.style = Paint.Style.FILL
+            selectedPaint.color = iconBackgroundSelectedColor
+            canvas.drawCircle(x, y, circleRadius, selectedPaint)
+        }
+    }
+    
+    private fun drawSelectedBackgroundStroke(canvas: Canvas, iconBackgroundSelectedStrokeColor: Int?, x: Float, y: Float) {
+        if (iconBackgroundSelectedStrokeColor != null) {
+            selectedPaint.style = Paint.Style.STROKE
+            selectedPaint.color = iconBackgroundSelectedStrokeColor
+            canvas.drawCircle(x, y, circleRadius, selectedPaint)
+        }
+    }
+    
     /*********************************************************************************************************/
     
 }
