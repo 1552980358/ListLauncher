@@ -4,20 +4,20 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <sakuraba.saki.list.launcher.preference.TextColorChangePreferenceCategory
-        android:title="@string/setting_quick_access_color_title"
-        android:summary="@string/setting_quick_access_color_summary"
+        android:title="@string/setting_quick_access_icon_title"
+        android:summary="@string/setting_quick_access_icon_summary"
         app:iconSpaceReserved="false">
         
         <sakuraba.saki.list.launcher.preference.TextColorChangePreference
-            android:key="key_quick_access_button_icon_color_normal"
-            android:title="@string/setting_quick_access_color_button_icon_color_normal_title"
-            android:summary="@string/setting_quick_access_color_button_icon_color_normal_summary"
+            android:key="key_quick_access_icon_color_normal"
+            android:title="@string/setting_quick_access_icon_color_normal_title"
+            android:summary="@string/setting_quick_access_icon_color_normal_summary"
             app:icon="@drawable/ic_preference_color_block" />
     
         <sakuraba.saki.list.launcher.preference.TextColorChangePreference
-            android:key="key_quick_access_button_icon_color_clicked"
-            android:title="@string/setting_quick_access_color_button_icon_color_clicked_title"
-            android:summary="@string/setting_quick_access_color_button_icon_color_clicked_summary"
+            android:key="key_quick_access_icon_color_clicked"
+            android:title="@string/setting_quick_access_icon_color_clicked_title"
+            android:summary="@string/setting_quick_access_icon_color_clicked_summary"
             app:icon="@drawable/ic_preference_color_block" />
         
     </sakuraba.saki.list.launcher.preference.TextColorChangePreferenceCategory>

@@ -77,12 +77,12 @@
     <string name="setting_custom_summary_color_summary">Use custom color of all summary text</string>
     <string name="setting_custom_summary_color_snackbar_should_enable_to_set">You should enable this option before setting the summary text color</string>\
     
-    <string name="setting_quick_access_color_title">Colors</string>
-    <string name="setting_quick_access_color_summary">Set different colors of the quick access button</string>
-    <string name="setting_quick_access_color_button_icon_color_normal_title">Button Icon color (normal)</string>
-    <string name="setting_quick_access_color_button_icon_color_normal_summary">Color of the icons when it is not touched</string>
-    <string name="setting_quick_access_color_button_icon_color_clicked_title">Button icon color (clicked)</string>
-    <string name="setting_quick_access_color_button_icon_color_clicked_summary">Color of the buttons icons when it is clicked</string>
+    <string name="setting_quick_access_icon_title">Icons</string>
+    <string name="setting_quick_access_icon_summary">Set different colors of the quick access icons</string>
+    <string name="setting_quick_access_icon_color_normal_title">Icon color (normal)</string>
+    <string name="setting_quick_access_icon_color_normal_summary">Color of the icons when it is not touched</string>
+    <string name="setting_quick_access_icon_color_clicked_title">Icon color (clicked)</string>
+    <string name="setting_quick_access_icon_color_clicked_summary">Color of the icons when it is touched</string>
     
     <string name="reset_setting_dialog_resetting">Resetting all saved configuration…</string>
     <string name="reset_setting_dialog_removing_files">Removing all saved images…</string>

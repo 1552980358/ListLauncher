@@ -35,8 +35,8 @@ import sakuraba.saki.list.launcher.broadcast.ApplicationChangeBroadcastReceiver.
 import sakuraba.saki.list.launcher.databinding.FragmentHomeBinding
 import sakuraba.saki.list.launcher.main.search.SearchFragment.Companion.APP_INFOS
 import sakuraba.saki.list.launcher.main.setting.SettingContainer
-import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.KEY_QUICK_ACCESS_BUTTON_ICON_COLOR_CLICKED
-import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.KEY_QUICK_ACCESS_BUTTON_ICON_COLOR_NORMAL
+import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.KEY_QUICK_ACCESS_ICON_COLOR_CLICKED
+import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.KEY_QUICK_ACCESS_ICON_COLOR_NORMAL
 import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.SETTING_CONTAINER
 import sakuraba.saki.list.launcher.util.findActivityViewById
 import sakuraba.saki.list.launcher.view.FloatingQuickAccessView.Companion.OnIconSelectedListener
@@ -272,10 +272,10 @@ class HomeFragment: Fragment() {
     
     private fun initQuickAccessButton() {
         homeViewModel.settingContainer.value?.apply {
-            getStringValue(KEY_QUICK_ACCESS_BUTTON_ICON_COLOR_NORMAL)?.apply {
+            getStringValue(KEY_QUICK_ACCESS_ICON_COLOR_NORMAL)?.apply {
                 fragmentHomeBinding.floatingQuickAccessView.setIconColor(Color.parseColor(this))
             }
-            getStringValue(KEY_QUICK_ACCESS_BUTTON_ICON_COLOR_CLICKED)?.apply {
+            getStringValue(KEY_QUICK_ACCESS_ICON_COLOR_CLICKED)?.apply {
                 fragmentHomeBinding.floatingQuickAccessView.setIconSelectedColor(Color.parseColor(this))
             }
         }

@@ -31,8 +31,8 @@ class SettingContainer(context: Context): Serializable {
         const val KEY_CUSTOM_NAVIGATION_BAR_COLOR = "key_custom_navigation_bar_color"
         const val KEY_NAVIGATION_BAR_COLOR = "key_navigation_bar_color"
         const val KEY_USE_SYSTEM_BACKGROUND = "key_use_system_background"
-        const val KEY_QUICK_ACCESS_BUTTON_ICON_COLOR_NORMAL = "key_quick_access_button_icon_color_normal"
-        const val KEY_QUICK_ACCESS_BUTTON_ICON_COLOR_CLICKED = "key_quick_access_button_icon_color_clicked"
+        const val KEY_QUICK_ACCESS_ICON_COLOR_NORMAL = "key_quick_access_icon_color_normal"
+        const val KEY_QUICK_ACCESS_ICON_COLOR_CLICKED = "key_quick_access_icon_color_clicked"
         
         val booleanKeys = arrayOf(
             KEY_CUSTOM_STATUS_BAR_COLOR,
@@ -51,8 +51,8 @@ class SettingContainer(context: Context): Serializable {
             KEY_TITLE_COLOR,
             KEY_SUMMARY_COLOR,
             KEY_NAVIGATION_BAR_COLOR,
-            KEY_QUICK_ACCESS_BUTTON_ICON_COLOR_NORMAL,
-            KEY_QUICK_ACCESS_BUTTON_ICON_COLOR_CLICKED
+            KEY_QUICK_ACCESS_ICON_COLOR_NORMAL,
+            KEY_QUICK_ACCESS_ICON_COLOR_CLICKED
         )
     }
     
