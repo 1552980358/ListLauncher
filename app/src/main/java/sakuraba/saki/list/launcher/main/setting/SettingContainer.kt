@@ -37,6 +37,12 @@ class SettingContainer(context: Context): Serializable {
         const val KEY_QUICK_ACCESS_ICON_BACKGROUND_STROKE_NORMAL = "key_quick_access_icon_background_stroke_normal"
         const val KEY_QUICK_ACCESS_ICON_BACKGROUND_CLICKED = "key_quick_access_icon_background_clicked"
         const val KEY_QUICK_ACCESS_ICON_BACKGROUND_STROKE_CLICKED = "key_quick_access_icon_background_stroke_clicked"
+        const val KEY_QUICK_ACCESS_BUTTON_NORMAL = "key_quick_access_button_normal"
+        const val KEY_QUICK_ACCESS_BUTTON_TOUCHED = "key_quick_access_button_touched"
+        const val KEY_QUICK_ACCESS_BUTTON_BACKGROUND_NORMAL = "key_quick_access_button_background_normal"
+        const val KEY_QUICK_ACCESS_BUTTON_BACKGROUND_STROKE_NORMAL = "key_quick_access_button_background_stroke_normal"
+        const val KEY_QUICK_ACCESS_BUTTON_BACKGROUND_TOUCHED = "key_quick_access_button_background_touched"
+        const val KEY_QUICK_ACCESS_BUTTON_BACKGROUND_STROKE_TOUCHED = "key_quick_access_button_background_stroke_touched"
         
         val booleanKeys = arrayOf(
             KEY_CUSTOM_STATUS_BAR_COLOR,
@@ -60,7 +66,13 @@ class SettingContainer(context: Context): Serializable {
             KEY_QUICK_ACCESS_ICON_BACKGROUND_NORMAL,
             KEY_QUICK_ACCESS_ICON_BACKGROUND_CLICKED,
             KEY_QUICK_ACCESS_ICON_BACKGROUND_STROKE_NORMAL,
-            KEY_QUICK_ACCESS_ICON_BACKGROUND_STROKE_CLICKED
+            KEY_QUICK_ACCESS_ICON_BACKGROUND_STROKE_CLICKED,
+            KEY_QUICK_ACCESS_BUTTON_NORMAL,
+            KEY_QUICK_ACCESS_BUTTON_TOUCHED,
+            KEY_QUICK_ACCESS_BUTTON_BACKGROUND_NORMAL,
+            KEY_QUICK_ACCESS_BUTTON_BACKGROUND_STROKE_NORMAL,
+            KEY_QUICK_ACCESS_BUTTON_BACKGROUND_TOUCHED,
+            KEY_QUICK_ACCESS_BUTTON_BACKGROUND_STROKE_TOUCHED
         )
     }
     
