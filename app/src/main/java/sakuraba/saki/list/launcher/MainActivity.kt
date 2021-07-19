@@ -154,7 +154,7 @@ class MainActivity: AppCompatActivity(), TextViewInterface {
         super.onDestroy()
     }
     
-    override fun hasCustomTitleTextColor(): Boolean {
+    override fun hasCustomTitleColor(): Boolean {
         return viewModel.settingContainer.value?.getBooleanValue(KEY_CUSTOM_TITLE_COLOR) == true
     }
     
@@ -164,7 +164,7 @@ class MainActivity: AppCompatActivity(), TextViewInterface {
         Color.BLACK
     }
     
-    override fun hasCustomSummaryTextColor(): Boolean {
+    override fun hasCustomSummaryColor(): Boolean {
         return viewModel.settingContainer.value?.getBooleanValue(KEY_CUSTOM_SUMMARY_COLOR) == true
     }
     

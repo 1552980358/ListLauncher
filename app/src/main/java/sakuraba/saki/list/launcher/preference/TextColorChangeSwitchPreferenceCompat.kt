@@ -17,13 +17,13 @@ open class TextColorChangeSwitchPreferenceCompat: SwitchPreferenceCompat {
     override fun onBindViewHolder(holder: PreferenceViewHolder?) {
         super.onBindViewHolder(holder)
         (context as TextViewInterface).apply {
-            if (hasCustomTitleTextColor()) {
+            if (hasCustomTitleColor()) {
                 holder?.itemView?.findViewById<TextView>(android.R.id.title)?.setTextColor(titleColor)
                 if (iconTintChange && icon != null) {
                     icon.setTint(titleColor)
                 }
             }
-            if (hasCustomSummaryTextColor()) {
+            if (hasCustomSummaryColor()) {
                 holder?.itemView?.findViewById<TextView>(android.R.id.summary)?.setTextColor(summaryColor)
             }
         }

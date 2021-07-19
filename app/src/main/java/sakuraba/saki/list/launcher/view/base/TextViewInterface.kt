@@ -4,14 +4,14 @@ import androidx.annotation.ColorInt
 
 interface TextViewInterface {
     
-    fun hasCustomTitleTextColor(): Boolean
+    fun hasCustomTitleColor(): Boolean
     
     @ColorInt
     fun getTitleTextColor(): Int
     
     val titleColor get() = getTitleTextColor()
     
-    fun hasCustomSummaryTextColor(): Boolean
+    fun hasCustomSummaryColor(): Boolean
     
     @ColorInt
     fun getSummaryTextColor(): Int

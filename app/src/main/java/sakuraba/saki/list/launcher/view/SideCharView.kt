@@ -39,7 +39,7 @@ class SideCharView: BaseView {
     
     init {
         (context as TextViewInterface).apply {
-            if (hasCustomTitleTextColor()) {
+            if (hasCustomTitleColor()) {
                 paint.color = titleColor
                 selectedPaint.color = titleColor
             }

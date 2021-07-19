@@ -15,7 +15,7 @@ class SummaryTextView: AppCompatTextView {
     }
     
     fun getColorSync() {
-        if ((context as TextViewInterface).hasCustomSummaryTextColor()) {
+        if ((context as TextViewInterface).hasCustomSummaryColor()) {
             setTextColor((context as TextViewInterface).summaryColor)
         }
     }
