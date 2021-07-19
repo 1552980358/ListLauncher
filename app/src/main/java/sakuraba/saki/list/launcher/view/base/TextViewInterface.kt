@@ -9,13 +9,13 @@ interface TextViewInterface {
     @ColorInt
     fun getTitleTextColor(): Int
     
-    val titleTextViewColor get() = getTitleTextColor()
+    val titleColor get() = getTitleTextColor()
     
     fun hasCustomSummaryTextColor(): Boolean
     
     @ColorInt
     fun getSummaryTextColor(): Int
     
-    val summaryTextViewColor get() = getSummaryTextColor()
+    val summaryColor get() = getSummaryTextColor()
     
 }

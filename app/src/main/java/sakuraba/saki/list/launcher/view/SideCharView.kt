@@ -40,8 +40,8 @@ class SideCharView: BaseView {
     init {
         (context as TextViewInterface).apply {
             if (hasCustomTitleTextColor()) {
-                paint.color = titleTextViewColor
-                selectedPaint.color = titleTextViewColor
+                paint.color = titleColor
+                selectedPaint.color = titleColor
             }
         }
         // Same text size

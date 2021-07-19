@@ -16,7 +16,7 @@ class TitleTextView: AppCompatTextView {
     
     fun getColorSync() {
         if ((context as TextViewInterface).hasCustomTitleTextColor()) {
-            setTextColor((context as TextViewInterface).getTitleTextColor())
+            setTextColor((context as TextViewInterface).titleColor)
         }
     }
     
