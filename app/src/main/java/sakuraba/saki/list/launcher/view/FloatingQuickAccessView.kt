@@ -58,6 +58,7 @@ class FloatingQuickAccessView: BaseView {
     private val iconSize by lazy { resources.getDimension(R.dimen.view_floating_quick_access_icon_size) }
     
     private val plusDrawable by lazy { resources.getDrawable(R.drawable.ic_plus, null) }
+    private val plusTouchedDrawable by lazy { resources.getDrawable(R.drawable.ic_plus, null) }
     private val phoneDrawable by lazy { resources.getDrawable(R.drawable.ic_phone, null) }
     private val messageDrawable by lazy { resources.getDrawable(R.drawable.ic_message, null) }
     private val browserDrawable by lazy { resources.getDrawable(R.drawable.ic_browser, null) }
@@ -65,8 +66,12 @@ class FloatingQuickAccessView: BaseView {
     private val messageSelectedDrawable by lazy { resources.getDrawable(R.drawable.ic_message_selected, null) }
     private val browserSelectedDrawable by lazy { resources.getDrawable(R.drawable.ic_browser_selected, null) }
     
-    private var buttonClickColor: Int
-    private var buttonNormalColor: Int
+    // private var buttonNormalColor: Int
+    // private var buttonClickColor: Int
+    private var buttonBackgroundColorNormal: Int? = null
+    private var buttonBackgroundStrokeColorNormal: Int? = null
+    private var buttonBackgroundColorTouched: Int? = null
+    private var buttonBackgroundStrokeColorTouched: Int? = null
     
     private var listener: OnIconSelectedListener? = null
     
@@ -98,8 +103,8 @@ class FloatingQuickAccessView: BaseView {
             isAntiAlias = true
         }
         
-        buttonClickColor = ContextCompat.getColor(context, R.color.purple_200)
-        buttonNormalColor = ContextCompat.getColor(context, R.color.purple_500)
+        // buttonClickColor = ContextCompat.getColor(context, R.color.purple_200)
+        // buttonNormalColor = ContextCompat.getColor(context, R.color.purple_500)
     
         // Initialize all configurations of normalPaint
         normalPaint.apply {
@@ -120,6 +125,11 @@ class FloatingQuickAccessView: BaseView {
         iconBackgroundStrokeColor = ContextCompat.getColor(context, R.color.purple_500)
         iconBackgroundSelectedColor = ContextCompat.getColor(context, R.color.white)
         iconBackgroundSelectedStrokeColor = ContextCompat.getColor(context, R.color.purple_500)
+    
+        buttonBackgroundColorNormal = ContextCompat.getColor(context, R.color.purple_500)
+        buttonBackgroundStrokeColorNormal = ContextCompat.getColor(context, R.color.purple_500)
+        buttonBackgroundColorTouched = ContextCompat.getColor(context, R.color.purple_200)
+        buttonBackgroundStrokeColorTouched = ContextCompat.getColor(context, R.color.purple_200)
         
         @Suppress("ClickableViewAccessibility")
         setOnTouchListener { _, event ->
@@ -228,16 +238,29 @@ class FloatingQuickAccessView: BaseView {
         iconBackgroundSelectedStrokeColor = newColor
     }
     
-    fun setButtonIconColor(newColor: Int) {
+    fun setButtonNormalColor(newColor: Int) {
+        // buttonNormalColor = newColor
         plusDrawable.setTint(newColor)
     }
     
     fun setButtonClickedColor(newColor: Int) {
-        buttonClickColor = newColor
+        // buttonClickColor = newColor
+        plusTouchedDrawable.setTint(newColor)
     }
     
-    fun setButtonNormalColor(newColor: Int) {
-        buttonNormalColor = newColor
+    fun setButtonBackgroundColorNormal(newColor: Int?) {
+        buttonBackgroundColorNormal = newColor
+    }
+    fun setButtonBackgroundStrokeColorNormal(newColor: Int?) {
+        buttonBackgroundStrokeColorNormal = newColor
+    }
+    
+    fun setButtonBackgroundColorTouched(newColor: Int?) {
+        buttonBackgroundColorTouched = newColor
+    }
+    
+    fun setButtonBackgroundStrokeColorTouched(newColor: Int?) {
+        buttonBackgroundStrokeColorTouched = newColor
     }
     
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
@@ -349,13 +372,57 @@ class FloatingQuickAccessView: BaseView {
             }
         }
         
-        paint.color = when {
-            isOnTouched -> buttonClickColor
-            else -> buttonNormalColor
+        when {
+            isOnTouched -> drawButtonTouched(canvas)
+            else -> drawButtonNormal(canvas)
         }
         
-        canvas.drawCircle(widthF - circleRadius - paint.strokeWidth, heightF - circleRadius - paint.strokeWidth, circleRadius, paint)
-        canvas.drawBitmap(plusDrawable.toBitmap(), widthF - circleRadius - paint.strokeWidth - iconSize / 2, widthF - circleRadius - paint.strokeWidth - iconSize / 2, paint)
+        // canvas.drawCircle(widthF - circleRadius - paint.strokeWidth, heightF - circleRadius - paint.strokeWidth, circleRadius, paint)
+        // canvas.drawBitmap(plusDrawable.toBitmap(), widthF - circleRadius - paint.strokeWidth - iconSize / 2, widthF - circleRadius - paint.strokeWidth - iconSize / 2, paint)
+    }
+    
+    /**
+     ********************************************************************************************************
+     *
+     **/
+    private fun drawButtonNormal(canvas: Canvas) {
+        drawButtonBackgroundNormal(canvas, buttonBackgroundColorNormal, buttonBackgroundStrokeColorNormal)
+        drawButtonBitmapNormal(canvas)
+    }
+    
+    private fun drawButtonBackgroundNormal(canvas: Canvas, buttonBackgroundColorNormal: Int?, buttonBackgroundStrokeColorNormal: Int?) {
+        drawButtonBackground(canvas, buttonBackgroundColorNormal)
+        drawButtonBackgroundStroke(canvas, buttonBackgroundStrokeColorNormal)
+    }
+    
+    private fun drawButtonBitmapNormal(canvas: Canvas) = canvas.drawBitmap(plusDrawable.toBitmap(), widthF - circleRadius - paint.strokeWidth - iconSize / 2, widthF - circleRadius - paint.strokeWidth - iconSize / 2, paint)
+    
+    private fun drawButtonTouched(canvas: Canvas) {
+        drawButtonBackgroundTouched(canvas, buttonBackgroundColorTouched, buttonBackgroundStrokeColorTouched)
+        drawButtonBitmapTouched(canvas)
+    }
+    
+    private fun drawButtonBackgroundTouched(canvas: Canvas, buttonBackgroundColorTouched: Int?, buttonBackgroundStrokeColorTouched: Int?) {
+        drawButtonBackground(canvas, buttonBackgroundColorTouched)
+        drawButtonBackgroundStroke(canvas, buttonBackgroundStrokeColorTouched)
+    }
+    
+    private fun drawButtonBitmapTouched(canvas: Canvas) = canvas.drawBitmap(plusTouchedDrawable.toBitmap(), widthF - circleRadius - paint.strokeWidth - iconSize / 2, widthF - circleRadius - paint.strokeWidth - iconSize / 2, paint)
+    
+    private fun drawButtonBackground(canvas: Canvas, backgroundColor: Int?) {
+        backgroundColor?.let { color ->
+            paint.style = Paint.Style.FILL
+            paint.color = color
+            canvas.drawCircle(widthF - circleRadius - paint.strokeWidth, heightF - circleRadius - paint.strokeWidth, circleRadius, paint)
+        }
+    }
+    
+    private fun drawButtonBackgroundStroke(canvas: Canvas, backgroundStrokeColor: Int?) {
+        backgroundStrokeColor?.let { color ->
+            paint.style = Paint.Style.STROKE
+            paint.color = color
+            canvas.drawCircle(widthF - circleRadius - paint.strokeWidth, heightF - circleRadius - paint.strokeWidth, circleRadius, paint)
+        }
     }
     
     /**
