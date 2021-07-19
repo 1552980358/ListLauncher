@@ -16,7 +16,7 @@ class TextColorChangePreference: Preference {
     override fun onBindViewHolder(holder: PreferenceViewHolder?) {
         super.onBindViewHolder(holder)
         (context as TextViewInterface).apply {
-            if (hasCustomTitleColor()) {
+            if (isCustomTitleColor) {
                 (holder?.findViewById(android.R.id.title) as TextView?)?.apply {
                     setTextColor(titleColor)
                     // Identification as category title
@@ -26,7 +26,7 @@ class TextColorChangePreference: Preference {
                     icon.setTint(titleColor)
                 }
             }
-            if (hasCustomSummaryColor()) {
+            if (isCustomSummaryColor) {
                 (holder?.findViewById(android.R.id.summary) as TextView?)?.apply {
                     setTextColor(summaryColor)
                 }

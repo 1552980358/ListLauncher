@@ -17,14 +17,14 @@ class TextColorChangePreferenceCategory: PreferenceCategory {
         super.onBindViewHolder(holder)
     
         (context as TextViewInterface).apply {
-            if (hasCustomTitleColor()) {
+            if (isCustomTitleColor) {
                 (holder?.findViewById(android.R.id.title) as TextView?)?.apply {
                     setTextColor(titleColor)
                     // Identification as category title
                     setTypeface(typeface, Typeface.BOLD)
                 }
             }
-            if (hasCustomSummaryColor()) {
+            if (isCustomSummaryColor) {
                 (holder?.findViewById(android.R.id.summary) as TextView?)?.apply {
                     setTextColor(summaryColor)
                 }
