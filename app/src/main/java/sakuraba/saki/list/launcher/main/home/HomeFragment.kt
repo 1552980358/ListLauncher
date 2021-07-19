@@ -35,6 +35,12 @@ import sakuraba.saki.list.launcher.broadcast.ApplicationChangeBroadcastReceiver.
 import sakuraba.saki.list.launcher.databinding.FragmentHomeBinding
 import sakuraba.saki.list.launcher.main.search.SearchFragment.Companion.APP_INFOS
 import sakuraba.saki.list.launcher.main.setting.SettingContainer
+import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.KEY_QUICK_ACCESS_BUTTON_BACKGROUND_NORMAL
+import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.KEY_QUICK_ACCESS_BUTTON_BACKGROUND_STROKE_NORMAL
+import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.KEY_QUICK_ACCESS_BUTTON_BACKGROUND_STROKE_TOUCHED
+import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.KEY_QUICK_ACCESS_BUTTON_BACKGROUND_TOUCHED
+import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.KEY_QUICK_ACCESS_BUTTON_NORMAL
+import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.KEY_QUICK_ACCESS_BUTTON_TOUCHED
 import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.KEY_QUICK_ACCESS_ICON_BACKGROUND_CLICKED
 import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.KEY_QUICK_ACCESS_ICON_BACKGROUND_NORMAL
 import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.KEY_QUICK_ACCESS_ICON_BACKGROUND_STROKE_CLICKED
@@ -293,6 +299,24 @@ class HomeFragment: Fragment() {
             }
             getStringValue(KEY_QUICK_ACCESS_ICON_BACKGROUND_STROKE_CLICKED)?.apply {
                 fragmentHomeBinding.floatingQuickAccessView.setIconBackgroundSelectedStrokeColor(Color.parseColor(this))
+            }
+            getStringValue(KEY_QUICK_ACCESS_BUTTON_NORMAL)?.apply {
+                fragmentHomeBinding.floatingQuickAccessView.setButtonNormalColor(Color.parseColor(this))
+            }
+            getStringValue(KEY_QUICK_ACCESS_BUTTON_TOUCHED)?.apply {
+                fragmentHomeBinding.floatingQuickAccessView.setButtonClickedColor(Color.parseColor(this))
+            }
+            getStringValue(KEY_QUICK_ACCESS_BUTTON_BACKGROUND_NORMAL)?.apply {
+                fragmentHomeBinding.floatingQuickAccessView.setButtonBackgroundColorNormal(Color.parseColor(this))
+            }
+            getStringValue(KEY_QUICK_ACCESS_BUTTON_BACKGROUND_STROKE_NORMAL)?.apply {
+                fragmentHomeBinding.floatingQuickAccessView.setButtonBackgroundStrokeColorNormal(Color.parseColor(this))
+            }
+            getStringValue(KEY_QUICK_ACCESS_BUTTON_BACKGROUND_TOUCHED)?.apply {
+                fragmentHomeBinding.floatingQuickAccessView.setButtonBackgroundColorTouched(Color.parseColor(this))
+            }
+            getStringValue(KEY_QUICK_ACCESS_BUTTON_BACKGROUND_STROKE_TOUCHED)?.apply {
+                fragmentHomeBinding.floatingQuickAccessView.setButtonBackgroundStrokeColorTouched(Color.parseColor(this))
             }
         }
     }

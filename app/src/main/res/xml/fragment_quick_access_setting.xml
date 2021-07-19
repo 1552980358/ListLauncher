@@ -45,5 +45,48 @@
             app:icon="@drawable/ic_preference_color_block" />
         
     </sakuraba.saki.list.launcher.preference.TextColorChangePreferenceCategory>
+    
+    <sakuraba.saki.list.launcher.preference.TextColorChangePreferenceCategory
+        android:title="@string/setting_quick_access_button_title"
+        android:summary="@string/setting_quick_access_button_summary"
+        app:iconSpaceReserved="false" >
+        
+        <sakuraba.saki.list.launcher.preference.TextColorChangePreference
+            android:key="key_quick_access_button_normal"
+            android:title="@string/setting_quick_access_button_normal_title"
+            android:summary="@string/setting_quick_access_button_normal_summary"
+            app:icon="@drawable/ic_preference_color_block" />
+    
+        <sakuraba.saki.list.launcher.preference.TextColorChangePreference
+            android:key="key_quick_access_button_touched"
+            android:title="@string/setting_quick_access_button_touched_title"
+            android:summary="@string/setting_quick_access_button_touched_summary"
+            app:icon="@drawable/ic_preference_color_block" />
+    
+        <sakuraba.saki.list.launcher.preference.TextColorChangePreference
+            android:key="key_quick_access_button_background_normal"
+            android:title="@string/setting_quick_access_button_background_normal_title"
+            android:summary="@string/setting_quick_access_button_background_normal_summary"
+            app:icon="@drawable/ic_preference_color_block" />
+    
+        <sakuraba.saki.list.launcher.preference.TextColorChangePreference
+            android:key="key_quick_access_button_background_touched"
+            android:title="@string/setting_quick_access_button_background_touched_title"
+            android:summary="@string/setting_quick_access_button_background_touched_summary"
+            app:icon="@drawable/ic_preference_color_block" />
+    
+        <sakuraba.saki.list.launcher.preference.TextColorChangePreference
+            android:key="key_quick_access_button_background_stroke_normal"
+            android:title="@string/setting_quick_access_button_background_stroke_normal_title"
+            android:summary="@string/setting_quick_access_button_background_stroke_normal_summary"
+            app:icon="@drawable/ic_preference_color_block" />
+        
+        <sakuraba.saki.list.launcher.preference.TextColorChangePreference
+            android:key="key_quick_access_button_background_stroke_touched"
+            android:title="@string/setting_quick_access_button_background_stroke_touched_title"
+            android:summary="@string/setting_quick_access_button_background_stroke_touched_summary"
+            app:icon="@drawable/ic_preference_color_block" />
+        
+    </sakuraba.saki.list.launcher.preference.TextColorChangePreferenceCategory>
 
 </PreferenceScreen>
