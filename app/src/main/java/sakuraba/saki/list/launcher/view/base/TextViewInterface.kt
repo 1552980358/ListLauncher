@@ -6,12 +6,18 @@ interface TextViewInterface {
     
     fun hasCustomTitleColor(): Boolean
     
+    val isCustomTitleColor get() = hasCustomTitleColor()
+    
     @ColorInt
     fun getTitleTextColor(): Int
     
     val titleColor get() = getTitleTextColor()
     
+    /*******************************************************/
+    
     fun hasCustomSummaryColor(): Boolean
+    
+    val isCustomSummaryColor get() = hasCustomSummaryColor()
     
     @ColorInt
     fun getSummaryTextColor(): Int
