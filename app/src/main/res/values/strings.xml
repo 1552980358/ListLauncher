@@ -92,6 +92,21 @@
     <string name="setting_quick_access_icon_background_stroke_clicked_title">Icon background stroke color (clicked)</string>
     <string name="setting_quick_access_icon_background_stroke_clicked_summary">Stroke color of the icon\'s background when it is touched</string>
     
+    <string name="setting_quick_access_button_title">Button</string>
+    <string name="setting_quick_access_button_summary">Set different colors of the quick access button</string>
+    <string name="setting_quick_access_button_normal_title">Button icon color (normal)</string>
+    <string name="setting_quick_access_button_normal_summary">Color of the icon of the button when it is not touched</string>
+    <string name="setting_quick_access_button_touched_title">Button icon color (touched)</string>
+    <string name="setting_quick_access_button_touched_summary">Color of the icon of the button when it is touched</string>
+    <string name="setting_quick_access_button_background_normal_title">Button background color (normal)</string>
+    <string name="setting_quick_access_button_background_normal_summary">Color of the background of the button when it is not touched</string>
+    <string name="setting_quick_access_button_background_stroke_normal_title">Button background stroke color (normal)</string>
+    <string name="setting_quick_access_button_background_stroke_normal_summary">Stroke color of the button background of the button when it is not touched</string>
+    <string name="setting_quick_access_button_background_touched_title">Button background color (touched)</string>
+    <string name="setting_quick_access_button_background_touched_summary">Color of the button background of the button when it is touched</string>
+    <string name="setting_quick_access_button_background_stroke_touched_title">Button background stroke color (touched)</string>
+    <string name="setting_quick_access_button_background_stroke_touched_summary">Stroke color of the button background of the button when it is touched</string>
+    
     <string name="reset_setting_dialog_resetting">Resetting all saved configuration…</string>
     <string name="reset_setting_dialog_removing_files">Removing all saved images…</string>
     <string name="reset_setting_dialog_restart_3_second">Reset process completed.\nRestart in 3 second…</string>
