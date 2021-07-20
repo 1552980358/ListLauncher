@@ -7,13 +7,12 @@ plugins {
 
 android {
     //noinspection GroovyAssignabilityCheck
-    compileSdkVersion 30
-    buildToolsVersion "30.0.3"
+    compileSdkVersion 31
 
     defaultConfig {
         applicationId "sakuraba.saki.list.launcher"
         minSdkVersion 21
-        targetSdkVersion 30
+        targetSdkVersion 31
         versionCode 1
         versionName "1.0"
 
@@ -80,6 +79,10 @@ andResGuard {
      * 默认值为“SHA-1”
      **/
     // digestalg = "SHA-256"
+}
+
+kapt {
+    generateStubs = true
 }
 
 dependencies {
