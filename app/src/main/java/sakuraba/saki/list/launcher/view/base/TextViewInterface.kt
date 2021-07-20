@@ -11,7 +11,7 @@ interface TextViewInterface {
     @ColorInt
     fun getTitleTextColor(): Int
     
-    val titleColor get() = getTitleTextColor()
+    val customTitleColor get() = getTitleTextColor()
     
     /*******************************************************/
     
@@ -22,6 +22,6 @@ interface TextViewInterface {
     @ColorInt
     fun getSummaryTextColor(): Int
     
-    val summaryColor get() = getSummaryTextColor()
+    val customSummaryColor get() = getSummaryTextColor()
     
 }

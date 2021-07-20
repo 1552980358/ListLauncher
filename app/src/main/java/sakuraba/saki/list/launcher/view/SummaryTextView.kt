@@ -12,6 +12,6 @@ class SummaryTextView: SynchronizedTextView {
     
     override fun hasSyncTextColor() = (context as TextViewInterface).isCustomSummaryColor
     
-    override fun getSyncTextColor() = (context as TextViewInterface).summaryColor
+    override fun getSyncTextColor() = (context as TextViewInterface).customSummaryColor
     
 }

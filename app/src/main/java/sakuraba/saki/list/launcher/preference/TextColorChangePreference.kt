@@ -18,17 +18,17 @@ class TextColorChangePreference: Preference {
         (context as TextViewInterface).apply {
             if (isCustomTitleColor) {
                 (holder?.findViewById(android.R.id.title) as TextView?)?.apply {
-                    setTextColor(titleColor)
+                    setTextColor(customTitleColor)
                     // Identification as category title
                     setTypeface(typeface, Typeface.BOLD)
                 }
                 if (icon != null) {
-                    icon.setTint(titleColor)
+                    icon.setTint(customTitleColor)
                 }
             }
             if (isCustomSummaryColor) {
                 (holder?.findViewById(android.R.id.summary) as TextView?)?.apply {
-                    setTextColor(summaryColor)
+                    setTextColor(customSummaryColor)
                 }
             }
         }

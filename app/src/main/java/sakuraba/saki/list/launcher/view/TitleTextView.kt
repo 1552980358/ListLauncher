@@ -12,6 +12,6 @@ class TitleTextView: SynchronizedTextView {
     
     override fun hasSyncTextColor() = (context as TextViewInterface).isCustomTitleColor
     
-    override fun getSyncTextColor() = (context as TextViewInterface).titleColor
+    override fun getSyncTextColor() = (context as TextViewInterface).customTitleColor
     
 }
