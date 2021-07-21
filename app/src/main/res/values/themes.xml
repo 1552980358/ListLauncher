@@ -23,6 +23,7 @@
     </style>
     
     <style name="Theme.ListLauncher.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+    <style name="Theme.ListLauncher.AppBarOverlay.Light" parent="ThemeOverlay.AppCompat.ActionBar" />
     <style name="Theme.ListLauncher.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
     
     <style name="Theme.ListLauncher.LightStatusBar" parent="ThemeOverlay.AppCompat">
