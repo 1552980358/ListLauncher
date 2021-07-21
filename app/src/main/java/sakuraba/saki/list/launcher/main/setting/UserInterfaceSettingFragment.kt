@@ -25,6 +25,7 @@ import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.snackbar.BaseTransientBottomBar.LENGTH_SHORT
 import com.google.android.material.snackbar.Snackbar
 import lib.github1552980358.ktExtension.android.content.commit
+import lib.github1552980358.ktExtension.androidx.fragment.app.restartActivity
 import sakuraba.saki.list.launcher.MainActivity
 import sakuraba.saki.list.launcher.R
 import sakuraba.saki.list.launcher.dialog.ColorPickDialogFragment
@@ -42,6 +43,7 @@ import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.KEY_S
 import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.KEY_TITLE_COLOR
 import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.KEY_TOOLBAR_BACKGROUND_COLOR
 import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.KEY_USE_SYSTEM_BACKGROUND
+import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.KEY_USE_TOOLBAR_LIGHT
 import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.SETTING_CONTAINER
 import sakuraba.saki.list.launcher.preference.TextColorChangeSwitchPreferenceCompat
 import sakuraba.saki.list.launcher.preference.TwoSidedSwitchPreferenceCompat
@@ -92,6 +94,7 @@ class UserInterfaceSettingFragment: PreferenceFragmentCompat() {
         initStatusBarTextColor()
         
         initToolbarBackgroundColor(sharedPreferences)
+        initToolbarLight(sharedPreferences)
         
         initTitleColor(sharedPreferences)
         initSummaryColor(sharedPreferences)
@@ -272,6 +275,15 @@ class UserInterfaceSettingFragment: PreferenceFragmentCompat() {
                     findActivityViewById<AppBarLayout>(R.id.appBarLayout).setBackgroundColor(Color.parseColor(DEFAULT_TOOLBAR_BACKGROUND_COLOR))
                     findPreference<Preference>(KEY_TOOLBAR_BACKGROUND_COLOR)?.isEnabled = false
                 }
+                return@setOnPreferenceChangeListener true
+            }
+        }
+    
+    private fun initToolbarLight(sharedPreferences: SharedPreferences) =
+        findPreference<TextColorChangeSwitchPreferenceCompat>(KEY_USE_TOOLBAR_LIGHT)?.apply {
+            setOnPreferenceChangeListener { _, newValue ->
+                sharedPreferences.commit(KEY_USE_TOOLBAR_LIGHT, newValue as Boolean)
+                restartActivity()
                 return@setOnPreferenceChangeListener true
             }
         }

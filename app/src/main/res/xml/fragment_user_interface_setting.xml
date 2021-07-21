@@ -71,6 +71,13 @@
             app:defaultValue="false"
             app:icon="@drawable/ic_preference_color_block"/>
         
+        <sakuraba.saki.list.launcher.preference.TextColorChangeSwitchPreferenceCompat
+            android:key="key_use_toolbar_light"
+            android:title="@string/setting_use_toolbar_light_title"
+            android:summary="@string/setting_use_toolbar_light_summary"
+            app:defaultValue="false"
+            app:iconSpaceReserved="false" />
+        
     </sakuraba.saki.list.launcher.preference.TextColorChangePreferenceCategory>
     
     <sakuraba.saki.list.launcher.preference.TextColorChangePreferenceCategory

@@ -6,6 +6,7 @@ import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import android.view.View
+import android.widget.Toolbar
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
@@ -37,6 +38,7 @@ import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.KEY_S
 import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.KEY_TITLE_COLOR
 import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.KEY_TOOLBAR_BACKGROUND_COLOR
 import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.KEY_USE_SYSTEM_BACKGROUND
+import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.KEY_USE_TOOLBAR_LIGHT
 import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.SETTING_CONTAINER
 import sakuraba.saki.list.launcher.main.setting.SettingFragment.Companion.BACKGROUND_FILE
 import sakuraba.saki.list.launcher.view.base.TextViewInterface
@@ -140,6 +142,16 @@ class MainActivity: AppCompatActivity(), TextViewInterface {
             } else if (getBooleanValue(KEY_USE_SYSTEM_BACKGROUND) == true) {
                 activityMainBinding.drawerLayout.background = WallpaperManager.getInstance(this@MainActivity).drawable
             }
+            /**
+             * Due to [AppBarLayout] does not provide setting style after instance was created.
+             **/
+            activityMainBinding.root.addView(
+                layoutInflater.inflate(
+                    if (getBooleanValue(KEY_USE_TOOLBAR_LIGHT) == true) R.layout.app_bar_main_light else R.layout.app_bar_main,
+                    activityMainBinding.root,
+                    false
+                )
+            )
         }
     }
     

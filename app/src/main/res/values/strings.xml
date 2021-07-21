@@ -62,6 +62,8 @@
     <string name="setting_status_bar_snackbar_should_enable_to_set">You should enable this option before setting the status bar color</string>
     <string name="setting_custom_toolbar_bg_color_title">Toolbar color</string>
     <string name="setting_custom_toolbar_bg_color_summary">Customize toolbar color</string>
+    <string name="setting_use_toolbar_light_title">Use light colored toolbar</string>
+    <string name="setting_use_toolbar_light_summary">Enable light colored toolbar (Buttons and text set as black)</string>
     <string name="setting_toolbar_bg_snackbar_should_enable_to_set">You should enable this option before setting the custom color</string>
     <string name="setting_custom_background_image_title">Custom background image</string>
     <string name="setting_custom_background_image_summary">Use custom image as launcher background.\nClick here to select image.\nSystem wallpaper will be disabled when this option is enabled.</string>
