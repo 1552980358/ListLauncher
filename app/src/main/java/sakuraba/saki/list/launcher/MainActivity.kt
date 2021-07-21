@@ -1,6 +1,8 @@
 package sakuraba.saki.list.launcher
 
+import android.Manifest
 import android.app.WallpaperManager
+import android.content.pm.PackageManager
 import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.os.Build
@@ -13,6 +15,7 @@ import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
 import androidx.core.graphics.drawable.toDrawable
 import androidx.core.view.WindowCompat
 import androidx.drawerlayout.widget.DrawerLayout
@@ -139,8 +142,9 @@ class MainActivity: AppCompatActivity(), TextViewInterface {
                     activityMainBinding.drawerLayout.background =
                         BitmapFactory.decodeStream(openFileInput(BACKGROUND_FILE))?.toDrawable(resources)
                 }
-            } else if (getBooleanValue(KEY_USE_SYSTEM_BACKGROUND) == true) {
-                activityMainBinding.drawerLayout.background = WallpaperManager.getInstance(this@MainActivity).drawable
+            } else if (getBooleanValue(KEY_USE_SYSTEM_BACKGROUND) == true &&
+                ActivityCompat.checkSelfPermission(this@MainActivity, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+                    activityMainBinding.drawerLayout.background = WallpaperManager.getInstance(this@MainActivity).drawable
             }
             /**
              * Due to [AppBarLayout] does not provide setting style after instance was created.

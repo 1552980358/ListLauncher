@@ -6,6 +6,7 @@ import android.app.WallpaperManager
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
+import android.content.pm.PackageManager
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
@@ -13,6 +14,7 @@ import android.provider.MediaStore
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.coordinatorlayout.widget.CoordinatorLayout
+import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.view.WindowCompat
 import androidx.drawerlayout.widget.DrawerLayout
@@ -80,8 +82,10 @@ class UserInterfaceSettingFragment: PreferenceFragmentCompat() {
             if (!it) {
                 findPreference<TextColorChangeSwitchPreferenceCompat>(KEY_USE_SYSTEM_BACKGROUND)?.isChecked = false
             } else {
-                findActivityViewById<DrawerLayout>(R.id.drawer_layout).background =
-                    WallpaperManager.getInstance(requireContext()).drawable
+                if (ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+                    findActivityViewById<DrawerLayout>(R.id.drawer_layout).background =
+                        WallpaperManager.getInstance(requireContext()).drawable
+                }
             }
         }
         
