@@ -29,6 +29,10 @@
     <string name="setting_reset_dialog_message">Are you sure to reset all setting?</string>
     <string name="setting_reset_dialog_confirm">Confirm</string>
     <string name="setting_reset_dialog_cancel">Cancel</string>
+    <string name="setting_restart">Restart</string>
+    <string name="setting_restart_content">Restart now?</string>
+    <string name="setting_restart_confirm">Restart</string>
+    
     <string name="setting_auth_title">Authorization</string>
     <string name="setting_auth_summary">Authorize before launching application</string>
     <string name="setting_use_fingerprint_title">Fingerprint</string>

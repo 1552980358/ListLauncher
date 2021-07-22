@@ -9,7 +9,9 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
+import lib.github1552980358.ktExtension.androidx.fragment.app.restartActivity
 import sakuraba.saki.list.launcher.R
+import sakuraba.saki.list.launcher.dialog.ApplyDialogFragment
 import sakuraba.saki.list.launcher.dialog.ResetSettingsDialogFragment
 import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.SETTING_CONTAINER
 
@@ -21,6 +23,7 @@ class SettingFragment: PreferenceFragmentCompat() {
         private const val KEY_SECURITY_SETTING = "key_security_setting"
         private const val KEY_USER_INTERFACE_SETTING = "key_user_interface_setting"
         private const val KEY_QUICK_ACCESS_BUTTON_SETTING = "key_quick_access_button_setting"
+        private const val KEY_RESTART = "key_restart"
     }
     
     private lateinit var viewModel: SettingViewModel
@@ -36,6 +39,7 @@ class SettingFragment: PreferenceFragmentCompat() {
         initSecurity()
         initUserInterface()
         initQuickAccessButton()
+        initRestart()
     }
     
     private fun initSecurity() =
@@ -54,6 +58,16 @@ class SettingFragment: PreferenceFragmentCompat() {
         findPreference<Preference>(KEY_QUICK_ACCESS_BUTTON_SETTING)?.setOnPreferenceClickListener {
             findNavController().navigate(R.id.nav_quick_access_setting, Bundle().apply { putSerializable(SETTING_CONTAINER, viewModel.settingContainer.value) })
             return@setOnPreferenceClickListener false
+        }
+    
+    private fun initRestart() =
+        findPreference<Preference>(KEY_RESTART)?.apply {
+            setOnPreferenceClickListener {
+                ApplyDialogFragment(object: ApplyDialogFragment.Companion.OnApplyListener {
+                    override fun onApply() { restartActivity() }
+                }, R.string.setting_restart_content, R.string.setting_restart_confirm).show(parentFragmentManager)
+                return@setOnPreferenceClickListener true
+            }
         }
     
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
