@@ -30,6 +30,7 @@ import lib.github1552980358.ktExtension.android.content.commit
 import lib.github1552980358.ktExtension.androidx.fragment.app.restartActivity
 import sakuraba.saki.list.launcher.MainActivity
 import sakuraba.saki.list.launcher.R
+import sakuraba.saki.list.launcher.dialog.ApplyDialogFragment
 import sakuraba.saki.list.launcher.dialog.ColorPickDialogFragment
 import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.KEY_BACKGROUND_IMAGE
 import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.KEY_CUSTOM_BACKGROUND_IMAGE
@@ -82,10 +83,14 @@ class UserInterfaceSettingFragment: PreferenceFragmentCompat() {
             if (!it) {
                 findPreference<TextColorChangeSwitchPreferenceCompat>(KEY_USE_SYSTEM_BACKGROUND)?.isChecked = false
             } else {
-                if (ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
-                    findActivityViewById<DrawerLayout>(R.id.drawer_layout).background =
-                        WallpaperManager.getInstance(requireContext()).drawable
-                }
+                ApplyDialogFragment(object : ApplyDialogFragment.Companion.OnApplyListener {
+                    override fun onApply() {
+                        if (ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+                            findActivityViewById<DrawerLayout>(R.id.drawer_layout).background =
+                                WallpaperManager.getInstance(requireContext()).drawable
+                        }
+                    }
+                }).show(parentFragmentManager)
             }
         }
         
@@ -95,7 +100,7 @@ class UserInterfaceSettingFragment: PreferenceFragmentCompat() {
         initNavigationBar(sharedPreferences)
         
         initStatusBarColor(sharedPreferences)
-        initStatusBarTextColor()
+        initStatusBarTextColor(sharedPreferences)
         
         initToolbarBackgroundColor(sharedPreferences)
         initToolbarLight(sharedPreferences)
@@ -242,8 +247,12 @@ class UserInterfaceSettingFragment: PreferenceFragmentCompat() {
                     setStatusBarColor(preferenceManager, preferenceManager.getString(KEY_STATUS_BAR_COLOR, DEFAULT_STATUS_BAR_COLOR)!!)
                     findPreference<Preference>(KEY_STATUS_BAR_COLOR)?.isEnabled = true
                 } else {
-                    requireActivity().window.statusBarColor = ContextCompat.getColor(requireContext(), R.color.purple_700)
-                    findPreference<Preference>(KEY_STATUS_BAR_COLOR)?.isEnabled = false
+                    ApplyDialogFragment(object : ApplyDialogFragment.Companion.OnApplyListener {
+                        override fun onApply() {
+                            requireActivity().window.statusBarColor = ContextCompat.getColor(requireContext(), R.color.purple_700)
+                            findPreference<Preference>(KEY_STATUS_BAR_COLOR)?.isEnabled = false
+                        }
+                    }).show(parentFragmentManager)
                 }
                 return@setOnPreferenceChangeListener true
             }
@@ -287,7 +296,9 @@ class UserInterfaceSettingFragment: PreferenceFragmentCompat() {
         findPreference<TextColorChangeSwitchPreferenceCompat>(KEY_USE_TOOLBAR_LIGHT)?.apply {
             setOnPreferenceChangeListener { _, newValue ->
                 sharedPreferences.commit(KEY_USE_TOOLBAR_LIGHT, newValue as Boolean)
-                restartActivity()
+                ApplyDialogFragment(object : ApplyDialogFragment.Companion.OnApplyListener {
+                    override fun onApply() { restartActivity() }
+                }).show(parentFragmentManager)
                 return@setOnPreferenceChangeListener true
             }
         }
@@ -387,11 +398,13 @@ class UserInterfaceSettingFragment: PreferenceFragmentCompat() {
         
     }, Color.parseColor(colorString)).show(parentFragmentManager)
     
-    private fun initStatusBarTextColor() =
+    private fun initStatusBarTextColor(sharedPreferences: SharedPreferences) =
         findPreference<SwitchPreferenceCompat>(KEY_CUSTOM_STATUS_BAR_BLACK_TEXT)?.setOnPreferenceChangeListener { _, newValue ->
             settingContainer.getBooleanUpdate(KEY_CUSTOM_STATUS_BAR_BLACK_TEXT, newValue as Boolean)
-            startActivity(Intent(requireContext(), MainActivity::class.java))
-            requireActivity().finish()
+            sharedPreferences.commit(KEY_CUSTOM_STATUS_BAR_BLACK_TEXT, newValue)
+            ApplyDialogFragment(object : ApplyDialogFragment.Companion.OnApplyListener {
+                override fun onApply() { restartActivity() }
+            }).show(parentFragmentManager)
             return@setOnPreferenceChangeListener true
         }
     
@@ -408,7 +421,11 @@ class UserInterfaceSettingFragment: PreferenceFragmentCompat() {
             //      .putString(KEY_STATUS_BAR_COLOR, colorStr)
             //      .commit()
             sharedPreferences.commit(KEY_STATUS_BAR_COLOR, colorStr)
-            requireActivity().window?.statusBarColor = color
+            ApplyDialogFragment(object : ApplyDialogFragment.Companion.OnApplyListener {
+                override fun onApply() {
+                    requireActivity().window?.statusBarColor = color
+                }
+            }).show(parentFragmentManager)
         }
         override fun onSelectDefault() {
             settingContainer.getStringUpdate(KEY_STATUS_BAR_COLOR, DEFAULT_STATUS_BAR_COLOR)
@@ -418,7 +435,11 @@ class UserInterfaceSettingFragment: PreferenceFragmentCompat() {
             //     .putString(KEY_STATUS_BAR_COLOR, DEFAULT_STATUS_BAR_COLOR)
             //     .commit()
             sharedPreferences.commit(KEY_STATUS_BAR_COLOR, DEFAULT_STATUS_BAR_COLOR)
-            requireActivity().window?.statusBarColor = ContextCompat.getColor(requireContext(), R.color.purple_700)
+            ApplyDialogFragment(object : ApplyDialogFragment.Companion.OnApplyListener {
+                override fun onApply() {
+                    requireActivity().window?.statusBarColor = ContextCompat.getColor(requireContext(), R.color.purple_700)
+                }
+            }).show(parentFragmentManager)
         }
         override fun onCancel() { }
     }, Color.parseColor(color)).show(parentFragmentManager)
@@ -434,7 +455,11 @@ class UserInterfaceSettingFragment: PreferenceFragmentCompat() {
             //     .commit()
             sharedPreferences.commit(KEY_TOOLBAR_BACKGROUND_COLOR, colorStr)
             preference?.updateIconColor(color)
-            findActivityViewById<AppBarLayout>(R.id.appBarLayout).setBackgroundColor(color)
+            ApplyDialogFragment(object : ApplyDialogFragment.Companion.OnApplyListener {
+                override fun onApply() {
+                    findActivityViewById<AppBarLayout>(R.id.appBarLayout).setBackgroundColor(color)
+                }
+            }).show(parentFragmentManager)
         }
         override fun onSelectDefault() {
             settingContainer.getStringUpdate(KEY_TOOLBAR_BACKGROUND_COLOR, DEFAULT_TOOLBAR_BACKGROUND_COLOR)
@@ -445,10 +470,18 @@ class UserInterfaceSettingFragment: PreferenceFragmentCompat() {
             //     .commit()
             sharedPreferences.commit(KEY_TOOLBAR_BACKGROUND_COLOR, DEFAULT_TOOLBAR_BACKGROUND_COLOR)
             preference?.updateIconColor(DEFAULT_TOOLBAR_BACKGROUND_COLOR)
-            findActivityViewById<AppBarLayout>(R.id.appBarLayout).setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.purple_500))
+            ApplyDialogFragment(object : ApplyDialogFragment.Companion.OnApplyListener {
+                override fun onApply() {
+                    findActivityViewById<AppBarLayout>(R.id.appBarLayout).setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.purple_500))
+                }
+            }).show(parentFragmentManager)
         }
         override fun onCancel() {
-            findActivityViewById<AppBarLayout>(R.id.appBarLayout).setBackgroundColor(Color.parseColor(color))
+            ApplyDialogFragment(object : ApplyDialogFragment.Companion.OnApplyListener {
+                override fun onApply() {
+                    findActivityViewById<AppBarLayout>(R.id.appBarLayout).setBackgroundColor(Color.parseColor(color))
+                }
+            }).show(parentFragmentManager)
         }
     }, Color.parseColor(color)).show(parentFragmentManager)
     
@@ -463,8 +496,9 @@ class UserInterfaceSettingFragment: PreferenceFragmentCompat() {
             //     .commit()
             sharedPreferences.commit(KEY_TITLE_COLOR, colorStr)
             // preference.icon?.setTint(color)
-            startActivity(Intent(requireContext(), MainActivity::class.java))
-            requireActivity().finish()
+            ApplyDialogFragment(object : ApplyDialogFragment.Companion.OnApplyListener {
+                override fun onApply() { restartActivity() }
+            }).show(parentFragmentManager)
         }
         
         override fun onSelectDefault() {
@@ -475,8 +509,9 @@ class UserInterfaceSettingFragment: PreferenceFragmentCompat() {
             //     .putString(KEY_TITLE_COLOR, DEFAULT_TITLE_COLOR)
             //     .commit()
             sharedPreferences.commit(KEY_TITLE_COLOR, DEFAULT_TITLE_COLOR)
-            startActivity(Intent(requireContext(), MainActivity::class.java))
-            requireActivity().finish()
+            ApplyDialogFragment(object : ApplyDialogFragment.Companion.OnApplyListener {
+                override fun onApply() { restartActivity() }
+            }).show(parentFragmentManager)
         }
         
         override fun onCancel() {}
@@ -493,8 +528,9 @@ class UserInterfaceSettingFragment: PreferenceFragmentCompat() {
                 //    .commit()
                 sharedPreferences.commit(KEY_SUMMARY_COLOR, colorStr)
                 // preference.icon?.setTint(color)
-                startActivity(Intent(requireContext(), MainActivity::class.java))
-                requireActivity().finish()
+                ApplyDialogFragment(object : ApplyDialogFragment.Companion.OnApplyListener {
+                    override fun onApply() { restartActivity() }
+                }).show(parentFragmentManager)
             }
             
             override fun onSelectDefault() {
@@ -505,8 +541,9 @@ class UserInterfaceSettingFragment: PreferenceFragmentCompat() {
                 //     .putString(KEY_SUMMARY_COLOR, DEFAULT_SUMMARY_COLOR)
                 //     .commit()
                 sharedPreferences.commit(KEY_SUMMARY_COLOR, DEFAULT_SUMMARY_COLOR)
-                startActivity(Intent(requireContext(), MainActivity::class.java))
-                requireActivity().finish()
+                ApplyDialogFragment(object : ApplyDialogFragment.Companion.OnApplyListener {
+                    override fun onApply() { restartActivity() }
+                }).show(parentFragmentManager)
             }
             
             override fun onCancel() {}

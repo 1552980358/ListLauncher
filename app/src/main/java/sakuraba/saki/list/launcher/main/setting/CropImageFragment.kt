@@ -23,6 +23,8 @@ import com.google.android.material.snackbar.BaseTransientBottomBar
 import com.google.android.material.snackbar.Snackbar
 import sakuraba.saki.list.launcher.R
 import sakuraba.saki.list.launcher.databinding.FragmentCropImageBinding
+import sakuraba.saki.list.launcher.dialog.ApplyDialogFragment
+import sakuraba.saki.list.launcher.dialog.ApplyDialogFragment.Companion.OnApplyListener
 import sakuraba.saki.list.launcher.main.setting.SettingFragment.Companion.BACKGROUND_FILE
 import sakuraba.saki.list.launcher.main.setting.UserInterfaceSettingFragment.Companion.CROP_URI
 import sakuraba.saki.list.launcher.util.findActivityViewById
@@ -98,8 +100,16 @@ class CropImageFragment: Fragment() {
                             ).show()
                         }
                     }
-                    findActivityViewById<DrawerLayout>(R.id.drawer_layout).background = this.toDrawable(resources)
-                    findNavController().navigateUp()
+                    
+                    ApplyDialogFragment(object : OnApplyListener {
+                        override fun onApply() {
+                            findActivityViewById<DrawerLayout>(R.id.drawer_layout).background = this@apply.toDrawable(resources)
+                            findNavController().navigateUp()
+                        }
+                        override fun onCancel() {
+                            findNavController().navigateUp()
+                        }
+                    }).show(parentFragmentManager)
                 }
             }
             R.id.menu_change_image -> {
