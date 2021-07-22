@@ -149,7 +149,7 @@ class MainActivity: AppCompatActivity(), TextViewInterface {
             /**
              * Due to [AppBarLayout] does not provide setting style after instance was created.
              **/
-            activityMainBinding.root.addView(
+            activityMainBinding.appBarContainer.addView(
                 layoutInflater.inflate(
                     if (getBooleanValue(KEY_USE_TOOLBAR_LIGHT) == true) R.layout.app_bar_main_light else R.layout.app_bar_main,
                     activityMainBinding.root,
