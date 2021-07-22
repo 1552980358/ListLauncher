@@ -77,7 +77,7 @@
     <string name="setting_custom_title_color_snackbar_should_enable_to_set">You should enable this option before setting the title text color</string>
     <string name="setting_custom_summary_color_title">Custom summary text color</string>
     <string name="setting_custom_summary_color_summary">Use custom color of all summary text</string>
-    <string name="setting_custom_summary_color_snackbar_should_enable_to_set">You should enable this option before setting the summary text color</string>\
+    <string name="setting_custom_summary_color_snackbar_should_enable_to_set">You should enable this option before setting the summary text color</string>
     
     <string name="setting_quick_access_icon_title">Icons</string>
     <string name="setting_quick_access_icon_summary">Set different colors of the quick access icons</string>
@@ -160,5 +160,10 @@
     <string name="space_management_dialog_message">Are you sure to reset all setting?</string>
     <string name="space_management_dialog_confirm">Confirm</string>
     <string name="space_management_dialog_cancel">Cancel</string>
+    
+    <string name="apply_dialog_title">Confirm</string>
+    <string name="apply_dialog_message">Apply configuration now?</string>
+    <string name="apply_dialog_apply">Apply</string>
+    <string name="apply_dialog_cancel">Cancel</string>
     
 </resources>
