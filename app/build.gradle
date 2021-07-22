@@ -105,7 +105,7 @@ dependencies {
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.0'
     kapt "androidx.databinding:databinding-compiler-common:$gradle_version"
     implementation 'com.github.1552980358:KtExtension:1.1'
-    implementation 'com.github.1552980358:KtExtensionAndroid:d74fc8587f'
+    implementation 'com.github.1552980358:KtExtensionAndroid:1.1.1'
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
