@@ -29,6 +29,10 @@
     <string name="setting_reset_dialog_message">Are you sure to reset all setting?</string>
     <string name="setting_reset_dialog_confirm">Confirm</string>
     <string name="setting_reset_dialog_cancel">Cancel</string>
+    
+    <string name="setting_category_configuration">Configuration</string>
+    <string name="setting_category_application">Application</string>
+    
     <string name="setting_restart">Restart</string>
     <string name="setting_restart_content">Restart now?</string>
     <string name="setting_restart_confirm">Restart</string>

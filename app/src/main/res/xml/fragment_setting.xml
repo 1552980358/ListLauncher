@@ -3,22 +3,30 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     
-    <sakuraba.saki.list.launcher.preference.TextColorChangePreference
-        android:key="key_security_setting"
-        android:title="@string/setting_category_security"
-        app:icon="@drawable/ic_security"/>
+    <sakuraba.saki.list.launcher.preference.TextColorChangePreferenceCategory
+        android:title="@string/setting_category_configuration"
+        app:iconSpaceReserved="false">
     
-    <sakuraba.saki.list.launcher.preference.TextColorChangePreference
-        android:key="key_user_interface_setting"
-        android:title="@string/menu_user_interface_setting"
-        app:icon="@drawable/ic_user_interface"/>
+        <sakuraba.saki.list.launcher.preference.TextColorChangePreference
+            android:key="key_security_setting"
+            android:title="@string/setting_category_security"
+            app:icon="@drawable/ic_security"/>
     
-    <sakuraba.saki.list.launcher.preference.TextColorChangePreference
-        android:key="key_quick_access_button_setting"
-        android:title="@string/menu_quick_access_setting"
-        android:icon="@drawable/ic_quick_access_button" />
+        <sakuraba.saki.list.launcher.preference.TextColorChangePreference
+            android:key="key_user_interface_setting"
+            android:title="@string/menu_user_interface_setting"
+            app:icon="@drawable/ic_user_interface"/>
     
-    <PreferenceCategory app:iconSpaceReserved="false">
+        <sakuraba.saki.list.launcher.preference.TextColorChangePreference
+            android:key="key_quick_access_button_setting"
+            android:title="@string/menu_quick_access_setting"
+            android:icon="@drawable/ic_quick_access_button" />
+        
+    </sakuraba.saki.list.launcher.preference.TextColorChangePreferenceCategory>
+    
+    <PreferenceCategory
+        android:title="@string/setting_category_application"
+        app:iconSpaceReserved="false">
         
         <sakuraba.saki.list.launcher.preference.TextColorChangePreference
             android:key="key_restart"
