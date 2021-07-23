@@ -8,9 +8,12 @@ import androidx.preference.SwitchPreferenceCompat
 import com.google.android.material.snackbar.BaseTransientBottomBar
 import com.google.android.material.snackbar.Snackbar
 import sakuraba.saki.list.launcher.R
-import sakuraba.saki.list.launcher.base.SettingValueChangeListener
+import sakuraba.saki.list.launcher.base.booleanSettingValueChangeListener
 import sakuraba.saki.list.launcher.main.launchApp.AuthorizationListener
 import sakuraba.saki.list.launcher.main.launchApp.FingerprintUtil
+import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.KEY_PIN_CODE
+import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.KEY_USE_FINGERPRINT
+import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.KEY_USE_PIN
 import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.SETTING_CONTAINER
 import sakuraba.saki.list.launcher.preference.TwoSidedSwitchPreferenceCompat
 import sakuraba.saki.list.launcher.util.findActivityViewById
@@ -35,25 +38,25 @@ class SecuritySettingFragment: PreferenceFragmentCompat(), FingerprintUtil {
     }
     
     private fun initFingerprint() =
-        findPreference<SwitchPreferenceCompat>(SettingContainer.KEY_USE_FINGERPRINT)?.apply {
+        findPreference<SwitchPreferenceCompat>(KEY_USE_FINGERPRINT)?.apply {
             if (!checkSupportFingerprint(requireContext())) {
                 isEnabled = false
                 setSummary(R.string.setting_use_fingerprint_summary_not_available)
             }
             setOnPreferenceChangeListener { _, newValue ->
-                settingContainer.getBooleanUpdate(SettingContainer.KEY_USE_FINGERPRINT, newValue as Boolean)
+                settingContainer.getBooleanUpdate(KEY_USE_FINGERPRINT, newValue as Boolean)
                 if (newValue) {
-                    findPreference<SwitchPreferenceCompat>(SettingContainer.KEY_USE_PIN)?.isChecked = true
+                    findPreference<SwitchPreferenceCompat>(KEY_USE_PIN)?.isChecked = true
                 }
                 return@setOnPreferenceChangeListener true
             }
         }
     
     private fun initPinCode() =
-        findPreference<TwoSidedSwitchPreferenceCompat>(SettingContainer.KEY_USE_PIN)?.apply {
-            if (findPreference<SwitchPreferenceCompat>(SettingContainer.KEY_USE_FINGERPRINT)?.isChecked == true) {
-                if (!sharedPreferences.contains(SettingContainer.KEY_PIN_CODE)) {
-                    findPreference<SwitchPreferenceCompat>(SettingContainer.KEY_USE_FINGERPRINT)?.isChecked = false
+        findPreference<TwoSidedSwitchPreferenceCompat>(KEY_USE_PIN)?.apply {
+            if (findPreference<SwitchPreferenceCompat>(KEY_USE_FINGERPRINT)?.isChecked == true) {
+                if (!sharedPreferences.contains(KEY_PIN_CODE)) {
+                    findPreference<SwitchPreferenceCompat>(KEY_USE_FINGERPRINT)?.isChecked = false
                 } else {
                     if (!isChecked) {
                         isChecked = true
@@ -82,11 +85,11 @@ class SecuritySettingFragment: PreferenceFragmentCompat(), FingerprintUtil {
                                 Snackbar.make(findActivityViewById(R.id.coordinatorLayout), R.string.pin_authorize_failed_message, Snackbar.LENGTH_SHORT).show()
                             }
                             override fun onAuthComplete() {
-                                if (settingContainer.getBooleanValue(SettingContainer.KEY_USE_PIN) != false) {
-                                    settingContainer.getBooleanUpdate(SettingContainer.KEY_USE_PIN, false)
+                                if (settingContainer.getBooleanValue(KEY_USE_PIN) != false) {
+                                    settingContainer.getBooleanUpdate(KEY_USE_PIN, false)
                                 }
-                                if (findPreference<SwitchPreferenceCompat>(SettingContainer.KEY_USE_FINGERPRINT)?.isChecked == true) {
-                                    findPreference<SwitchPreferenceCompat>(SettingContainer.KEY_USE_FINGERPRINT)?.isChecked = false
+                                if (findPreference<SwitchPreferenceCompat>(KEY_USE_FINGERPRINT)?.isChecked == true) {
+                                    findPreference<SwitchPreferenceCompat>(KEY_USE_FINGERPRINT)?.isChecked = false
                                 }
                             }
                         })
@@ -95,9 +98,7 @@ class SecuritySettingFragment: PreferenceFragmentCompat(), FingerprintUtil {
                 return@setOnPreferenceChangeListener true
             }
             setOnContentClickListener {
-                if (sharedPreferences.contains(SettingContainer.KEY_PIN_CODE) && settingContainer.getBooleanValue(
-                        SettingContainer.KEY_USE_PIN
-                    ) == true) {
+                if (sharedPreferences.contains(KEY_PIN_CODE) && settingContainer.getBooleanValue(KEY_USE_PIN) == true) {
                     findNavController().navigate(R.id.nav_pin_auth, Bundle().apply {
                         putSerializable(SETTING_CONTAINER, settingContainer)
                         putSerializable(AuthorizationListener.AUTHORIZATION_LISTENER, object : AuthorizationListener {
