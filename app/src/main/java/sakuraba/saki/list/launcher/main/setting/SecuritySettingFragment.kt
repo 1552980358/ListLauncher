@@ -46,8 +46,10 @@ class SecuritySettingFragment: PreferenceFragmentCompat(), FingerprintUtil {
             setOnPreferenceChangeListener { _, newValue ->
                 settingContainer.getBooleanUpdate(KEY_USE_FINGERPRINT, newValue as Boolean)
                 if (newValue) {
-                    findPreference<SwitchPreferenceCompat>(KEY_USE_PIN)?.isChecked = true
-                    setUpPin()
+                    if (settingContainer.getBooleanValue(KEY_USE_PIN) != true) {
+                        findPreference<TwoSidedSwitchPreferenceCompat>(KEY_USE_PIN)?.isChecked = true
+                        setUpPin()
+                    }
                 }
                 return@setOnPreferenceChangeListener true
             }
