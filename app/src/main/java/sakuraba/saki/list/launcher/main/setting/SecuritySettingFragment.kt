@@ -65,14 +65,13 @@ class SecuritySettingFragment: PreferenceFragmentCompat(), FingerprintUtil {
             }
             setOnPreferenceChangeListener { _, newValue ->
                 if (newValue as Boolean) {
-                    object : SettingValueChangeListener(settingContainer, SettingContainer.KEY_USE_PIN) {
-                        override fun onSettingValueChange(settingContainer: SettingContainer?, key: String, newValue: Boolean?) {
-                            if (newValue == false) {
-                                findPreference<SwitchPreferenceCompat>(SettingContainer.KEY_USE_FINGERPRINT)?.isChecked = false
-                                findPreference<SwitchPreferenceCompat>(SettingContainer.KEY_USE_PIN)?.isChecked = false
-                            }
-                            removeListener()
+                    @Suppress("NAME_SHADOWING")
+                    booleanSettingValueChangeListener(settingContainer, KEY_USE_PIN) { _, _, newValue ->
+                        if (newValue == false) {
+                            findPreference<SwitchPreferenceCompat>(KEY_USE_FINGERPRINT)?.isChecked = false
+                            findPreference<SwitchPreferenceCompat>(KEY_USE_PIN)?.isChecked = false
                         }
+                        removeListener()
                     }
                     findNavController().navigate(R.id.nav_set_pin, Bundle().apply {
                         putSerializable(SETTING_CONTAINER, settingContainer)
