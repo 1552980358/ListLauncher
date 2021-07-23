@@ -17,13 +17,17 @@ import androidx.navigation.fragment.findNavController
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import lib.github1552980358.ktExtension.androidx.fragment.app.getColor
+import sakuraba.saki.list.launcher.R
 import sakuraba.saki.list.launcher.base.Constants
 import sakuraba.saki.list.launcher.databinding.FragmentLaunchAppBinding
 import sakuraba.saki.list.launcher.dialog.FingerprintDialogFragment
 import sakuraba.saki.list.launcher.dialog.PinInputDialogFragment
 import sakuraba.saki.list.launcher.main.setting.SettingContainer
+import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.KEY_CUSTOM_BACKGROUND_IMAGE
 import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.KEY_USE_FINGERPRINT
 import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.KEY_USE_PIN
+import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.KEY_USE_SYSTEM_BACKGROUND
 import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.SETTING_CONTAINER
 
 class LaunchAppFragment: Fragment(), FingerprintUtil {
@@ -66,6 +70,10 @@ class LaunchAppFragment: Fragment(), FingerprintUtil {
     
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        if (viewModel.settingContainer.value?.getBooleanValue(KEY_USE_SYSTEM_BACKGROUND) != true
+            && viewModel.settingContainer.value?.getBooleanValue(KEY_CUSTOM_BACKGROUND_IMAGE) != true) {
+            fragmentLaunchAppBinding.root.setBackgroundColor(getColor(R.color.purple_500))
+        }
         viewModel.setApplicationName(arguments?.getString(Constants.LAUNCH_APPLICATION_NAME))
         viewModel.setPackageName(arguments?.getString(Constants.LAUNCH_PACKAGE_NAME))
         CoroutineScope(Dispatchers.IO).launch {
