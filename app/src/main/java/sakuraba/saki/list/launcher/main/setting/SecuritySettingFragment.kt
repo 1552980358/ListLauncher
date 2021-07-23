@@ -47,6 +47,7 @@ class SecuritySettingFragment: PreferenceFragmentCompat(), FingerprintUtil {
                 settingContainer.getBooleanUpdate(KEY_USE_FINGERPRINT, newValue as Boolean)
                 if (newValue) {
                     findPreference<SwitchPreferenceCompat>(KEY_USE_PIN)?.isChecked = true
+                    setUpPin()
                 }
                 return@setOnPreferenceChangeListener true
             }
@@ -65,17 +66,7 @@ class SecuritySettingFragment: PreferenceFragmentCompat(), FingerprintUtil {
             }
             setOnPreferenceChangeListener { _, newValue ->
                 if (newValue as Boolean) {
-                    @Suppress("NAME_SHADOWING")
-                    booleanSettingValueChangeListener(settingContainer, KEY_USE_PIN) { _, _, newValue ->
-                        if (newValue == false) {
-                            findPreference<SwitchPreferenceCompat>(KEY_USE_FINGERPRINT)?.isChecked = false
-                            findPreference<SwitchPreferenceCompat>(KEY_USE_PIN)?.isChecked = false
-                        }
-                        removeListener()
-                    }
-                    findNavController().navigate(R.id.nav_set_pin, Bundle().apply {
-                        putSerializable(SETTING_CONTAINER, settingContainer)
-                    })
+                    setUpPin()
                 } else {
                     findNavController().navigate(R.id.nav_pin_auth, Bundle().apply {
                         putSerializable(SETTING_CONTAINER, settingContainer)
@@ -119,5 +110,19 @@ class SecuritySettingFragment: PreferenceFragmentCompat(), FingerprintUtil {
                 }
             }
         }
+    
+    private fun setUpPin() {
+        @Suppress("NAME_SHADOWING")
+        booleanSettingValueChangeListener(settingContainer, KEY_USE_PIN) { _, _,  newValue ->
+            if (newValue == false) {
+                findPreference<SwitchPreferenceCompat>(KEY_USE_FINGERPRINT)?.isChecked = false
+                findPreference<SwitchPreferenceCompat>(KEY_USE_PIN)?.isChecked = false
+            }
+            removeListener()
+        }
+        findNavController().navigate(R.id.nav_set_pin, Bundle().apply {
+            putSerializable(SETTING_CONTAINER, settingContainer)
+        })
+    }
     
 }
