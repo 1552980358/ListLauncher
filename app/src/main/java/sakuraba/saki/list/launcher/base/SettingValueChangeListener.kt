@@ -46,3 +46,35 @@ abstract class SettingValueChangeListener: Serializable {
     }
     
 }
+
+fun stringSettingValueChangeListener(
+    settingContainer: SettingContainer? = null,
+    listenValue: String,
+    block: SettingValueChangeListener.(SettingContainer?, String, String?) -> Unit) =
+    object : SettingValueChangeListener(settingContainer, listenValue) {
+        override fun onSettingValueChange(settingContainer: SettingContainer?, key: String, newValue: String?) = this.block(settingContainer, key, newValue)
+    }
+
+fun booleanSettingValueChangeListener(
+    settingContainer: SettingContainer? = null,
+    listenValue: String,
+    block: SettingValueChangeListener.(SettingContainer?, String, Boolean?) -> Unit) =
+    object : SettingValueChangeListener(settingContainer, listenValue) {
+        override fun onSettingValueChange(settingContainer: SettingContainer?, key: String, newValue: Boolean?) = this.block(settingContainer, key, newValue)
+    }
+
+fun stringSettingValueChangeListener(
+    settingContainer: SettingContainer? = null,
+    listenValues: List<String>,
+    block: SettingValueChangeListener.(SettingContainer?, String, String?) -> Unit) =
+    object : SettingValueChangeListener(settingContainer, listenValues) {
+        override fun onSettingValueChange(settingContainer: SettingContainer?, key: String, newValue: String?) = this.block(settingContainer, key, newValue)
+    }
+
+fun booleanSettingValueChangeListener(
+    settingContainer: SettingContainer? = null,
+    listenValues: List<String>,
+    block: SettingValueChangeListener.(SettingContainer?, String, Boolean?) -> Unit) =
+    object : SettingValueChangeListener(settingContainer, listenValues) {
+        override fun onSettingValueChange(settingContainer: SettingContainer?, key: String, newValue: Boolean?) = this.block(settingContainer, key, newValue)
+    }
