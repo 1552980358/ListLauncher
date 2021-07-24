@@ -100,6 +100,7 @@ dependencies {
     implementation 'androidx.preference:preference-ktx:1.1.1'
     implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.2.0-alpha01'
     implementation 'com.github.promeg:tinypinyin:2.0.3'
+    implementation 'com.github.android:renderscript-intrinsics-replacement-toolkit:b6363490c3'
     implementation 'com.github.promeg:tinypinyin-lexicons-android-cncity:2.0.3'
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.0'
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.0'
