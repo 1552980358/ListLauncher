@@ -15,12 +15,11 @@ import android.view.ViewGroup
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.coordinatorlayout.widget.CoordinatorLayout
-import androidx.core.graphics.drawable.toDrawable
-import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.BaseTransientBottomBar
 import com.google.android.material.snackbar.Snackbar
+import lib.github1552980358.ktExtension.androidx.fragment.app.restartActivity
 import sakuraba.saki.list.launcher.R
 import sakuraba.saki.list.launcher.databinding.FragmentCropImageBinding
 import sakuraba.saki.list.launcher.dialog.ApplyDialogFragment
@@ -102,10 +101,7 @@ class CropImageFragment: Fragment() {
                     }
                     
                     ApplyDialogFragment(object : OnApplyListener {
-                        override fun onApply() {
-                            findActivityViewById<DrawerLayout>(R.id.drawer_layout).background = this@apply.toDrawable(resources)
-                            findNavController().navigateUp()
-                        }
+                        override fun onApply() { restartActivity() }
                         override fun onCancel() {
                             findNavController().navigateUp()
                         }
