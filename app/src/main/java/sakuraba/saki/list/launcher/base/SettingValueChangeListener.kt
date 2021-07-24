@@ -24,6 +24,8 @@ abstract class SettingValueChangeListener: Serializable {
     
     open fun onSettingValueChange(settingContainer: SettingContainer?, key: String, newValue: String?) {}
     
+    open fun onSettingValueChange(settingContainer: SettingContainer?, key: String, newValue: Int?) {}
+    
     fun setSettingContainer(settingContainer: SettingContainer?) {
         this._settingContainer = settingContainer
         _settingContainer?.addSettingValueChangeListener(this)
@@ -40,6 +42,12 @@ abstract class SettingValueChangeListener: Serializable {
     }
     
     fun notifyUpdate(key: String, newValue: Boolean?) {
+        if (arrayList.contains(key)) {
+            onSettingValueChange(_settingContainer, key, newValue)
+        }
+    }
+    
+    fun notifyUpdate(key: String, newValue: Int?) {
         if (arrayList.contains(key)) {
             onSettingValueChange(_settingContainer, key, newValue)
         }
