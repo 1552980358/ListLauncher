@@ -3,6 +3,7 @@ package sakuraba.saki.list.launcher
 import android.Manifest
 import android.app.WallpaperManager
 import android.content.pm.PackageManager
+import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.os.Build
@@ -14,21 +15,24 @@ import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.Toolbar
 import androidx.core.app.ActivityCompat
 import androidx.core.graphics.drawable.toDrawable
 import androidx.core.view.WindowCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.appbar.AppBarLayout
-import lib.github1552980358.ktExtension.jvm.keyword.tryOnly
+import com.google.android.renderscript.Toolkit
+import lib.github1552980358.ktExtension.android.graphics.toBitmap
+import lib.github1552980358.ktExtension.jvm.keyword.tryRun
 import sakuraba.saki.list.launcher.broadcast.ApplicationChangeBroadcastReceiver
 import sakuraba.saki.list.launcher.broadcast.ApplicationChangeBroadcastReceiver.Companion.APPLICATION_CHANGE_BROADCAST_RECEIVER
 import sakuraba.saki.list.launcher.databinding.ActivityMainBinding
 import sakuraba.saki.list.launcher.main.MainViewModel
 import sakuraba.saki.list.launcher.main.home.TimeBroadcastReceiver
 import sakuraba.saki.list.launcher.main.setting.SettingContainer
+import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.KEY_BLUR_BACKGROUND_RADIUS
 import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.KEY_CUSTOM_BACKGROUND_IMAGE
+import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.KEY_CUSTOM_BLUR_BACKGROUND
 import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.KEY_CUSTOM_NAVIGATION_BAR_COLOR
 import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.KEY_CUSTOM_STATUS_BAR_BLACK_TEXT
 import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.KEY_CUSTOM_STATUS_BAR_COLOR
@@ -137,14 +141,14 @@ class MainActivity: AppCompatActivity(), TextViewInterface {
                     .findViewById<AppBarLayout>(R.id.appBarLayout)
                     .setBackgroundColor(Color.parseColor(getStringValue(KEY_TOOLBAR_BACKGROUND_COLOR)!!))
             }
-            if (getBooleanValue(KEY_CUSTOM_BACKGROUND_IMAGE) == true) {
-                tryOnly {
-                    activityMainBinding.drawerLayout.background =
-                        BitmapFactory.decodeStream(openFileInput(BACKGROUND_FILE))?.toDrawable(resources)
+            getBackgroundBitmapRaw(this)?.let { background ->
+                val radius = getIntValue(KEY_BLUR_BACKGROUND_RADIUS)
+                activityMainBinding.root.background = when {
+                    getBooleanValue(KEY_CUSTOM_BLUR_BACKGROUND) == true && radius != null -> {
+                        Toolkit.blur(background, radius).toDrawable(resources)
+                    }
+                    else -> background.toDrawable(resources)
                 }
-            } else if (getBooleanValue(KEY_USE_SYSTEM_BACKGROUND) == true &&
-                ActivityCompat.checkSelfPermission(this@MainActivity, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
-                    activityMainBinding.drawerLayout.background = WallpaperManager.getInstance(this@MainActivity).drawable
             }
             /**
              * Due to [AppBarLayout] does not provide setting style after instance was created.
@@ -157,6 +161,17 @@ class MainActivity: AppCompatActivity(), TextViewInterface {
                 )
             )
         }
+    }
+    
+    private fun getBackgroundBitmapRaw(settingContainer: SettingContainer): Bitmap? {
+        var background: Bitmap? = null
+        if (settingContainer.getBooleanValue(KEY_CUSTOM_BACKGROUND_IMAGE) == true) {
+            background = tryRun { BitmapFactory.decodeStream(openFileInput(BACKGROUND_FILE)) }
+        } else if (settingContainer.getBooleanValue(KEY_USE_SYSTEM_BACKGROUND) == true &&
+            ActivityCompat.checkSelfPermission(this@MainActivity, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+            background = WallpaperManager.getInstance(this@MainActivity).drawable.toBitmap()
+        }
+        return background
     }
     
     override fun onSupportNavigateUp(): Boolean {

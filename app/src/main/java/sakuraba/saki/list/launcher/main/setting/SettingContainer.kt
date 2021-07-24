@@ -44,6 +44,8 @@ class SettingContainer(context: Context): Serializable {
         const val KEY_QUICK_ACCESS_BUTTON_BACKGROUND_TOUCHED = "key_quick_access_button_background_touched"
         const val KEY_QUICK_ACCESS_BUTTON_BACKGROUND_STROKE_TOUCHED = "key_quick_access_button_background_stroke_touched"
         const val KEY_USE_TOOLBAR_LIGHT = "key_use_toolbar_light"
+        const val KEY_CUSTOM_BLUR_BACKGROUND = "key_custom_blur_background"
+        const val KEY_BLUR_BACKGROUND_RADIUS = "key_blur_background_radius"
         
         val booleanKeys = arrayOf(
             KEY_CUSTOM_STATUS_BAR_COLOR,
@@ -54,7 +56,8 @@ class SettingContainer(context: Context): Serializable {
             KEY_CUSTOM_SUMMARY_COLOR,
             KEY_CUSTOM_NAVIGATION_BAR_COLOR,
             KEY_USE_SYSTEM_BACKGROUND,
-            KEY_USE_TOOLBAR_LIGHT
+            KEY_USE_TOOLBAR_LIGHT,
+            KEY_CUSTOM_BLUR_BACKGROUND
         )
         
         val stringKeys = arrayOf(
@@ -146,6 +149,8 @@ class SettingContainer(context: Context): Serializable {
     
     fun getBooleanValue(key: String): Boolean? = getValue(key)
     
+    fun getIntValue(key: String): Int? = getValue(key)
+    
     fun getStringUpdate(key: String, newValue: String?) {
         stringMap[key] = newValue
         settingValueListeners.forEach { listeners -> listeners.notifyUpdate(key, newValue) }
@@ -154,6 +159,11 @@ class SettingContainer(context: Context): Serializable {
     fun getBooleanUpdate(key: String, newValue: Boolean) {
         booleanMap[key] = newValue
         settingValueListeners.forEach { listeners -> listeners.notifyUpdate(key, newValue) }
+    }
+    
+    fun getIntUpdate(key: String, newValue: Int?) {
+        intMap[key] = newValue
+        settingValueListeners.forEach { listener -> listener.notifyUpdate(key, newValue) }
     }
     
     @Synchronized

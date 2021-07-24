@@ -32,8 +32,12 @@ import sakuraba.saki.list.launcher.MainActivity
 import sakuraba.saki.list.launcher.R
 import sakuraba.saki.list.launcher.dialog.ApplyDialogFragment
 import sakuraba.saki.list.launcher.dialog.ColorPickDialogFragment
+import sakuraba.saki.list.launcher.dialog.SeekbarDialogFragment
+import sakuraba.saki.list.launcher.dialog.SeekbarDialogFragment.Companion.OnSelectListener
 import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.KEY_BACKGROUND_IMAGE
+import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.KEY_BLUR_BACKGROUND_RADIUS
 import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.KEY_CUSTOM_BACKGROUND_IMAGE
+import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.KEY_CUSTOM_BLUR_BACKGROUND
 import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.KEY_CUSTOM_NAVIGATION_BAR_COLOR
 import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.KEY_CUSTOM_STATUS_BAR_BLACK_TEXT
 import sakuraba.saki.list.launcher.main.setting.SettingContainer.Companion.KEY_CUSTOM_STATUS_BAR_COLOR
@@ -63,6 +67,10 @@ class UserInterfaceSettingFragment: PreferenceFragmentCompat() {
         const val DEFAULT_TITLE_COLOR = "#FF000000"
         const val DEFAULT_SUMMARY_COLOR = "#FF757575"
         const val DEFAULT_NAVIGATION_BAR_COLOR = "#00FFFFFF"
+        const val DEFAULT_BLUR_BACKGROUND_RADIUS = 5
+        
+        private const val RADIUS_MAX = 25
+        private const val RADIUS_MIN = 1
     
         const val CROP_URI = "crop_uri"
     }
@@ -96,6 +104,7 @@ class UserInterfaceSettingFragment: PreferenceFragmentCompat() {
         
         initBackground(sharedPreferences)
         initSystemWallpaper()
+        initBlurBackground(sharedPreferences)
         
         initNavigationBar(sharedPreferences)
         
@@ -179,6 +188,65 @@ class UserInterfaceSettingFragment: PreferenceFragmentCompat() {
             return@setOnPreferenceChangeListener true
         }
     }
+    
+    private fun initBlurBackground(sharedPreferences: SharedPreferences) =
+        findPreference<TwoSidedSwitchPreferenceCompat>(KEY_CUSTOM_BLUR_BACKGROUND)?.apply {
+            if (!sharedPreferences.contains(KEY_BLUR_BACKGROUND_RADIUS)) {
+                sharedPreferences.commit(KEY_BLUR_BACKGROUND_RADIUS, DEFAULT_BLUR_BACKGROUND_RADIUS)
+            }
+            setOnContentClickListener {
+                if (!sharedPreferences.getBoolean(KEY_CUSTOM_BLUR_BACKGROUND, false)) {
+                    Snackbar.make(findActivityViewById<DrawerLayout>(R.id.drawer_layout), R.string.setting_blur_background_should_enable_to_set, LENGTH_SHORT).show()
+                    return@setOnContentClickListener
+                }
+                setBlurRadius(sharedPreferences)
+            }
+            setOnPreferenceChangeListener { _, newValue ->
+                settingContainer.getBooleanUpdate(KEY_CUSTOM_BLUR_BACKGROUND, newValue as Boolean)
+                if (newValue == true) {
+                    if (!sharedPreferences.getBoolean(KEY_CUSTOM_BACKGROUND_IMAGE, false) && !sharedPreferences.getBoolean(KEY_USE_SYSTEM_BACKGROUND, false)) {
+                        isChecked = false
+                        return@setOnPreferenceChangeListener false
+                    }
+                    sharedPreferences.commit(KEY_CUSTOM_BLUR_BACKGROUND, newValue)
+                    setBlurRadius(sharedPreferences)
+                } else {
+                    sharedPreferences.commit(KEY_CUSTOM_BLUR_BACKGROUND, newValue)
+                    ApplyDialogFragment(object : ApplyDialogFragment.Companion.OnApplyListener {
+                        override fun onApply() { restartActivity() }
+                    }).show(parentFragmentManager)
+                }
+                return@setOnPreferenceChangeListener true
+            }
+        }
+    
+    private fun setBlurRadius(sharedPreferences: SharedPreferences) =
+        SeekbarDialogFragment(
+            R.string.setting_blur_dialog_title,
+            R.string.setting_blur_dialog_positive,
+            R.string.setting_blur_dialog_negative,
+            R.string.setting_blur_dialog_default,
+            RADIUS_MAX,
+            RADIUS_MIN,
+            sharedPreferences.getInt(KEY_BLUR_BACKGROUND_RADIUS, DEFAULT_BLUR_BACKGROUND_RADIUS),
+            object : OnSelectListener {
+                override fun onPositive(value: Int) {
+                    sharedPreferences.commit(KEY_BLUR_BACKGROUND_RADIUS, value)
+                    ApplyDialogFragment(object : ApplyDialogFragment.Companion.OnApplyListener {
+                        override fun onApply() { restartActivity() }
+                    }).show(parentFragmentManager)
+                }
+                override fun onNegative() {
+                    sharedPreferences.getBoolean(KEY_BLUR_BACKGROUND_RADIUS, false)
+                    findPreference<SwitchPreferenceCompat>(KEY_CUSTOM_BLUR_BACKGROUND)?.isChecked = false
+                }
+                override fun onDefault() {
+                    sharedPreferences.commit(KEY_BLUR_BACKGROUND_RADIUS, DEFAULT_BLUR_BACKGROUND_RADIUS)
+                    ApplyDialogFragment(object : ApplyDialogFragment.Companion.OnApplyListener {
+                        override fun onApply() { restartActivity() }
+                    }).show(parentFragmentManager)
+                }
+            }).show(parentFragmentManager)
     
     private fun initNavigationBar(preferenceManager: SharedPreferences) = findPreference<TwoSidedSwitchPreferenceCompat>(
         KEY_CUSTOM_NAVIGATION_BAR_COLOR

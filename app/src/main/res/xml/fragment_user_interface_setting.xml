@@ -22,6 +22,12 @@
             android:defaultValue="false"
             app:iconSpaceReserved="false" />
         
+        <sakuraba.saki.list.launcher.preference.TwoSidedSwitchPreferenceCompat
+            android:key="key_custom_blur_background"
+            android:title="@string/setting_blur_background_title"
+            android:summary="@string/setting_blur_background_summary"
+            app:iconSpaceReserved="false" />
+        
     </sakuraba.saki.list.launcher.preference.TextColorChangePreferenceCategory>
     
     <sakuraba.saki.list.launcher.preference.TextColorChangePreferenceCategory
