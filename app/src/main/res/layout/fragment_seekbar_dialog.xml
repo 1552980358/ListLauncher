@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="@dimen/seekbar_dialog_root_paddings"
+    android:orientation="vertical">
+    
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+    
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/text_view_min"
+            android:layout_margin="@dimen/seekbar_dialog_text_view_margins"
+            android:textSize="@dimen/seekbar_dialog_text_view_text_size"/>
+    
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/text_view_max"
+            android:layout_margin="@dimen/seekbar_dialog_text_view_margins"
+            android:textSize="@dimen/seekbar_dialog_text_view_text_size"
+            android:layout_alignParentEnd="true"/>
+    
+        <SeekBar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/seekbar"
+            android:layout_marginTop="@dimen/seekbar_dialog_seekbar_margins"
+            android:layout_marginBottom="@dimen/seekbar_dialog_seekbar_margins"
+            android:layout_toEndOf="@id/text_view_min"
+            android:layout_toStartOf="@id/text_view_max"
+            android:layout_centerVertical="true"/>
+        
+    </RelativeLayout>
+    
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/text_view_cur"
+        android:textColor="@color/black"
+        android:textSize="@dimen/seekbar_dialog_text_view_text_size"
+        android:layout_gravity="center"/>
+
+</LinearLayout>
