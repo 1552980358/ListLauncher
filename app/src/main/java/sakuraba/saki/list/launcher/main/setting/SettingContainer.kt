@@ -76,10 +76,15 @@ class SettingContainer(context: Context): Serializable {
             KEY_QUICK_ACCESS_BUTTON_BACKGROUND_TOUCHED,
             KEY_QUICK_ACCESS_BUTTON_BACKGROUND_STROKE_TOUCHED
         )
+        
+        val intKeys = arrayOf(
+            KEY_BLUR_BACKGROUND_RADIUS
+        )
     }
     
     private val stringMap = mutableMapOf<String, String?>()
     private val booleanMap = mutableMapOf<String, Boolean>()
+    private val intMap = mutableMapOf<String, Int?>()
     private val settingValueListeners = arrayListOf<SettingValueChangeListener>()
     
     init {
@@ -108,6 +113,11 @@ class SettingContainer(context: Context): Serializable {
                 stringMap[key] = preferenceManager.getString(key, null)
             }
         }
+        intKeys.forEach { key ->
+            if (preferenceManager.contains(key)) {
+                intMap[key] = preferenceManager.getInt(key, 1)
+            }
+        }
     }
     
     fun <T> getValue(key: String): T? {
@@ -121,6 +131,12 @@ class SettingContainer(context: Context): Serializable {
             return tryRun {
                 @Suppress("UNCHECKED_CAST")
                 booleanMap[key] as T
+            }
+        }
+        if (intMap[key] != null) {
+            return tryRun {
+                @Suppress("UNCHECKED_CAST")
+                intMap[key] as T
             }
         }
         return null
