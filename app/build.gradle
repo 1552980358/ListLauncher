@@ -5,6 +5,9 @@ plugins {
     id 'AndResGuard'
 }
 
+//noinspection GroovyAssignabilityCheck
+def gitCommits = Integer.parseInt('git rev-list --count HEAD'.execute([], project.rootDir).text.trim())
+
 android {
     //noinspection GroovyAssignabilityCheck
     compileSdkVersion 31
@@ -13,7 +16,7 @@ android {
         applicationId "sakuraba.saki.list.launcher"
         minSdkVersion 21
         targetSdkVersion 31
-        versionCode 1
+        versionCode gitCommits
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
