@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    
+    <Preference
+        android:title="@string/app_name"
+        app:iconSpaceReserved="false"
+        app:layout="@layout/layout_preference_about_image" />
+    
+    <sakuraba.saki.list.launcher.preference.TextColorChangePreference
+        android:title="@string/setting_about_application_id_title"
+        android:summary="@string/setting_about_application_id_summary"
+        app:iconSpaceReserved="false" />
+    
+    <sakuraba.saki.list.launcher.preference.TextColorChangePreference
+        android:key="key_version_name"
+        android:title="@string/setting_about_version_name"
+        app:iconSpaceReserved="false" />
+    
+    <sakuraba.saki.list.launcher.preference.TextColorChangePreference
+        android:key="key_version_code"
+        android:title="@string/setting_about_version_code"
+        app:iconSpaceReserved="false" />
+    
+    <sakuraba.saki.list.launcher.preference.TextColorChangePreference
+        android:key="key_build_type"
+        android:title="@string/setting_about_build_type"
+        app:iconSpaceReserved="false" />
+    
+    <PreferenceCategory app:layout="@layout/layout_preference_screen">
+        <sakuraba.saki.list.launcher.preference.TextColorChangePreference
+            android:key="key_license"
+            android:title="@string/setting_license_title"
+            android:summary="@string/setting_license_summary"
+            app:icon="@drawable/ic_license" />
+    
+        <sakuraba.saki.list.launcher.preference.TextColorChangePreference
+            android:key="key_project_github"
+            android:title="@string/setting_project_github"
+            app:icon="@drawable/ic_github" />
+    </PreferenceCategory>
+    
+</PreferenceScreen>

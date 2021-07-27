@@ -1,5 +1,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">ListLauncher</string>
+    <string name="app_package_name">sakuraba.saki.list.launcher</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="nav_header_title">Android Studio</string>
@@ -13,6 +14,7 @@
     <string name="menu_security_setting">Security Setting</string>
     <string name="menu_user_interface_setting">User Interface</string>
     <string name="menu_quick_access_setting">Quick Access Button</string>
+    <string name="menu_about">About</string>
     <string name="menu_search">Search</string>
     <string name="menu_launch_app">Launching application…</string>
     <string name="menu_set_pin">Set Pin</string>
@@ -32,6 +34,16 @@
     
     <string name="setting_category_configuration">Configuration</string>
     <string name="setting_category_application">Application</string>
+    
+    <string name="setting_about">About ListLauncher</string>
+    <string name="setting_about_application_id_title">Package Name</string>
+    <string name="setting_about_application_id_summary">@string/app_package_name</string>
+    <string name="setting_about_version_name">Version Name</string>
+    <string name="setting_about_version_code">Version Code</string>
+    <string name="setting_about_build_type">Build Type</string>
+    <string name="setting_project_github">Project Github Repo</string>
+    <string name="setting_license_title">License</string>
+    <string name="setting_license_summary">GNU General Public License v3.0</string>
     
     <string name="setting_restart">Restart</string>
     <string name="setting_restart_content">Restart now?</string>
