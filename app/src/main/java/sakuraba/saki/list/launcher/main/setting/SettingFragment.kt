@@ -23,6 +23,7 @@ class SettingFragment: PreferenceFragmentCompat() {
         private const val KEY_SECURITY_SETTING = "key_security_setting"
         private const val KEY_USER_INTERFACE_SETTING = "key_user_interface_setting"
         private const val KEY_QUICK_ACCESS_BUTTON_SETTING = "key_quick_access_button_setting"
+        private const val KEY_ABOUT = "key_about"
         private const val KEY_RESTART = "key_restart"
     }
     
@@ -39,6 +40,7 @@ class SettingFragment: PreferenceFragmentCompat() {
         initSecurity()
         initUserInterface()
         initQuickAccessButton()
+        initAbout()
         initRestart()
     }
     
@@ -58,6 +60,12 @@ class SettingFragment: PreferenceFragmentCompat() {
         findPreference<Preference>(KEY_QUICK_ACCESS_BUTTON_SETTING)?.setOnPreferenceClickListener {
             findNavController().navigate(R.id.nav_quick_access_setting, Bundle().apply { putSerializable(SETTING_CONTAINER, viewModel.settingContainer.value) })
             return@setOnPreferenceClickListener false
+        }
+    
+    private fun initAbout() =
+        findPreference<Preference>(KEY_ABOUT)?.setOnPreferenceClickListener {
+            findNavController().navigate(R.id.nav_about)
+            return@setOnPreferenceClickListener true
         }
     
     private fun initRestart() =

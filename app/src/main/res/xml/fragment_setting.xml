@@ -27,6 +27,11 @@
     <PreferenceCategory
         android:title="@string/setting_category_application"
         app:iconSpaceReserved="false">
+    
+        <sakuraba.saki.list.launcher.preference.TextColorChangePreference
+            android:key="key_about"
+            android:title="@string/setting_about"
+            app:icon="@drawable/ic_about" />
         
         <sakuraba.saki.list.launcher.preference.TextColorChangePreference
             android:key="key_restart"
