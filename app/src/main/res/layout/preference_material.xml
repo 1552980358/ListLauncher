@@ -49,7 +49,7 @@
             android:paddingBottom="16dp"
             android:layout_gravity="center_vertical">
         
-            <TextView
+            <sakuraba.saki.list.launcher.view.TitleTextView
                 android:id="@android:id/title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -57,7 +57,7 @@
                 android:textAppearance="?android:attr/textAppearanceListItem"
                 android:ellipsize="marquee"/>
         
-            <TextView
+            <sakuraba.saki.list.launcher.view.SummaryTextView
                 android:id="@android:id/summary"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

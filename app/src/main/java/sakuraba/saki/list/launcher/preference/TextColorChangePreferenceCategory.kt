@@ -1,7 +1,6 @@
 package sakuraba.saki.list.launcher.preference
 
 import android.content.Context
-import android.graphics.Typeface
 import android.util.AttributeSet
 import android.widget.TextView
 import androidx.preference.PreferenceCategory
@@ -15,22 +14,12 @@ class TextColorChangePreferenceCategory: PreferenceCategory {
     
     override fun onBindViewHolder(holder: PreferenceViewHolder?) {
         super.onBindViewHolder(holder)
-    
         (context as TextViewInterface).apply {
             if (isCustomTitleColor) {
-                (holder?.findViewById(android.R.id.title) as TextView?)?.apply {
-                    setTextColor(customTitleColor)
-                    // Identification as category title
-                    setTypeface(typeface, Typeface.BOLD)
-                }
-            }
-            if (isCustomSummaryColor) {
-                (holder?.findViewById(android.R.id.summary) as TextView?)?.apply {
-                    setTextColor(customSummaryColor)
-                }
+                icon?.setTint(customTitleColor)
+                (holder?.findViewById(android.R.id.title) as TextView).setTextColor(customTitleColor)
             }
         }
-        
     }
     
 }
