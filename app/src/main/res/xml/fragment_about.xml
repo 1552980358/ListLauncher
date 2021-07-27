@@ -28,7 +28,8 @@
         android:title="@string/setting_about_build_type"
         app:iconSpaceReserved="false" />
     
-    <PreferenceCategory app:layout="@layout/layout_preference_screen">
+    <sakuraba.saki.list.launcher.preference.TextColorChangePreferenceCategory
+        app:layout="@layout/layout_preference_category">
         <sakuraba.saki.list.launcher.preference.TextColorChangePreference
             android:key="key_license"
             android:title="@string/setting_license_title"
@@ -39,6 +40,6 @@
             android:key="key_project_github"
             android:title="@string/setting_project_github"
             app:icon="@drawable/ic_github" />
-    </PreferenceCategory>
+    </sakuraba.saki.list.launcher.preference.TextColorChangePreferenceCategory>
     
 </PreferenceScreen>
