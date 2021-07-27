@@ -110,6 +110,16 @@ Default             |  Customized
   
 ## Credit
 
+- [KtExtension](https://github.com/1552980358/KtExtension)
+  ```
+  'com.github.1552980358:KtExtension:1.1'
+  ```
+
+- [KtExtensionAndroid](https://github.com/1552980358/KtExtensionAndroid)
+  ```
+  'com.github.1552980358:KtExtensionAndroid:1.1.1'
+  ```
+
 - [TinyPinYin](https://github.com/promeG/TinyPinyin)
   ```
   'com.github.promeg:tinypinyin:2.0.3'
@@ -117,22 +127,25 @@ Default             |  Customized
   ```
   
 - [Google Inc.](https://developer.android.com/)
- ```
- 'androidx.core:core-ktx:1.6.0'
- 'androidx.appcompat:appcompat:1.3.0'
- 'com.google.android.material:material:1.4.0'
- 'androidx.constraintlayout:constraintlayout:2.0.4'
- 'androidx.navigation:navigation-fragment-ktx:2.3.5'
- 'androidx.navigation:navigation-ui-ktx:2.3.5'
- 'androidx.lifecycle:lifecycle-livedata-ktx:2.3.1'
- 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.1'
- 'androidx.navigation:navigation-fragment-ktx:2.3.5'
- 'androidx.navigation:navigation-ui-ktx:2.3.5'
- 'androidx.preference:preference-ktx:1.1.1'
- 'androidx.swiperefreshlayout:swiperefreshlayout:1.2.0-alpha01'
- 'com.github.promeg:tinypinyin:2.0.3'
- 'com.github.promeg:tinypinyin-lexicons-android-cncity:2.0.3'
- ```
+  ```
+  'androidx.core:core-ktx:1.6.0'
+  'androidx.appcompat:appcompat:1.3.1'
+  'androidx.constraintlayout:constraintlayout:2.0.4'
+  'androidx.navigation:navigation-fragment-ktx:2.3.5'
+  'androidx.navigation:navigation-ui-ktx:2.3.5'
+  'androidx.lifecycle:lifecycle-livedata-ktx:2.3.1'
+  'androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.1'
+  'androidx.navigation:navigation-fragment-ktx:2.3.5'
+  'androidx.navigation:navigation-ui-ktx:2.3.5'
+  'androidx.preference:preference-ktx:1.1.1'
+  'androidx.swiperefreshlayout:swiperefreshlayout:1.2.0-alpha01'
+  
+  'com.google.android.material:material:1.4.0'
+  
+  'com.github.android:renderscript-intrinsics-replacement-toolkit:b6363490c3'
+  
+  "androidx.databinding:databinding-compiler-common:$gradle_version"
+  ```
 
 - [JetBrains](https://www.jetbrains.com/)
   ```
