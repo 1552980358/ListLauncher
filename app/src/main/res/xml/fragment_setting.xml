@@ -24,7 +24,7 @@
         
     </sakuraba.saki.list.launcher.preference.TextColorChangePreferenceCategory>
     
-    <PreferenceCategory
+    <sakuraba.saki.list.launcher.preference.TextColorChangePreferenceCategory
         android:title="@string/setting_category_application"
         app:iconSpaceReserved="false">
     
@@ -38,6 +38,6 @@
             android:title="@string/setting_restart"
             app:icon="@drawable/ic_restart" />
         
-    </PreferenceCategory>
+    </sakuraba.saki.list.launcher.preference.TextColorChangePreferenceCategory>
     
 </PreferenceScreen>
