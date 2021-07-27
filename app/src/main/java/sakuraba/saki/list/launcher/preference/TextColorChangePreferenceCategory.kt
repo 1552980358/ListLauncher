@@ -19,6 +19,9 @@ class TextColorChangePreferenceCategory: PreferenceCategory {
                 icon?.setTint(customTitleColor)
                 (holder?.findViewById(android.R.id.title) as TextView).setTextColor(customTitleColor)
             }
+            if (isCustomSummaryColor) {
+                (holder?.findViewById(android.R.id.summary) as TextView).setTextColor(customTitleColor)
+            }
         }
     }
     
