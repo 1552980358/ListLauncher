@@ -26,6 +26,15 @@
     <string name="menu_crop_image_save">Save</string>
     <string name="menu_crop_image_change_image">Change as…</string>
     
+    <string name="application_info_application_name">Application Name</string>
+    <string name="application_info_package_name">Package Name</string>
+    <string name="application_info_installation_type">Application Type</string>
+    <string name="application_info_system_application">System Application</string>
+    <string name="application_info_user_installed">User-installed Application</string>
+    <string name="application_info_version_name">Version Name</string>
+    <string name="application_info_version_code">Version Code</string>
+    <string name="application_info_setting_info">See application in System Setting</string>
+    
     <string name="menu_setting_reset">Reset All</string>
     <string name="setting_reset_dialog_title">Confirm</string>
     <string name="setting_reset_dialog_message">Are you sure to reset all setting?</string>

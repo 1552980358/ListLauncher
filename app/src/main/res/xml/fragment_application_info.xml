@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    
+    <sakuraba.saki.list.launcher.preference.ApplicationIconPreference
+        android:key="key_application_icon"
+        app:layout="@layout/layout_preference_application_icon" />
+    
+    <sakuraba.saki.list.launcher.preference.TextColorChangePreference
+        android:key="key_application_name"
+        android:title="@string/application_info_application_name"
+        app:iconSpaceReserved="false" />
+    
+    <sakuraba.saki.list.launcher.preference.TextColorChangePreference
+        android:key="key_package_name"
+        android:title="@string/application_info_package_name"
+        app:iconSpaceReserved="false" />
+    
+    <sakuraba.saki.list.launcher.preference.TextColorChangePreference
+        android:key="key_installation_type"
+        android:title="@string/application_info_installation_type"
+        app:iconSpaceReserved="false" />
+    
+    <sakuraba.saki.list.launcher.preference.TextColorChangePreference
+        android:key="key_version_name"
+        android:title="@string/application_info_version_name"
+        app:iconSpaceReserved="false" />
+    
+    <sakuraba.saki.list.launcher.preference.TextColorChangePreference
+        android:key="key_version_code"
+        android:title="@string/application_info_version_code"
+        app:iconSpaceReserved="false" />
+    
+    <sakuraba.saki.list.launcher.preference.TextColorChangePreference
+        android:key="key_system_setting"
+        android:title="@string/application_info_setting_info"
+        app:iconSpaceReserved="false" />
+
+</PreferenceScreen>

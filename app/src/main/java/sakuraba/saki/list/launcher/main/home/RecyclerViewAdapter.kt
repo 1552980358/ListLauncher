@@ -21,6 +21,10 @@ class RecyclerViewAdapter(
     private val activity: FragmentActivity
 ): RecyclerView.Adapter<ViewHolder>() {
     
+    companion object {
+        const val APP_INFO = "AppInfo"
+    }
+    
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.recycler_view_sub_view, parent, false))
     }
