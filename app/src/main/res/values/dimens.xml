@@ -113,4 +113,7 @@
     <dimen name="seekbar_dialog_text_view_text_size">17sp</dimen>
     <dimen name="seekbar_dialog_seekbar_margins">5dp</dimen>
     
+    <dimen name="application_info_icon_container_height">150dp</dimen>
+    <dimen name="application_info_icon_size">80dp</dimen>
+    
 </resources>
