@@ -1,4 +1,4 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
     <string name="app_name">ListLauncher</string>
     <string name="app_package_name">sakuraba.saki.list.launcher</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
@@ -10,6 +10,7 @@
     <string name="action_search">Search</string>
     
     <string name="menu_home">Home</string>
+    <string name="menu_application_info">Application Info</string>
     <string name="menu_setting">Setting</string>
     <string name="menu_security_setting">Security Setting</string>
     <string name="menu_user_interface_setting">User Interface</string>
@@ -152,16 +153,6 @@
     <string name="reset_setting_dialog_restart_1_second">Reset process completed.\nRestart in 1 second…</string>
     
     <string name="loading_dialog_title">Loading…</string>
-    
-    <string name="bottom_dialog_home_application_name">Application Name</string>
-    <string name="bottom_dialog_home_package_name">Package Name</string>
-    <string name="bottom_dialog_home_system_yes">[System Application]</string>
-    <string name="bottom_dialog_home_system_no">[User-installed Application]</string>
-    <string name="bottom_dialog_home_button_setting">SETTING</string>
-    <string name="bottom_dialog_home_button_cancel" tools:ignore="ButtonCase">CANCEL</string>
-    
-    <string name="bottom_dialog_home_version_name">Version Name</string>
-    <string name="bottom_dialog_home_version_code">Version Code</string>
     
     <string name="activity_launch_app_launching">Launching…</string>
     
