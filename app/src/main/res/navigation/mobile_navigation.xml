@@ -12,6 +12,11 @@
         tools:layout="@layout/fragment_home" />
     
     <fragment
+        android:id="@+id/nav_application_info"
+        android:name="sakuraba.saki.list.launcher.main.home.ApplicationInfoFragment"
+        android:label="@string/menu_application_info" />
+    
+    <fragment
         android:id="@+id/nav_setting"
         android:name="sakuraba.saki.list.launcher.main.setting.SettingFragment"
         android:label="@string/menu_setting" />
